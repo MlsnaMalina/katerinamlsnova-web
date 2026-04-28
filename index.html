@@ -15,15 +15,58 @@
 
   <link rel="stylesheet" href="style.css" />
 </head>
-<body>
-  <button
-    id="theme-toggle"
-    class="theme-toggle"
-    type="button"
-    aria-label="Přepnout světlý/tmavý režim"
-  >
-    <span class="theme-toggle__icon" aria-hidden="true">🌙</span>
-  </button>
+<body id="top">
+  <nav id="nav" class="nav" aria-label="Hlavní navigace">
+    <a href="#top" class="nav__brand">KM<span class="nav__brand-cursor" aria-hidden="true">▌</span></a>
+
+    <ul class="nav__links">
+      <li><a href="#co-umim">Co umím</a></li>
+      <li><a href="#ukazky">Ukázky</a></li>
+      <li><a href="#ceny">Ceny</a></li>
+      <li><a href="#o-mne">O mně</a></li>
+      <li><a href="#kontakt">Kontakt</a></li>
+    </ul>
+
+    <button
+      id="nav-burger"
+      class="nav__burger"
+      type="button"
+      aria-label="Otevřít menu"
+      aria-expanded="false"
+      aria-controls="mobile-menu"
+    >
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+
+    <button
+      id="theme-toggle"
+      class="theme-toggle"
+      type="button"
+      aria-label="Přepnout světlý/tmavý režim"
+    >
+      <span class="theme-toggle__icon" aria-hidden="true">🌙</span>
+    </button>
+  </nav>
+
+  <div id="mobile-menu" class="mobile-menu" aria-hidden="true">
+    <button
+      id="mobile-menu-close"
+      class="mobile-menu__close"
+      type="button"
+      aria-label="Zavřít menu"
+    >
+      ×
+    </button>
+    <ul class="mobile-menu__links">
+      <li><a href="#co-umim">Co umím</a></li>
+      <li><a href="#ukazky">Ukázky</a></li>
+      <li><a href="#ceny">Ceny</a></li>
+      <li><a href="#o-mne">O mně</a></li>
+      <li><a href="#kontakt">Kontakt</a></li>
+    </ul>
+  </div>
 
   <main>
     <section class="hero">

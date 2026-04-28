@@ -21,6 +21,52 @@
   }, 2000);
 })();
 
+// Nav scroll behavior — pozadí navigace se objeví po scrollu > 80 px
+(function () {
+  const nav = document.getElementById("nav");
+  if (!nav) return;
+
+  function update() {
+    if (window.scrollY > 80) {
+      nav.classList.add("is-scrolled");
+    } else {
+      nav.classList.remove("is-scrolled");
+    }
+  }
+
+  update();
+  window.addEventListener("scroll", update, { passive: true });
+})();
+
+// Mobile menu — hamburger toggle
+(function () {
+  const burger = document.getElementById("nav-burger");
+  const menu = document.getElementById("mobile-menu");
+  const closeBtn = document.getElementById("mobile-menu-close");
+  if (!burger || !menu) return;
+
+  function open() {
+    menu.classList.add("is-open");
+    menu.setAttribute("aria-hidden", "false");
+    burger.setAttribute("aria-expanded", "true");
+    document.body.style.overflow = "hidden";
+  }
+
+  function close() {
+    menu.classList.remove("is-open");
+    menu.setAttribute("aria-hidden", "true");
+    burger.setAttribute("aria-expanded", "false");
+    document.body.style.overflow = "";
+  }
+
+  burger.addEventListener("click", open);
+  closeBtn?.addEventListener("click", close);
+  menu.querySelectorAll("a").forEach((a) => a.addEventListener("click", close));
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && menu.classList.contains("is-open")) close();
+  });
+})();
+
 // Theme toggle — light/dark s perzistencí v localStorage
 (function () {
   const STORAGE_KEY = "km-theme";
