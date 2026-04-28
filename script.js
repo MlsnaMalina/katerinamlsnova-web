@@ -67,6 +67,38 @@
   });
 })();
 
+// Process steps — postupný fade-in zleva při scrollu (Intersection Observer)
+(function () {
+  const steps = document.querySelectorAll(
+    ".process__step, .process__arrow"
+  );
+  if (!steps.length) return;
+
+  if (!("IntersectionObserver" in window)) {
+    steps.forEach((el) => el.classList.add("is-visible"));
+    return;
+  }
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const el = entry.target;
+          const delay = parseInt(el.dataset.delay || "0", 10);
+          setTimeout(() => el.classList.add("is-visible"), delay);
+          observer.unobserve(el);
+        }
+      });
+    },
+    { threshold: 0.2 }
+  );
+
+  steps.forEach((el, i) => {
+    el.dataset.delay = String(i * 150);
+    observer.observe(el);
+  });
+})();
+
 // Theme toggle — light/dark s perzistencí v localStorage
 (function () {
   const STORAGE_KEY = "km-theme";
