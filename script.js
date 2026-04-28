@@ -109,12 +109,18 @@
     return;
   }
 
+  const highlight = document.querySelector(".about__highlight");
+
   const observer = new IntersectionObserver(
     (entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
           media.classList.add("is-visible");
           setTimeout(() => media.classList.add("is-drawn"), 700);
+          // Po dokončení rámečku (slide 700 + draw 1200) → podtržení
+          setTimeout(() => highlight?.classList.add("is-underlined"), 1900);
+          // Po dokončení podtržení (+ 900) → srdíčko
+          setTimeout(() => highlight?.classList.add("is-hearted"), 2800);
           observer.unobserve(media);
         }
       });
