@@ -478,6 +478,37 @@ body {
   }
 }
 
+.skill-card__doodle--big {
+  width: 88px;
+  height: 88px;
+  margin: 0.5rem auto 1.75rem;
+}
+
+.skill-card__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: var(--font-mono);
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--accent);
+  text-decoration: none;
+  background: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+.skill-card__cta-arrow {
+  display: inline-block;
+  transition: transform 0.2s ease;
+}
+
+.skill-card__cta:hover .skill-card__cta-arrow,
+.skill-card__cta:focus-visible .skill-card__cta-arrow {
+  transform: translateX(4px);
+}
+
 .skill-card__berry {
   position: absolute;
   top: 1rem;
