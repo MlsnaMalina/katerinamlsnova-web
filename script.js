@@ -1,3 +1,26 @@
+// Hero intro sekvence: kurzor bliká 2s → pauza → tagline fade in → kurzor znovu bliká
+(function () {
+  const cursor = document.querySelector(".logo__cursor");
+  const tagline = document.querySelector(".tagline");
+  if (!cursor || !tagline) return;
+
+  // 1) Kurzor bliká 2 s (init class už nastavena v HTML)
+  setTimeout(() => {
+    // 2) Stop blikání
+    cursor.classList.remove("is-blinking");
+    cursor.classList.add("is-paused");
+
+    // 3) Tagline fade in (0.6 s)
+    tagline.classList.add("is-visible");
+
+    // 4) Po dokončení fade in kurzor znovu rozblikat
+    setTimeout(() => {
+      cursor.classList.remove("is-paused");
+      cursor.classList.add("is-blinking");
+    }, 600);
+  }, 2000);
+})();
+
 // Theme toggle — light/dark s perzistencí v localStorage
 (function () {
   const STORAGE_KEY = "km-theme";
