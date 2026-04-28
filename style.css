@@ -419,7 +419,8 @@ body {
 .skill-card__doodle {
   width: 64px;
   height: 64px;
-  margin-bottom: 1.5rem;
+  margin: 0 auto 1.5rem;
+  display: block;
   color: var(--text);
 }
 
