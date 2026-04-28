@@ -1,0 +1,85 @@
+/* ============================================
+   Kateřina Mlsnová — base styles
+   ============================================ */
+
+:root {
+  /* Logo Kit — raw palette */
+  --color-raspberry-dark: #7A1840;
+  --color-raspberry-light: #B83066;
+  --color-ink: #1A1714;
+  --color-deep-black: #0F0E0C;
+  --color-white: #FFFFFF;
+  --color-cream: #F7F4EE;
+
+  /* Typography */
+  --font-display: "Syne", sans-serif;
+  --font-body: "Space Grotesk", sans-serif;
+  --font-mono: "IBM Plex Mono", monospace;
+
+  /* Semantic tokens — LIGHT mode (default) */
+  --bg: var(--color-cream);
+  --bg-elevated: var(--color-white);
+  --text: var(--color-ink);
+  --text-muted: rgba(26, 23, 20, 0.7);
+  --accent: var(--color-raspberry-dark);
+  --accent-hover: var(--color-raspberry-light);
+  --border: rgba(26, 23, 20, 0.12);
+}
+
+/* DARK mode — auto via system preference */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: var(--color-deep-black);
+    --bg-elevated: var(--color-ink);
+    --text: var(--color-cream);
+    --text-muted: rgba(247, 244, 238, 0.7);
+    --accent: var(--color-raspberry-light);
+    --accent-hover: var(--color-raspberry-dark);
+    --border: rgba(247, 244, 238, 0.12);
+  }
+}
+
+/* DARK mode — manual override (toggle later via [data-theme]) */
+[data-theme="dark"] {
+  --bg: var(--color-deep-black);
+  --bg-elevated: var(--color-ink);
+  --text: var(--color-cream);
+  --text-muted: rgba(247, 244, 238, 0.7);
+  --accent: var(--color-raspberry-light);
+  --accent-hover: var(--color-raspberry-dark);
+  --border: rgba(247, 244, 238, 0.12);
+}
+
+[data-theme="light"] {
+  --bg: var(--color-cream);
+  --bg-elevated: var(--color-white);
+  --text: var(--color-ink);
+  --text-muted: rgba(26, 23, 20, 0.7);
+  --accent: var(--color-raspberry-dark);
+  --accent-hover: var(--color-raspberry-light);
+  --border: rgba(26, 23, 20, 0.12);
+}
+
+/* Reset */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--font-body);
+  font-weight: 400;
+  background-color: var(--bg);
+  color: var(--text);
+  line-height: 1.5;
+  min-height: 100vh;
+}
