@@ -99,6 +99,32 @@
   });
 })();
 
+// O mně — slide in obrázku, pak nakreslení doodle rámečku
+(function () {
+  const media = document.querySelector(".about__media");
+  if (!media) return;
+
+  if (!("IntersectionObserver" in window)) {
+    media.classList.add("is-visible", "is-drawn");
+    return;
+  }
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          media.classList.add("is-visible");
+          setTimeout(() => media.classList.add("is-drawn"), 700);
+          observer.unobserve(media);
+        }
+      });
+    },
+    { threshold: 0.25 }
+  );
+
+  observer.observe(media);
+})();
+
 // Theme toggle — light/dark s perzistencí v localStorage
 (function () {
   const STORAGE_KEY = "km-theme";
