@@ -376,24 +376,44 @@ body {
 .skill-card {
   position: relative;
   padding: 2.25rem 1.75rem 2rem;
-  background-color: var(--bg-elevated);
-  border-radius: 1rem;
-  box-shadow: 0 1px 2px rgba(26, 23, 20, 0.04),
-    0 8px 24px rgba(26, 23, 20, 0.06);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  overflow: hidden;
+  background-color: var(--card-bg);
+  border-radius: 14px;
+  transition: transform 0.3s ease;
   color: var(--text);
 }
 
-[data-theme="dark"] .skill-card,
-:root:not([data-theme="light"]) .skill-card {
-  /* fallback handled by --bg-elevated */
+/* Card bg: white in light, #1A1714 in dark — splývá se sekcí */
+:root {
+  --card-bg: var(--color-white);
+}
+[data-theme="dark"] {
+  --card-bg: var(--color-ink);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --card-bg: var(--color-ink);
+  }
+}
+
+/* Hand-drawn frame — SVG rect with feTurbulence filter */
+.skill-card__frame {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: visible;
+}
+
+.skill-card__frame rect {
+  fill: none;
+  stroke: var(--text);
+  stroke-width: 1.6;
+  stroke-linejoin: round;
 }
 
 .skill-card:hover {
   transform: translateY(-4px);
-  box-shadow: 0 4px 12px rgba(26, 23, 20, 0.06),
-    0 16px 40px rgba(26, 23, 20, 0.1);
 }
 
 .skill-card__doodle {
@@ -408,9 +428,12 @@ body {
   height: 100%;
   fill: none;
   stroke: currentColor;
-  stroke-width: 2;
   stroke-linecap: round;
   stroke-linejoin: round;
+}
+
+.skill-card__doodle svg circle {
+  fill: currentColor;
 }
 
 .skill-card__title {
@@ -435,6 +458,24 @@ body {
   font-weight: 600;
   font-size: 0.95rem;
   color: var(--accent);
+  opacity: 0;
+  max-height: 0;
+  overflow: hidden;
+  transition: opacity 0.3s ease, max-height 0.3s ease;
+}
+
+.skill-card:hover .skill-card__price,
+.skill-card:focus-within .skill-card__price {
+  opacity: 1;
+  max-height: 3rem;
+}
+
+/* Touch zařízení (bez hoveru) — cena je vždy viditelná */
+@media (hover: none) {
+  .skill-card__price {
+    opacity: 1;
+    max-height: 3rem;
+  }
 }
 
 .skill-card__berry {
