@@ -99,13 +99,13 @@
   });
 })();
 
-// O mně — fade in obrázku, pak postupné kreslení doodle prvků
+// O mně — slide in obrázku zleva, pak nakreslení doodle rámečku
 (function () {
-  const stage = document.querySelector(".about__stage");
-  if (!stage) return;
+  const media = document.querySelector(".about__media");
+  if (!media) return;
 
   if (!("IntersectionObserver" in window)) {
-    stage.classList.add("is-active");
+    media.classList.add("is-visible", "is-drawn");
     return;
   }
 
@@ -113,15 +113,16 @@
     (entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
-          stage.classList.add("is-active");
-          observer.unobserve(stage);
+          media.classList.add("is-visible");
+          setTimeout(() => media.classList.add("is-drawn"), 700);
+          observer.unobserve(media);
         }
       });
     },
-    { threshold: 0.2 }
+    { threshold: 0.25 }
   );
 
-  observer.observe(stage);
+  observer.observe(media);
 })();
 
 // Theme toggle — light/dark s perzistencí v localStorage
