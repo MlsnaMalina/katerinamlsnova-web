@@ -433,7 +433,7 @@ body {
 }
 
 .skill-card__doodle svg circle {
-  fill: currentColor;
+  fill: none;
 }
 
 .skill-card__title {
