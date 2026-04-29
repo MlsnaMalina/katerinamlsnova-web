@@ -297,8 +297,8 @@
       <div class="works__inner">
         <h2 class="section-title">Ukázky</h2>
 
-        <div class="works__carousel">
-          <article class="work-card">
+        <div class="works__grid">
+          <article class="work-card" tabindex="0" role="button">
             <svg class="work-card__frame" preserveAspectRatio="none" aria-hidden="true">
               <rect width="100%" height="100%" rx="14" ry="14" filter="url(#rough)" />
             </svg>
@@ -315,7 +315,7 @@
             </div>
           </article>
 
-          <article class="work-card">
+          <article class="work-card" tabindex="0" role="button">
             <svg class="work-card__frame" preserveAspectRatio="none" aria-hidden="true">
               <rect width="100%" height="100%" rx="14" ry="14" filter="url(#rough)" />
             </svg>
@@ -332,7 +332,7 @@
             </div>
           </article>
 
-          <article class="work-card">
+          <article class="work-card" tabindex="0" role="button">
             <svg class="work-card__frame" preserveAspectRatio="none" aria-hidden="true">
               <rect width="100%" height="100%" rx="14" ry="14" filter="url(#rough)" />
             </svg>
@@ -349,7 +349,7 @@
             </div>
           </article>
 
-          <article class="work-card">
+          <article class="work-card" tabindex="0" role="button">
             <svg class="work-card__frame" preserveAspectRatio="none" aria-hidden="true">
               <rect width="100%" height="100%" rx="14" ry="14" filter="url(#rough)" />
             </svg>
@@ -366,7 +366,7 @@
             </div>
           </article>
 
-          <article class="work-card">
+          <article class="work-card" tabindex="0" role="button">
             <svg class="work-card__frame" preserveAspectRatio="none" aria-hidden="true">
               <rect width="100%" height="100%" rx="14" ry="14" filter="url(#rough)" />
             </svg>
@@ -383,7 +383,7 @@
             </div>
           </article>
 
-          <article class="work-card">
+          <article class="work-card" tabindex="0" role="button">
             <svg class="work-card__frame" preserveAspectRatio="none" aria-hidden="true">
               <rect width="100%" height="100%" rx="14" ry="14" filter="url(#rough)" />
             </svg>
@@ -494,6 +494,25 @@
       </div>
     </section>
   </main>
+
+  <div id="lightbox" class="lightbox" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="lightbox-title">
+    <div class="lightbox__overlay" data-lightbox-close></div>
+    <div class="lightbox__panel" role="document">
+      <button type="button" class="lightbox__close" aria-label="Zavřít" data-lightbox-close>×</button>
+      <div class="lightbox__media">
+        <img class="lightbox__image" src="" alt="" />
+      </div>
+      <div class="lightbox__body">
+        <span class="lightbox__tag"></span>
+        <h3 id="lightbox-title" class="lightbox__title"></h3>
+        <p class="lightbox__desc"></p>
+        <a class="lightbox__cta work-card__cta" href="#" target="_blank" rel="noopener">
+          <span class="lightbox__cta-label"></span>
+          <span class="work-card__cta-arrow" aria-hidden="true">→</span>
+        </a>
+      </div>
+    </div>
+  </div>
 
   <script src="script.js"></script>
 </body>

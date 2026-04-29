@@ -131,27 +131,92 @@
   observer.observe(media);
 })();
 
-// Ukázky — 3D coverflow carousel s auto rotací každé 4 s
+// Ukázky — grid karet + lightbox po kliknutí
 (function () {
-  const carousel = document.querySelector(".works__carousel");
-  if (!carousel) return;
-  const cards = Array.from(carousel.querySelectorAll(".work-card"));
-  if (cards.length < 2) return;
+  const grid = document.querySelector(".works__grid");
+  const lightbox = document.getElementById("lightbox");
+  if (!grid || !lightbox) return;
 
-  const total = cards.length;
-  let active = 0;
+  const cards = grid.querySelectorAll(".work-card");
+  const imgEl = lightbox.querySelector(".lightbox__image");
+  const tagEl = lightbox.querySelector(".lightbox__tag");
+  const titleEl = lightbox.querySelector(".lightbox__title");
+  const descEl = lightbox.querySelector(".lightbox__desc");
+  const ctaEl = lightbox.querySelector(".lightbox__cta");
+  const ctaLabelEl = lightbox.querySelector(".lightbox__cta-label");
 
-  function update() {
-    cards.forEach((card, i) => {
-      card.classList.toggle("is-center", i === active);
-    });
+  let lastFocused = null;
+
+  function open(card) {
+    const cardImg = card.querySelector(".work-card__media img");
+    const cardTag = card.querySelector(".work-card__tag");
+    const cardTitle = card.querySelector(".work-card__title");
+    const cardDesc = card.querySelector(".work-card__desc");
+    const cardCta = card.querySelector(".work-card__cta");
+
+    imgEl.src = cardImg?.src || "";
+    imgEl.alt = cardImg?.alt || "";
+    tagEl.textContent = cardTag?.textContent || "";
+    titleEl.textContent = cardTitle?.textContent || "";
+    descEl.textContent = cardDesc?.textContent || "";
+
+    if (cardCta) {
+      const href = cardCta.getAttribute("href") || "#";
+      const label = cardCta.firstChild?.textContent?.trim() || cardCta.textContent.trim().replace(/→\s*$/, "").trim();
+      ctaEl.setAttribute("href", href);
+      ctaLabelEl.textContent = label;
+      // Externí odkazy otevírat v novém tabu, mailto v aktuálním
+      if (href.startsWith("mailto:")) {
+        ctaEl.removeAttribute("target");
+        ctaEl.removeAttribute("rel");
+      } else {
+        ctaEl.setAttribute("target", "_blank");
+        ctaEl.setAttribute("rel", "noopener");
+      }
+      ctaEl.style.display = "";
+    } else {
+      ctaEl.style.display = "none";
+    }
+
+    lastFocused = document.activeElement;
+    lightbox.classList.add("is-open");
+    lightbox.setAttribute("aria-hidden", "false");
+    document.body.classList.add("lightbox-open");
+    setTimeout(() => lightbox.querySelector(".lightbox__close")?.focus(), 50);
   }
 
-  update();
-  setInterval(() => {
-    active = (active + 1) % total;
-    update();
-  }, 4000);
+  function close() {
+    lightbox.classList.remove("is-open");
+    lightbox.setAttribute("aria-hidden", "true");
+    document.body.classList.remove("lightbox-open");
+    if (lastFocused && typeof lastFocused.focus === "function") {
+      lastFocused.focus();
+    }
+  }
+
+  cards.forEach((card) => {
+    card.addEventListener("click", (e) => {
+      // Pokud uživatel klikl přímo na CTA, neotvírat lightbox — nech ho jít na odkaz
+      if (e.target.closest(".work-card__cta")) return;
+      open(card);
+    });
+    card.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        open(card);
+      }
+    });
+  });
+
+  lightbox.querySelectorAll("[data-lightbox-close]").forEach((el) => {
+    el.addEventListener("click", close);
+  });
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && lightbox.classList.contains("is-open")) {
+      close();
+    }
+  });
 })();
 
 // Theme toggle — light/dark s perzistencí v localStorage
