@@ -226,8 +226,8 @@
     ctx.drawImage(img, x, y, w, h);
   }
 
-  function drawWindImage(img, x, y, w, h) {
-    // Wind SVG strokes are dark — invert in dark mode for visibility.
+  function drawInvertibleImage(img, x, y, w, h) {
+    // Dark-stroke SVG (wind, ant, beetle) — invert in dark mode for visibility.
     if (isDark()) {
       ctx.save();
       ctx.filter = 'invert(1)';
@@ -272,12 +272,12 @@
 
   function drawObstacle(ob) {
     if (ob.type === 'wind') {
-      drawWindImage(images.wind, ob.x, ob.y, ob.w, ob.h);
+      drawInvertibleImage(images.wind, ob.x, ob.y, ob.w, ob.h);
     } else {
       const img = ob.type === 'ant' ? images.ant : images.beetle;
       for (let i = 0; i < ob.count; i++) {
         const ix = ob.x + i * (OBSTACLE_W + OBSTACLE_GAP);
-        drawImageThemed(img, ix, ob.y, OBSTACLE_W, OBSTACLE_H);
+        drawInvertibleImage(img, ix, ob.y, OBSTACLE_W, OBSTACLE_H);
       }
     }
   }
