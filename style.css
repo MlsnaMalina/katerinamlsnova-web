@@ -1947,32 +1947,35 @@ body.lightbox-open {
   gap: 0.75rem;
 }
 
-.contact__email-cluster {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.25rem;
+.contact__email-wrap {
+  position: relative;
+  display: inline-block;
 }
 
 .contact__email-hint {
+  position: absolute;
+  right: calc(100% + 12px);
+  top: 50%;
+  transform: translateY(-50%);
   display: inline-flex;
-  flex-direction: row;
   align-items: center;
   gap: 0.4rem;
   color: var(--accent);
+  pointer-events: none;
 }
 
 .contact__email-hint-text {
   font-family: var(--font-mono);
   font-weight: 600;
-  font-size: 0.8rem;
+  font-size: 0.75rem;
   color: var(--accent);
   transform: rotate(-5deg);
   white-space: nowrap;
 }
 
 .contact__email-hint-arrow {
-  width: 46px;
-  height: 42px;
+  width: 56px;
+  height: 32px;
   flex-shrink: 0;
   overflow: visible;
 }
@@ -1983,6 +1986,12 @@ body.lightbox-open {
   stroke-width: 2;
   stroke-linecap: round;
   stroke-linejoin: round;
+}
+
+@media (max-width: 600px) {
+  .contact__email-hint {
+    display: none;
+  }
 }
 
 .contact__email {
