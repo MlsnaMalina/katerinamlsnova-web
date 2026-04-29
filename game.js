@@ -180,7 +180,9 @@
     if (g.type === 'wind') {
       ob.w = WIND_W;
       ob.h = WIND_H;
-      ob.y = (groundY - 90) - WIND_H / 2;
+      const low = Math.random() < 0.3;
+      const centerY = low ? groundY - 20 : groundY - 90;
+      ob.y = centerY - WIND_H / 2;
     } else {
       ob.w = g.count * OBSTACLE_W + (g.count - 1) * OBSTACLE_GAP;
       ob.h = OBSTACLE_H;
@@ -189,16 +191,15 @@
     groups.push(ob);
   }
 
+  function getGap(currentSpeed) {
+    const base = Math.max(900 - (currentSpeed - 4) * 60, 400);
+    return base + Math.random() * 400;
+  }
+
   // -------------------- Drawing --------------------
   function drawImageThemed(img, x, y, w, h) {
-    if (isDark()) {
-      ctx.save();
-      ctx.filter = 'invert(1)';
-      ctx.drawImage(img, x, y, w, h);
-      ctx.restore();
-    } else {
-      ctx.drawImage(img, x, y, w, h);
-    }
+    ctx.filter = 'none';
+    ctx.drawImage(img, x, y, w, h);
   }
 
   function drawGround() {
@@ -263,7 +264,7 @@
         spawnGroup();
         firstSpawnDone = true;
         distSinceSpawn = 0;
-        nextSpawnDist = 800 + Math.random() * 600;
+        nextSpawnDist = getGap(speed);
       }
 
       // Movement & spawn
@@ -276,7 +277,7 @@
         if (distSinceSpawn >= nextSpawnDist) {
           spawnGroup();
           distSinceSpawn = 0;
-          nextSpawnDist = 800 + Math.random() * 600;
+          nextSpawnDist = getGap(speed);
         }
       }
 
