@@ -1955,11 +1955,10 @@ body.lightbox-open {
 
 .contact__email-hint {
   display: inline-flex;
-  flex-direction: column;
-  align-items: flex-start;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.4rem;
   color: var(--accent);
-  margin-right: -0.25rem;
-  margin-bottom: -0.5rem;
 }
 
 .contact__email-hint-text {
@@ -1968,22 +1967,20 @@ body.lightbox-open {
   font-size: 0.8rem;
   color: var(--accent);
   transform: rotate(-5deg);
-  transform-origin: bottom left;
-  margin-left: 0.25rem;
   white-space: nowrap;
 }
 
 .contact__email-hint-arrow {
   width: 46px;
-  height: 44px;
-  margin-top: 0.1rem;
+  height: 42px;
+  flex-shrink: 0;
   overflow: visible;
 }
 
 .contact__email-hint-arrow path {
   fill: none;
   stroke: var(--accent);
-  stroke-width: 2.2;
+  stroke-width: 2;
   stroke-linecap: round;
   stroke-linejoin: round;
 }
