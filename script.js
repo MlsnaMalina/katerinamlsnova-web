@@ -301,6 +301,76 @@
   titles.forEach((t) => observer.observe(t));
 })();
 
+// Kontakt — odeslání přes Formspree (fetch, bez page reloadu)
+(function () {
+  const form = document.getElementById("contact-form");
+  const success = document.getElementById("contact-success");
+  const errorEl = document.getElementById("contact-error");
+  const submitBtn = document.getElementById("contact-submit");
+  if (!form || !success) return;
+
+  const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    errorEl.hidden = true;
+
+    const data = new FormData(form);
+    const name = (data.get("name") || "").toString().trim();
+    const email = (data.get("email") || "").toString().trim();
+    const message = (data.get("message") || "").toString().trim();
+
+    if (!name || !email || !message || !emailRe.test(email)) {
+      errorEl.textContent = "Vyplňte prosím všechna pole správně.";
+      errorEl.hidden = false;
+      return;
+    }
+
+    submitBtn.disabled = true;
+    const originalLabel = submitBtn.querySelector(".contact__submit-label").textContent;
+    submitBtn.querySelector(".contact__submit-label").textContent = "Odesílám…";
+
+    try {
+      const res = await fetch(form.action, {
+        method: "POST",
+        body: data,
+        headers: { Accept: "application/json" },
+      });
+
+      if (!res.ok) throw new Error("Network response not ok");
+
+      form.hidden = true;
+      success.hidden = false;
+    } catch (err) {
+      errorEl.textContent = "Něco se pokazilo. Zkuste to znovu nebo mi napište přímo na e-mail.";
+      errorEl.hidden = false;
+      submitBtn.disabled = false;
+      submitBtn.querySelector(".contact__submit-label").textContent = originalLabel;
+    }
+  });
+})();
+
+// Kontakt — odhalení e-mailu po kliknutí (anti-spam obfuskace)
+(function () {
+  const btn = document.getElementById("contact-email-reveal");
+  if (!btn) return;
+
+  btn.addEventListener("click", () => {
+    if (btn.classList.contains("is-revealed")) return;
+    const user = btn.dataset.user;
+    const domain = btn.dataset.domain;
+    if (!user || !domain) return;
+    const email = user + "@" + domain;
+
+    const link = document.createElement("a");
+    link.href = "mailto:" + email;
+    link.textContent = email;
+    link.className = "contact__email is-revealed";
+
+    btn.replaceWith(link);
+  });
+})();
+
 // Theme toggle — light/dark s perzistencí v localStorage
 (function () {
   const STORAGE_KEY = "km-theme";

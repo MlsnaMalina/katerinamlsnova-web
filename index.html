@@ -706,6 +706,108 @@
         </ol>
       </div>
     </section>
+
+    <section class="contact" id="kontakt">
+      <div class="contact__inner">
+        <h2 class="section-title section-title--underlined">
+          <span class="section-title__text">Napište mi</span>
+          <svg class="section-title__underline" viewBox="0 0 600 14" preserveAspectRatio="none" aria-hidden="true">
+            <path filter="url(#rough)" d="M 6,8 C 100,4 220,11 340,7 C 440,4 520,9 594,6" />
+          </svg>
+        </h2>
+
+        <p class="contact__lead">Máte nápad na projekt, chcete se zeptat, nebo jen říct „ahoj"? Napište mi — ráda se ozvu.</p>
+
+        <form
+          id="contact-form"
+          class="contact__form"
+          action="https://formspree.io/f/mzdopbaq"
+          method="POST"
+          novalidate
+        >
+          <div class="contact-field">
+            <label class="contact-field__label" for="contact-name">Jméno</label>
+            <div class="contact-field__wrap">
+              <svg class="contact-field__frame" preserveAspectRatio="none" aria-hidden="true">
+                <rect width="100%" height="100%" rx="10" ry="10" filter="url(#rough)" />
+              </svg>
+              <input
+                id="contact-name"
+                class="contact-field__input"
+                type="text"
+                name="name"
+                autocomplete="name"
+                required
+              />
+            </div>
+          </div>
+
+          <div class="contact-field">
+            <label class="contact-field__label" for="contact-email">E-mail</label>
+            <div class="contact-field__wrap">
+              <svg class="contact-field__frame" preserveAspectRatio="none" aria-hidden="true">
+                <rect width="100%" height="100%" rx="10" ry="10" filter="url(#rough)" />
+              </svg>
+              <input
+                id="contact-email"
+                class="contact-field__input"
+                type="email"
+                name="email"
+                autocomplete="email"
+                required
+              />
+            </div>
+          </div>
+
+          <div class="contact-field">
+            <label class="contact-field__label" for="contact-message">Zpráva</label>
+            <div class="contact-field__wrap">
+              <svg class="contact-field__frame" preserveAspectRatio="none" aria-hidden="true">
+                <rect width="100%" height="100%" rx="10" ry="10" filter="url(#rough)" />
+              </svg>
+              <textarea
+                id="contact-message"
+                class="contact-field__input contact-field__input--textarea"
+                name="message"
+                rows="5"
+                required
+              ></textarea>
+            </div>
+          </div>
+
+          <p class="contact__error" id="contact-error" hidden>
+            Něco se pokazilo. Zkuste to znovu nebo mi napište přímo na e-mail.
+          </p>
+
+          <button type="submit" class="contact__submit" id="contact-submit">
+            <span class="contact__submit-label">Odeslat</span>
+            <span class="contact__submit-arrow" aria-hidden="true">→</span>
+          </button>
+        </form>
+
+        <div class="contact__success" id="contact-success" hidden>
+          <span class="contact__success-heart" aria-hidden="true">
+            <svg viewBox="0 0 32 28" xmlns="http://www.w3.org/2000/svg">
+              <path filter="url(#rough)" d="M 16,24 C 8,18 2,13 4,8 C 6,3 12,3 16,9 C 20,3 26,3 28,8 C 30,13 24,18 16,24 Z" />
+            </svg>
+          </span>
+          <p class="contact__success-text">Zpráva odeslána! Ozvu se, jakmile to půjde.</p>
+        </div>
+
+        <div class="contact__divider" aria-hidden="true">
+          <svg viewBox="0 0 600 16" preserveAspectRatio="none">
+            <path filter="url(#rough)" d="M 4,8 C 60,4 120,12 180,8 C 240,4 300,12 360,8 C 420,4 480,12 540,8 C 570,6 590,8 596,8" />
+          </svg>
+        </div>
+
+        <p class="contact__alt">
+          <span class="contact__alt-text">nebo mi napište přímo na</span>
+          <button type="button" class="contact__email" id="contact-email-reveal" data-user="K.mlsnova" data-domain="seznam.cz">
+            Zobrazit e-mail
+          </button>
+        </p>
+      </div>
+    </section>
   </main>
 
   <div id="lightbox" class="lightbox" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="lightbox-title">
