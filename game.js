@@ -80,6 +80,7 @@
     y: 0,
     vy: 0,
     onGround: true,
+    boostFrames: 0,
     blowFrames: 0,
     blowOffsetX: 0,
     blowOffsetY: 0,
@@ -87,6 +88,10 @@
     blowScale: 1,
     blowAlpha: 1,
   };
+
+  let jumpHeld = false;
+  const MAX_BOOST_FRAMES = 12;
+  const BOOST_GRAVITY_REDUCTION = 0.45;
 
   let groups = [];
   let distSinceSpawn = 0;
@@ -210,6 +215,7 @@
     startTime = performance.now();
     player.vy = 0;
     player.onGround = true;
+    player.boostFrames = 0;
     player.y = groundY - PLAYER_H;
     player.blowFrames = 0;
     player.blowOffsetX = 0;
@@ -238,6 +244,7 @@
     if (state === STATE.RUNNING && player.onGround) {
       player.vy = jumpForce;
       player.onGround = false;
+      player.boostFrames = MAX_BOOST_FRAMES;
     }
   }
 
@@ -410,8 +417,16 @@
     frameCount += frames;
 
     if (state === STATE.RUNNING) {
-      // Physics
-      player.vy += gravity * frames;
+      // Physics — variable jump height: while jump key is held during ascent,
+      // counter-gravity briefly so peak rises with hold duration.
+      let g = gravity;
+      if (jumpHeld && player.boostFrames > 0 && player.vy < 0) {
+        g = gravity - BOOST_GRAVITY_REDUCTION;
+        player.boostFrames -= frames;
+      } else {
+        player.boostFrames = 0;
+      }
+      player.vy += g * frames;
       player.y += player.vy * frames;
       if (player.y + PLAYER_H >= groundY) {
         player.y = groundY - PLAYER_H;
@@ -508,7 +523,14 @@
       const inView = rect.top < window.innerHeight && rect.bottom > 0;
       if (!inView) return;
       e.preventDefault();
+      jumpHeld = true;
       onAction();
+    }
+  });
+
+  window.addEventListener('keyup', (e) => {
+    if (e.code === 'Space' || e.key === ' ') {
+      jumpHeld = false;
     }
   });
 
@@ -520,8 +542,13 @@
   wrapper.addEventListener('touchstart', (e) => {
     if (e.target === restartBtn) return;
     e.preventDefault();
+    jumpHeld = true;
     onAction();
   }, { passive: false });
+
+  wrapper.addEventListener('touchend', () => { jumpHeld = false; });
+  wrapper.addEventListener('touchcancel', () => { jumpHeld = false; });
+  window.addEventListener('blur', () => { jumpHeld = false; });
 
   restartBtn.addEventListener('click', (e) => {
     e.stopPropagation();
