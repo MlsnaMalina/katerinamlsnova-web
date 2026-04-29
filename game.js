@@ -442,7 +442,7 @@
 
   Promise.all([
     loadSVG('assets/malina-game.svg'),
-    loadSVGRecolored('assets/malina-game.svg', [['#1a1a1a', '#f0f0f0']]),
+    loadSVGRecolored('assets/malina-game.svg', [['#0d0d0d', '#f0f0f0']]),
     loadSVG('assets/mravenec-game.svg'),
     loadSVG('assets/brouk-game.svg'),
     loadSVG('assets/wind-game.svg'),
