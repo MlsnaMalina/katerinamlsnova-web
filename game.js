@@ -55,7 +55,7 @@
   }
 
   // -------------------- Constants --------------------
-  const STATE = { IDLE: 'idle', RUNNING: 'running', OVER: 'over' };
+  const STATE = { IDLE: 'idle', RUNNING: 'running', BLOWING: 'blowing', OVER: 'over' };
   const PLAYER_W = 70;
   const PLAYER_H = 77;
   const OBSTACLE_W = 55;
@@ -80,6 +80,12 @@
     y: 0,
     vy: 0,
     onGround: true,
+    blowFrames: 0,
+    blowOffsetX: 0,
+    blowOffsetY: 0,
+    blowRotation: 0,
+    blowScale: 1,
+    blowAlpha: 1,
   };
 
   let groups = [];
@@ -111,6 +117,12 @@
     player.vy = 0;
     player.onGround = true;
     player.y = groundY - PLAYER_H;
+    player.blowFrames = 0;
+    player.blowOffsetX = 0;
+    player.blowOffsetY = 0;
+    player.blowRotation = 0;
+    player.blowScale = 1;
+    player.blowAlpha = 1;
   }
 
   function startGame() {
@@ -133,6 +145,17 @@
       player.vy = jumpForce;
       player.onGround = false;
     }
+  }
+
+  function startBlowAway() {
+    state = STATE.BLOWING;
+    player.blowFrames = 0;
+    player.blowOffsetX = 0;
+    player.blowOffsetY = 0;
+    player.blowRotation = 0;
+    player.blowScale = 1;
+    player.blowAlpha = 1;
+    hud.classList.add('hidden');
   }
 
   function gameOver(byWind) {
@@ -192,14 +215,28 @@
   }
 
   function getGap(currentSpeed) {
-    const base = Math.max(900 - (currentSpeed - 4) * 60, 400);
-    return base + Math.random() * 400;
+    // At speed 4 → 600–800px (~2.5–3.3s). Tightens as speed grows.
+    const base = Math.max(600 - (currentSpeed - 4) * 40, 280);
+    return base + Math.random() * 200;
   }
 
   // -------------------- Drawing --------------------
   function drawImageThemed(img, x, y, w, h) {
     ctx.filter = 'none';
     ctx.drawImage(img, x, y, w, h);
+  }
+
+  function drawWindImage(img, x, y, w, h) {
+    // Wind SVG strokes are dark — invert in dark mode for visibility.
+    if (isDark()) {
+      ctx.save();
+      ctx.filter = 'invert(1)';
+      ctx.drawImage(img, x, y, w, h);
+      ctx.restore();
+    } else {
+      ctx.filter = 'none';
+      ctx.drawImage(img, x, y, w, h);
+    }
   }
 
   function drawGround() {
@@ -218,12 +255,24 @@
     if (state === STATE.RUNNING && player.onGround) {
       bob = Math.sin(frameCount * 0.15) * 2;
     }
-    drawImageThemed(images.malina, player.x, player.y + bob, PLAYER_W, PLAYER_H);
+    if (state === STATE.BLOWING) {
+      const cx = player.x + PLAYER_W / 2 + player.blowOffsetX;
+      const cy = player.y + PLAYER_H / 2 + player.blowOffsetY;
+      ctx.save();
+      ctx.globalAlpha = player.blowAlpha;
+      ctx.translate(cx, cy);
+      ctx.rotate(player.blowRotation);
+      ctx.scale(player.blowScale, player.blowScale);
+      ctx.drawImage(images.malina, -PLAYER_W / 2, -PLAYER_H / 2, PLAYER_W, PLAYER_H);
+      ctx.restore();
+    } else {
+      drawImageThemed(images.malina, player.x, player.y + bob, PLAYER_W, PLAYER_H);
+    }
   }
 
   function drawObstacle(ob) {
     if (ob.type === 'wind') {
-      drawImageThemed(images.wind, ob.x, ob.y, ob.w, ob.h);
+      drawWindImage(images.wind, ob.x, ob.y, ob.w, ob.h);
     } else {
       const img = ob.type === 'ant' ? images.ant : images.beetle;
       for (let i = 0; i < ob.count; i++) {
@@ -260,7 +309,7 @@
       }
 
       // First-spawn 2s gate
-      if (!firstSpawnDone && now - startTime >= 2000) {
+      if (!firstSpawnDone && now - startTime >= 1500) {
         spawnGroup();
         firstSpawnDone = true;
         distSinceSpawn = 0;
@@ -297,11 +346,31 @@
         const ow = ob.w * (1 - 2 * tol);
         const oh = ob.h * (1 - 2 * tol);
         if (rectsOverlap(px, py, pw, ph, ox, oy, ow, oh)) {
-          gameOver(ob.type === 'wind');
+          if (ob.type === 'wind') {
+            startBlowAway();
+          } else {
+            gameOver(false);
+          }
           break;
         }
       }
       updateHud();
+    } else if (state === STATE.BLOWING) {
+      // ~45 frames (≈0.75s) blow-away animation, then game over
+      player.blowFrames += frames;
+      const total = 45;
+      const t = Math.min(1, player.blowFrames / total);
+      player.blowOffsetX = t * (cssW * 0.9);
+      player.blowOffsetY = -t * (cssH * 0.9) - Math.sin(t * Math.PI) * 30;
+      player.blowRotation = t * Math.PI * 1.5;
+      player.blowScale = 1 + t * 0.4;
+      player.blowAlpha = Math.max(0, 1 - t);
+      // keep obstacles drifting for ambience
+      const move = speed * frames;
+      for (const ob of groups) ob.x -= move;
+      if (t >= 1) {
+        gameOver(true);
+      }
     }
 
     // Draw
@@ -319,6 +388,7 @@
     } else if (state === STATE.RUNNING) {
       jump();
     }
+    // BLOWING: ignore input until animation finishes
   }
 
   window.addEventListener('keydown', (e) => {
