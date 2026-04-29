@@ -148,10 +148,12 @@
       if (offset > total / 2) offset -= total;
       if (offset < -total / 2) offset += total;
 
-      card.classList.remove("is-center", "is-left", "is-right");
+      card.classList.remove("is-center", "is-left", "is-right", "is-far-left", "is-far-right");
       if (offset === 0) card.classList.add("is-center");
       else if (offset === -1) card.classList.add("is-left");
       else if (offset === 1) card.classList.add("is-right");
+      else if (offset === -2) card.classList.add("is-far-left");
+      else if (offset === 2) card.classList.add("is-far-right");
     });
   }
 
