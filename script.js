@@ -139,22 +139,11 @@
   if (cards.length < 2) return;
 
   const total = cards.length;
-  const POSITION_CLASSES = ["is-center", "is-left", "is-right", "is-far-left", "is-far-right"];
   let active = 0;
 
   function update() {
     cards.forEach((card, i) => {
-      let offset = i - active;
-      // Wrap to nearest signed offset (carousel runs in a loop)
-      if (offset > total / 2) offset -= total;
-      if (offset < -total / 2) offset += total;
-
-      POSITION_CLASSES.forEach((c) => card.classList.remove(c));
-      if (offset === 0) card.classList.add("is-center");
-      else if (offset === -1) card.classList.add("is-left");
-      else if (offset === 1) card.classList.add("is-right");
-      else if (offset === -2) card.classList.add("is-far-left");
-      else if (offset === 2) card.classList.add("is-far-right");
+      card.classList.toggle("is-center", i === active);
     });
   }
 
