@@ -93,32 +93,108 @@
   let nextSpawnDist = 0;
 
   // -------------------- Image loading --------------------
-  function loadSVG(path) {
+  function imgFromSrc(src) {
     return new Promise((resolve, reject) => {
       const img = new Image();
       img.onload = () => resolve(img);
-      img.onerror = () => reject(new Error('Failed to load ' + path));
-      img.src = path;
+      img.onerror = () => reject(new Error('Failed: ' + src));
+      img.src = src;
     });
   }
 
-  function loadSVGRecolored(path, replacements) {
-    return fetch(path)
-      .then(r => r.text())
-      .then(text => {
-        let out = text;
-        for (const [from, to] of replacements) {
-          out = out.split(from).join(to);
-        }
-        const url = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(out);
-        return new Promise((resolve, reject) => {
-          const img = new Image();
-          img.onload = () => resolve(img);
-          img.onerror = () => reject(new Error('Failed to load recolored ' + path));
-          img.src = url;
-        });
-      });
+  function loadSVG(path) {
+    return imgFromSrc(path);
   }
+
+  function loadSVGTransformed(path, transforms) {
+    return fetch(path).then(r => r.text()).then(text => {
+      let out = text;
+      for (const fn of transforms) out = fn(out);
+      return imgFromSrc('data:image/svg+xml;charset=utf-8,' + encodeURIComponent(out));
+    });
+  }
+
+  // -------------------- SVG transforms --------------------
+  function recolor(replacements) {
+    return text => {
+      let out = text;
+      for (const [from, to] of replacements) out = out.split(from).join(to);
+      return out;
+    };
+  }
+
+  function rotatePoint(x, y, cx, cy, rad) {
+    const dx = x - cx, dy = y - cy;
+    const c = Math.cos(rad), s = Math.sin(rad);
+    return [cx + dx * c - dy * s, cy + dx * s + dy * c];
+  }
+
+  function round2(n) { return Math.round(n * 100) / 100; }
+
+  function rotatePathD(d, angleRad) {
+    const tokens = d.match(/[A-Za-z]|-?\d+\.?\d*/g);
+    if (!tokens) return d;
+    let i = 0;
+    let pivotX = 0, pivotY = 0;
+    const out = [];
+    while (i < tokens.length) {
+      const cmd = tokens[i++];
+      out.push(cmd);
+      if (cmd === 'M') {
+        const x = parseFloat(tokens[i++]), y = parseFloat(tokens[i++]);
+        pivotX = x; pivotY = y;
+        out.push(round2(x), round2(y));
+      } else if (cmd === 'L') {
+        const x = parseFloat(tokens[i++]), y = parseFloat(tokens[i++]);
+        const [rx, ry] = rotatePoint(x, y, pivotX, pivotY, angleRad);
+        out.push(round2(rx), round2(ry));
+      } else if (cmd === 'Q') {
+        const cx = parseFloat(tokens[i++]), cy = parseFloat(tokens[i++]);
+        const x = parseFloat(tokens[i++]), y = parseFloat(tokens[i++]);
+        const [rcx, rcy] = rotatePoint(cx, cy, pivotX, pivotY, angleRad);
+        const [rx, ry] = rotatePoint(x, y, pivotX, pivotY, angleRad);
+        out.push(round2(rcx), round2(rcy), round2(rx), round2(ry));
+      } else {
+        return d; // unknown command — bail safely
+      }
+    }
+    return out.join(' ');
+  }
+
+  function rotateLegs(legPaths, angleRad) {
+    return text => {
+      let out = text;
+      legPaths.forEach((legD, idx) => {
+        const angle = (idx % 2 === 0 ? 1 : -1) * angleRad;
+        const newD = rotatePathD(legD, angle);
+        out = out.split(legD).join(newD);
+      });
+      return out;
+    };
+  }
+
+  const MALINA_LEGS = [
+    'M 88 132 L 88 182 L 75 187',
+    'M 112 132 L 112 182 L 125 187',
+  ];
+  const ANT_LEGS = [
+    'M 80 105 L 90 120 L 75 145',
+    'M 100 105 L 115 120 L 110 145',
+    'M 115 105 L 140 115 L 155 135',
+    'M 85 105 L 70 130 L 45 155',
+    'M 95 105 L 95 135 L 110 155',
+    'M 105 105 L 125 130 L 115 160',
+  ];
+  const BEETLE_LEGS = [
+    'M 55 115 L 65 135 L 75 135',
+    'M 100 120 L 115 135 L 115 145',
+    'M 145 110 L 165 125 L 160 140',
+    'M 45 115 L 35 140 L 20 145',
+    'M 90 120 L 85 150 L 70 160',
+    'M 135 120 L 130 155 L 110 165',
+  ];
+  const DEG = Math.PI / 180;
+  const MALINA_DARK_RECOLOR = [['#0d0d0d', '#f0f0f0']];
 
   let images = {};
   let imagesReady = false;
@@ -268,8 +344,21 @@
     ctx.stroke();
   }
 
+  function getWalkFrame() {
+    // Stride: 8 frames per swap at base speed (4), tightens with speed.
+    const stride = Math.max(3, Math.round(8 * 4 / Math.max(speed, 1)));
+    return Math.floor(frameCount / stride) % 2;
+  }
+
   function drawPlayer() {
-    const malinaImg = isDark() ? images.malinaDark : images.malina;
+    const dark = isDark();
+    let frame = 0;
+    if (state === STATE.RUNNING && player.onGround) {
+      frame = getWalkFrame();
+    }
+    const malinaImg = dark
+      ? (frame === 0 ? images.malinaDarkA : images.malinaDarkB)
+      : (frame === 0 ? images.malinaA : images.malinaB);
     let bob = 0;
     if (state === STATE.RUNNING && player.onGround) {
       bob = Math.sin(frameCount * 0.15) * 2;
@@ -293,7 +382,10 @@
     if (ob.type === 'wind') {
       drawInvertibleImage(images.wind, ob.x, ob.y, ob.w, ob.h);
     } else {
-      const img = ob.type === 'ant' ? images.ant : images.beetle;
+      const frame = getWalkFrame();
+      const img = ob.type === 'ant'
+        ? (frame === 0 ? images.antA : images.antB)
+        : (frame === 0 ? images.beetleA : images.beetleB);
       for (let i = 0; i < ob.count; i++) {
         const ix = ob.x + i * (OBSTACLE_W + OBSTACLE_GAP);
         drawInvertibleImage(img, ix, ob.y, OBSTACLE_W, OBSTACLE_H);
@@ -441,13 +533,23 @@
   player.y = groundY - PLAYER_H;
 
   Promise.all([
-    loadSVG('assets/malina-game.svg'),
-    loadSVGRecolored('assets/malina-game.svg', [['#0d0d0d', '#f0f0f0']]),
-    loadSVG('assets/mravenec-game.svg'),
-    loadSVG('assets/brouk-game.svg'),
+    loadSVGTransformed('assets/malina-game.svg', []),
+    loadSVGTransformed('assets/malina-game.svg', [rotateLegs(MALINA_LEGS, 18 * DEG)]),
+    loadSVGTransformed('assets/malina-game.svg', [recolor(MALINA_DARK_RECOLOR)]),
+    loadSVGTransformed('assets/malina-game.svg', [recolor(MALINA_DARK_RECOLOR), rotateLegs(MALINA_LEGS, 18 * DEG)]),
+    loadSVGTransformed('assets/mravenec-game.svg', []),
+    loadSVGTransformed('assets/mravenec-game.svg', [rotateLegs(ANT_LEGS, 20 * DEG)]),
+    loadSVGTransformed('assets/brouk-game.svg', []),
+    loadSVGTransformed('assets/brouk-game.svg', [rotateLegs(BEETLE_LEGS, 20 * DEG)]),
     loadSVG('assets/wind-game.svg'),
-  ]).then(([malina, malinaDark, ant, beetle, wind]) => {
-    images = { malina, malinaDark, ant, beetle, wind };
+  ]).then((arr) => {
+    images = {
+      malinaA: arr[0], malinaB: arr[1],
+      malinaDarkA: arr[2], malinaDarkB: arr[3],
+      antA: arr[4], antB: arr[5],
+      beetleA: arr[6], beetleB: arr[7],
+      wind: arr[8],
+    };
     imagesReady = true;
     requestAnimationFrame(loop);
   }).catch((err) => {
