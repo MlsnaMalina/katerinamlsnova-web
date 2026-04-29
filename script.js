@@ -275,6 +275,31 @@
   });
 })();
 
+// Ceny — animace doodle podtržení nadpisu při scrollu
+(function () {
+  const title = document.querySelector(".pricing__title");
+  if (!title) return;
+
+  if (!("IntersectionObserver" in window)) {
+    title.classList.add("is-underlined");
+    return;
+  }
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => title.classList.add("is-underlined"), 300);
+          observer.unobserve(title);
+        }
+      });
+    },
+    { threshold: 0.4 }
+  );
+
+  observer.observe(title);
+})();
+
 // Theme toggle — light/dark s perzistencí v localStorage
 (function () {
   const STORAGE_KEY = "km-theme";
