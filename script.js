@@ -131,13 +131,49 @@
   observer.observe(media);
 })();
 
-// Ukázky — grid karet + lightbox po kliknutí
+// Ukázky — 3D coverflow carousel + lightbox po kliknutí na střední kartu
 (function () {
-  const grid = document.querySelector(".works__grid");
+  const carousel = document.querySelector(".works__carousel");
   const lightbox = document.getElementById("lightbox");
-  if (!grid || !lightbox) return;
+  if (!carousel || !lightbox) return;
 
-  const cards = grid.querySelectorAll(".work-card");
+  const cards = Array.from(carousel.querySelectorAll(".work-card"));
+  const total = cards.length;
+  let active = 0;
+  let timer = null;
+
+  function updatePositions() {
+    cards.forEach((card, i) => {
+      let offset = i - active;
+      if (offset > total / 2) offset -= total;
+      if (offset < -total / 2) offset += total;
+
+      card.classList.remove("is-center", "is-left", "is-right");
+      if (offset === 0) card.classList.add("is-center");
+      else if (offset === -1) card.classList.add("is-left");
+      else if (offset === 1) card.classList.add("is-right");
+    });
+  }
+
+  function advance() {
+    active = (active + 1) % total;
+    updatePositions();
+  }
+
+  function startTimer() {
+    stopTimer();
+    timer = setInterval(advance, 4000);
+  }
+
+  function stopTimer() {
+    if (timer) clearInterval(timer);
+    timer = null;
+  }
+
+  if (total > 1) {
+    updatePositions();
+    startTimer();
+  }
   const imgEl = lightbox.querySelector(".lightbox__image");
   const tagEl = lightbox.querySelector(".lightbox__tag");
   const titleEl = lightbox.querySelector(".lightbox__title");
@@ -182,6 +218,7 @@
     lightbox.classList.add("is-open");
     lightbox.setAttribute("aria-hidden", "false");
     document.body.classList.add("lightbox-open");
+    stopTimer();
     setTimeout(() => lightbox.querySelector(".lightbox__close")?.focus(), 50);
   }
 
@@ -189,6 +226,7 @@
     lightbox.classList.remove("is-open");
     lightbox.setAttribute("aria-hidden", "true");
     document.body.classList.remove("lightbox-open");
+    if (total > 1) startTimer();
     if (lastFocused && typeof lastFocused.focus === "function") {
       lastFocused.focus();
     }

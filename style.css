@@ -557,14 +557,18 @@ body {
   margin: 0 auto;
 }
 
-.works__grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 2rem;
+.works__carousel {
+  position: relative;
+  width: 100%;
+  height: 480px;
+  margin: 0 auto;
 }
 
 .work-card {
-  position: relative;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 300px;
   display: flex;
   flex-direction: column;
   background-color: var(--card-bg);
@@ -572,19 +576,42 @@ body {
   overflow: hidden;
   color: var(--text);
   cursor: pointer;
-  transition: transform 0.3s ease;
   outline: none;
+  opacity: 0;
+  pointer-events: none;
+  transform: translate(-50%, -50%) scale(0.6);
+  transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1),
+              opacity 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 0;
 }
 
-.work-card:hover,
-.work-card:focus-visible {
-  transform: scale(1.02);
+.work-card.is-center {
+  transform: translate(-50%, -50%) scale(1);
+  opacity: 1;
+  z-index: 5;
+  pointer-events: auto;
 }
 
-.work-card:hover .work-card__frame rect,
-.work-card:focus-visible .work-card__frame rect {
+.work-card.is-left {
+  transform: translate(calc(-50% - 240px), -50%) scale(0.75);
+  opacity: 0.65;
+  z-index: 2;
+}
+
+.work-card.is-right {
+  transform: translate(calc(-50% + 240px), -50%) scale(0.75);
+  opacity: 0.65;
+  z-index: 2;
+}
+
+.work-card.is-center:hover {
+  transform: translate(-50%, -50%) scale(1.04);
+}
+
+.work-card.is-center:hover .work-card__frame rect,
+.work-card.is-center:focus-visible .work-card__frame rect {
   stroke: var(--accent);
-  stroke-width: 2;
+  stroke-width: 2.2;
 }
 
 .work-card__frame {
@@ -647,17 +674,24 @@ body {
 .work-card__title {
   font-family: var(--font-body);
   font-weight: 500;
-  font-size: 1.05rem;
+  font-size: 1.1rem;
   color: var(--text);
   margin: 0;
   line-height: 1.3;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 
 .work-card__desc {
-  display: none;
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+  margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 .work-card__cta {
@@ -687,15 +721,24 @@ body {
 }
 
 @media (max-width: 900px) {
-  .works__grid {
-    grid-template-columns: repeat(2, 1fr);
+  .work-card.is-left {
+    transform: translate(calc(-50% - 190px), -50%) scale(0.72);
+  }
+  .work-card.is-right {
+    transform: translate(calc(-50% + 190px), -50%) scale(0.72);
   }
 }
 
 @media (max-width: 600px) {
-  .works__grid {
-    grid-template-columns: 1fr;
-    gap: 1.5rem;
+  .works__carousel {
+    height: 460px;
+  }
+  .work-card {
+    width: 270px;
+  }
+  .work-card.is-left,
+  .work-card.is-right {
+    opacity: 0;
   }
 }
 
