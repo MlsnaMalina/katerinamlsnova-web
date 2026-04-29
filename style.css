@@ -545,6 +545,172 @@ body {
 }
 
 /* ============================================
+   Works section ("Ukázky")
+   ============================================ */
+
+.works {
+  padding: 6rem 1.5rem 8rem;
+  background-color: var(--bg-elevated);
+}
+
+.works__inner {
+  max-width: 72rem;
+  margin: 0 auto;
+}
+
+.works__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+}
+
+.work-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--card-bg);
+  border-radius: 14px;
+  overflow: hidden;
+  transition: transform 0.3s ease;
+  color: var(--text);
+}
+
+.work-card__frame {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: visible;
+  z-index: 1;
+}
+
+.work-card__frame rect {
+  fill: none;
+  stroke: var(--text);
+  stroke-width: 1.6;
+  stroke-linejoin: round;
+}
+
+.work-card:hover {
+  transform: translateY(-4px);
+}
+
+.work-card__media {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  background-color: var(--bg-elevated);
+}
+
+.work-card__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.4s ease;
+}
+
+.work-card:hover .work-card__media img {
+  transform: scale(1.03);
+}
+
+.work-card__body {
+  padding: 1.5rem 1.5rem 1.75rem;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.work-card__tag {
+  display: inline-block;
+  align-self: flex-start;
+  font-family: var(--font-mono);
+  font-weight: 600;
+  font-size: 0.75rem;
+  letter-spacing: 0.04em;
+  text-transform: lowercase;
+  color: var(--accent);
+  border: 1.4px solid var(--accent);
+  border-radius: 999px;
+  padding: 0.2rem 0.7rem;
+  margin-bottom: 0.9rem;
+}
+
+.work-card__title {
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: 1.2rem;
+  color: var(--text);
+  margin-bottom: 0.6rem;
+  line-height: 1.3;
+}
+
+.work-card__desc {
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  line-height: 1.55;
+  margin-bottom: 1.25rem;
+  flex: 1;
+}
+
+.work-card__cta {
+  display: inline-flex;
+  align-self: flex-start;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: var(--font-mono);
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--accent);
+  text-decoration: none;
+  background: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+.work-card__cta-arrow {
+  display: inline-block;
+  transition: transform 0.2s ease;
+}
+
+.work-card__cta:hover .work-card__cta-arrow,
+.work-card__cta:focus-visible .work-card__cta-arrow {
+  transform: translateX(4px);
+}
+
+.work-card__cta--disabled {
+  color: var(--text-muted);
+  cursor: not-allowed;
+  font-style: italic;
+  letter-spacing: 0.02em;
+}
+
+.work-card--soon {
+  opacity: 0.78;
+}
+
+.work-card--soon .work-card__media img {
+  filter: saturate(0.85);
+}
+
+@media (max-width: 960px) {
+  .works__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .works__grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ============================================
    About section ("O mně")
    ============================================ */
 
