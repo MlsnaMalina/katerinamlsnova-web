@@ -275,13 +275,13 @@
   });
 })();
 
-// Ceny — animace doodle podtržení nadpisu při scrollu
+// Animace doodle podtržení sekčních nadpisů při scrollu
 (function () {
-  const title = document.querySelector(".pricing__title");
-  if (!title) return;
+  const titles = document.querySelectorAll(".section-title--underlined");
+  if (!titles.length) return;
 
   if (!("IntersectionObserver" in window)) {
-    title.classList.add("is-underlined");
+    titles.forEach((t) => t.classList.add("is-underlined"));
     return;
   }
 
@@ -289,15 +289,16 @@
     (entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
-          setTimeout(() => title.classList.add("is-underlined"), 300);
-          observer.unobserve(title);
+          const el = entry.target;
+          setTimeout(() => el.classList.add("is-underlined"), 200);
+          observer.unobserve(el);
         }
       });
     },
     { threshold: 0.4 }
   );
 
-  observer.observe(title);
+  titles.forEach((t) => observer.observe(t));
 })();
 
 // Theme toggle — light/dark s perzistencí v localStorage

@@ -354,6 +354,40 @@ body {
   text-align: center;
 }
 
+.section-title--underlined {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.section-title__text {
+  display: inline-block;
+}
+
+.section-title__underline {
+  display: block;
+  width: min(420px, 80%);
+  height: 14px;
+  overflow: visible;
+}
+
+.section-title__underline path {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 2.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 700;
+  stroke-dashoffset: 700;
+  transition: stroke-dashoffset 0.9s ease;
+  vector-effect: non-scaling-stroke;
+}
+
+.section-title.is-underlined .section-title__underline path {
+  stroke-dashoffset: 0;
+}
+
 /* ============================================
    Skills section
    ============================================ */
@@ -556,6 +590,43 @@ body {
 .works__inner {
   max-width: 72rem;
   margin: 0 auto;
+}
+
+.works__subtitle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+  text-align: center;
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: 1.05rem;
+  line-height: 1.5;
+  color: var(--text);
+  margin: -2rem auto 3rem;
+  max-width: 44rem;
+}
+
+.works__subtitle-heart {
+  display: inline-flex;
+  width: 2.4rem;
+  height: 2.1rem;
+  flex-shrink: 0;
+}
+
+.works__subtitle-heart svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.works__subtitle-heart svg path {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 2.4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
 
 .works__stage {
@@ -1004,41 +1075,6 @@ body.lightbox-open {
   margin: 0 auto;
 }
 
-.pricing__title {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.4rem;
-  margin-bottom: 2.5rem;
-}
-
-.pricing__title-text {
-  display: inline-block;
-}
-
-.pricing__title-underline {
-  display: block;
-  width: min(420px, 80%);
-  height: 14px;
-  overflow: visible;
-}
-
-.pricing__title-underline path {
-  fill: none;
-  stroke: var(--accent);
-  stroke-width: 2.6;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-  stroke-dasharray: 700;
-  stroke-dashoffset: 700;
-  transition: stroke-dashoffset 0.9s ease;
-  vector-effect: non-scaling-stroke;
-}
-
-.pricing__title.is-underlined .pricing__title-underline path {
-  stroke-dashoffset: 0;
-}
-
 .pricing__intro {
   position: relative;
   max-width: 56rem;
@@ -1185,7 +1221,7 @@ body.lightbox-open {
   font-family: var(--font-mono);
   font-weight: 600;
   font-size: 0.78rem;
-  color: var(--accent);
+  color: var(--text);
   list-style: none;
   user-select: none;
   padding: 0.2rem 0;
