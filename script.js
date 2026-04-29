@@ -162,6 +162,11 @@
     updatePositions();
   }
 
+  function regress() {
+    active = (active - 1 + total) % total;
+    updatePositions();
+  }
+
   function startTimer() {
     stopTimer();
     timer = setInterval(advance, 4000);
@@ -176,6 +181,17 @@
     updatePositions();
     startTimer();
   }
+
+  const prevBtn = document.querySelector(".works__nav--prev");
+  const nextBtn = document.querySelector(".works__nav--next");
+  prevBtn?.addEventListener("click", () => {
+    regress();
+    if (total > 1) startTimer();
+  });
+  nextBtn?.addEventListener("click", () => {
+    advance();
+    if (total > 1) startTimer();
+  });
   const imgEl = lightbox.querySelector(".lightbox__image");
   const tagEl = lightbox.querySelector(".lightbox__tag");
   const titleEl = lightbox.querySelector(".lightbox__title");
