@@ -64,7 +64,7 @@
   const WIND_W = 100;
   const WIND_H = 65;
   const gravity = 0.6;
-  const jumpForce = -12;
+  const jumpForce = -7;
 
   // -------------------- State --------------------
   let state = STATE.IDLE;
@@ -90,8 +90,8 @@
   };
 
   let jumpHeld = false;
-  const MAX_BOOST_FRAMES = 12;
-  const BOOST_GRAVITY_REDUCTION = 0.45;
+  const MAX_BOOST_FRAMES = 8;
+  const BOOST_GRAVITY_REDUCTION = 0.4;
 
   let groups = [];
   let distSinceSpawn = 0;
