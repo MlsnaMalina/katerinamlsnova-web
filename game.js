@@ -17,48 +17,81 @@
   const restartBtn = document.getElementById('game-restart-btn');
 
   const HS_KEY = 'katerina-game-highscore';
-  const RASPBERRY_LIGHT = '#B83066';
-  const RASPBERRY_DARK = '#a31f4f';
-  const ERROR_RED = '#cc0000';
 
-  let dpr = Math.min(window.devicePixelRatio || 1, 2);
-  let cssW = 0;
-  let cssH = 0;
-
-  function resize() {
-    const rect = canvas.getBoundingClientRect();
-    cssW = rect.width;
-    cssH = rect.height;
-    dpr = Math.min(window.devicePixelRatio || 1, 2);
-    canvas.width = Math.round(cssW * dpr);
-    canvas.height = Math.round(cssH * dpr);
-    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-  }
-
+  // -------------------- Theme & colors --------------------
   function isDark() {
+    if (document.documentElement.classList.contains('dark')) return true;
     const t = document.documentElement.getAttribute('data-theme');
     if (t === 'dark') return true;
     if (t === 'light') return false;
     return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
   }
-
-  function getInk() {
-    return isDark() ? '#F7F4EE' : '#1A1714';
+  let colorText = '#1a1a1a';
+  let colorRaspberry = '#a31f4f';
+  const colorError = '#cc0000';
+  const colorGray = '#888888';
+  function refreshColors() {
+    if (isDark()) {
+      colorText = '#f0f0f0';
+      colorRaspberry = '#B83066';
+    } else {
+      colorText = '#1a1a1a';
+      colorRaspberry = '#a31f4f';
+    }
   }
-  function getBerry() {
-    return isDark() ? RASPBERRY_LIGHT : RASPBERRY_DARK;
+
+  // -------------------- Sizing --------------------
+  let cssW = 0;
+  let cssH = 0;
+  let groundY = 0;
+
+  function resize() {
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    cssW = canvas.offsetWidth;
+    cssH = canvas.offsetHeight;
+    canvas.width = Math.round(cssW * dpr);
+    canvas.height = Math.round(cssH * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    groundY = cssH - 50;
   }
 
-  // Game state
+  if (typeof ResizeObserver !== 'undefined') {
+    const ro = new ResizeObserver(() => {
+      resize();
+      if (state !== STATE.RUNNING && state !== STATE.BLOWING) {
+        player.y = groundY - player.h;
+      }
+    });
+    ro.observe(canvas);
+  } else {
+    window.addEventListener('resize', resize);
+  }
+
+  // -------------------- Helpers --------------------
+  function jitter(v) {
+    return v + (Math.random() - 0.5) * 2;
+  }
+
+  function rectsOverlap(ax, ay, aw, ah, bx, by, bw, bh) {
+    return ax < bx + bw && ax + aw > bx && ay < by + bh && ay + ah > by;
+  }
+
+  function setStrokeDefaults(width) {
+    ctx.lineCap = 'round';
+    ctx.lineJoin = 'round';
+    ctx.lineWidth = width || 2;
+  }
+
+  // -------------------- State --------------------
   const STATE = { IDLE: 'idle', RUNNING: 'running', OVER: 'over', BLOWING: 'blowing' };
   let state = STATE.IDLE;
   let score = 0;
   let highScore = parseInt(localStorage.getItem(HS_KEY) || '0', 10) || 0;
   let speed = 4;
-  const gravity = 0.6;
+  let frameCount = 0;
+  const gravity = 0.55;
   const jumpForce = -11;
 
-  // Player
   const player = {
     x: 60,
     y: 0,
@@ -66,32 +99,32 @@
     h: 40,
     vy: 0,
     onGround: true,
-    blowOffset: 0,
+    blowOffsetX: 0,
+    blowOffsetY: 0,
     blowAlpha: 1,
+    blowFrames: 0,
   };
 
-  let groundY = 0;
-
   let obstacles = [];
-  let nextSpawnDist = 0;
   let distSinceSpawn = 0;
+  let nextSpawnDist = 0;
 
   function reset() {
     score = 0;
     speed = 4;
     obstacles = [];
     distSinceSpawn = 0;
-    nextSpawnDist = 280;
+    nextSpawnDist = 320;
     player.vy = 0;
     player.onGround = true;
-    player.blowOffset = 0;
+    player.blowOffsetX = 0;
+    player.blowOffsetY = 0;
     player.blowAlpha = 1;
-    groundY = cssH - 28;
+    player.blowFrames = 0;
     player.y = groundY - player.h;
   }
 
   function startGame() {
-    if (state === STATE.RUNNING) return;
     reset();
     state = STATE.RUNNING;
     startScreen.classList.add('hidden');
@@ -112,14 +145,9 @@
     }
   }
 
-  function gameOver(byWind) {
-    if (state === STATE.OVER) return;
-    if (byWind) {
-      state = STATE.BLOWING;
-      player.blowStart = performance.now();
-      return;
-    }
-    finishGameOver(false);
+  function triggerWindOut() {
+    state = STATE.BLOWING;
+    player.blowFrames = 0;
   }
 
   function finishGameOver(byWind) {
@@ -141,307 +169,429 @@
     hud.classList.add('hidden');
   }
 
-  // Obstacles ----------------------------------------------------
+  // -------------------- Spawning --------------------
   function spawnObstacle() {
     const r = Math.random();
     let type;
-    if (r < 0.20) type = 'wave';
-    else if (r < 0.47) type = 'dollar';
-    else if (r < 0.74) type = 'euro';
-    else type = 'error';
+    if (r < 0.30) type = 'dollar';
+    else if (r < 0.60) type = 'euro';
+    else if (r < 0.90) type = 'error';
+    else type = 'wind';
 
     const ob = { type, x: cssW + 20 };
-    if (type === 'wave') {
-      ob.w = 60; ob.h = 18;
-      ob.y = groundY - 70;
-    } else if (type === 'error') {
-      ob.w = 56; ob.h = 22;
-      ob.y = groundY - ob.h;
+    if (type === 'wind') {
+      ob.w = 60; ob.h = 40;
+      ob.cy = groundY - 80;
+      ob.y = ob.cy - ob.h / 2;
     } else {
-      ob.w = 26; ob.h = 36;
+      ob.w = 28; ob.h = type === 'error' ? 38 : 40;
       ob.y = groundY - ob.h;
     }
     obstacles.push(ob);
   }
 
-  function rectsOverlap(ax, ay, aw, ah, bx, by, bw, bh) {
-    return ax < bx + bw && ax + aw > bx && ay < by + bh && ay + ah > by;
-  }
-
-  // Drawing ------------------------------------------------------
-  function drawGround() {
-    const ink = getInk();
-    ctx.strokeStyle = ink;
-    ctx.lineWidth = 2;
-    ctx.lineCap = 'round';
-    ctx.beginPath();
-    // doodle ground line
-    let x = 0;
-    ctx.moveTo(0, groundY);
-    while (x < cssW) {
-      const nx = x + 30;
-      const wobble = (Math.random() - 0.5) * 0.6;
-      ctx.lineTo(nx, groundY + wobble);
-      x = nx;
-    }
-    ctx.stroke();
-  }
-
+  // -------------------- Drawing: player --------------------
   function drawPlayer() {
-    const ink = getInk();
-    const berry = getBerry();
-    const cx = player.x + player.w / 2 + player.blowOffset;
-    const cy = player.y + player.h / 2;
+    const cx = player.x + player.w / 2 + player.blowOffsetX;
+    const cy = player.y + player.h / 2 + player.blowOffsetY;
     ctx.save();
     ctx.globalAlpha = player.blowAlpha;
 
-    // Body — raspberry blob (slightly lumpy circle)
-    ctx.fillStyle = berry;
-    ctx.strokeStyle = berry;
-    ctx.lineWidth = 2;
-    ctx.lineJoin = 'round';
+    // Body — 7 lumps as small arcs around a circle
+    const bodyR = 14;
+    const lumps = 7;
+    const lumpR = 5;
+    ctx.fillStyle = colorRaspberry;
+    ctx.strokeStyle = colorText;
+    setStrokeDefaults(2);
     ctx.beginPath();
-    const rb = 16;
-    const lumps = 10;
-    for (let i = 0; i <= lumps; i++) {
-      const a = (i / lumps) * Math.PI * 2;
-      const rr = rb + Math.sin(a * 3) * 1.5;
-      const px = cx + Math.cos(a) * rr;
-      const py = cy + Math.sin(a) * rr;
-      if (i === 0) ctx.moveTo(px, py);
-      else ctx.lineTo(px, py);
+    for (let i = 0; i < lumps; i++) {
+      const a = (i / lumps) * Math.PI * 2 - Math.PI / 2;
+      const lx = cx + Math.cos(a) * bodyR;
+      const ly = cy + Math.sin(a) * bodyR;
+      if (i === 0) ctx.moveTo(lx + lumpR, ly);
+      ctx.arc(lx, ly, lumpR, 0, Math.PI * 2);
     }
+    ctx.fill();
+    ctx.stroke();
+
+    // Leaf (small triangle on top)
+    ctx.strokeStyle = colorText;
+    ctx.fillStyle = 'transparent';
+    setStrokeDefaults(2);
+    const leafTopX = cx, leafTopY = cy - bodyR - 2;
+    ctx.beginPath();
+    ctx.moveTo(jitter(leafTopX - 4), jitter(leafTopY));
+    ctx.lineTo(jitter(leafTopX + 4), jitter(leafTopY));
+    ctx.lineTo(jitter(leafTopX), jitter(leafTopY - 5));
     ctx.closePath();
+    ctx.stroke();
+
+    // Stem above leaf
+    ctx.beginPath();
+    ctx.moveTo(jitter(leafTopX), jitter(leafTopY - 5));
+    ctx.lineTo(jitter(leafTopX + 1), jitter(leafTopY - 9));
+    ctx.stroke();
+
+    // Glasses — two circles
+    setStrokeDefaults(1.6);
+    const gLY = cy - 2;
+    const gLX = cx - 5;
+    const gRX = cx + 5;
+    ctx.beginPath();
+    ctx.arc(gLX, gLY, 5, 0, Math.PI * 2);
+    ctx.moveTo(gRX + 5, gLY);
+    ctx.arc(gRX, gLY, 5, 0, Math.PI * 2);
+    ctx.stroke();
+    // Bridge + temples
+    ctx.beginPath();
+    ctx.moveTo(gLX + 5, gLY);
+    ctx.lineTo(gRX - 5, gLY);
+    ctx.moveTo(gLX - 5, gLY);
+    ctx.lineTo(gLX - 9, gLY - 1);
+    ctx.moveTo(gRX + 5, gLY);
+    ctx.lineTo(gRX + 9, gLY - 1);
+    ctx.stroke();
+
+    // Eyes (filled dots inside glasses)
+    ctx.fillStyle = colorText;
+    ctx.beginPath();
+    ctx.arc(gLX, gLY, 2, 0, Math.PI * 2);
+    ctx.arc(gRX, gLY, 2, 0, Math.PI * 2);
     ctx.fill();
 
-    // Tiny stem (leaf)
-    ctx.strokeStyle = ink;
-    ctx.lineCap = 'round';
-    ctx.lineWidth = 2;
+    // Legs — animate with sine
+    setStrokeDefaults(2);
+    ctx.strokeStyle = colorText;
+    const walking = state === STATE.RUNNING && player.onGround;
+    const swing = walking ? Math.sin(frameCount * 0.3) * 3 : 0;
+    const legTopY = cy + bodyR - 2;
+    const legBotY = cy + bodyR + 8;
+    // left leg
     ctx.beginPath();
-    ctx.moveTo(cx, cy - rb);
-    ctx.lineTo(cx + 2, cy - rb - 5);
+    ctx.moveTo(jitter(cx - 6), jitter(legTopY));
+    ctx.lineTo(jitter(cx - 6 + swing), jitter(legBotY));
+    ctx.moveTo(jitter(cx - 10 + swing), jitter(legBotY));
+    ctx.lineTo(jitter(cx - 2 + swing), jitter(legBotY));
     ctx.stroke();
-
-    // Legs
+    // right leg (opposite phase)
     ctx.beginPath();
-    ctx.moveTo(cx - 6, cy + rb - 2);
-    ctx.lineTo(cx - 7, cy + rb + 8);
-    ctx.moveTo(cx + 6, cy + rb - 2);
-    ctx.lineTo(cx + 7, cy + rb + 8);
-    ctx.stroke();
-    // feet
-    ctx.beginPath();
-    ctx.moveTo(cx - 11, cy + rb + 8);
-    ctx.lineTo(cx - 4, cy + rb + 8);
-    ctx.moveTo(cx + 4, cy + rb + 8);
-    ctx.lineTo(cx + 11, cy + rb + 8);
+    ctx.moveTo(jitter(cx + 6), jitter(legTopY));
+    ctx.lineTo(jitter(cx + 6 - swing), jitter(legBotY));
+    ctx.moveTo(jitter(cx + 2 - swing), jitter(legBotY));
+    ctx.lineTo(jitter(cx + 10 - swing), jitter(legBotY));
     ctx.stroke();
 
     // Arms
     ctx.beginPath();
-    ctx.moveTo(cx - rb + 2, cy - 2);
-    ctx.lineTo(cx - rb - 6, cy + 4);
-    ctx.moveTo(cx + rb - 2, cy - 2);
-    ctx.lineTo(cx + rb + 6, cy + 4);
+    ctx.moveTo(jitter(cx - bodyR + 2), jitter(cy - 1));
+    ctx.lineTo(jitter(cx - bodyR - 6), jitter(cy + 5));
+    ctx.moveTo(jitter(cx + bodyR - 2), jitter(cy - 1));
+    ctx.lineTo(jitter(cx + bodyR + 6), jitter(cy + 5));
     ctx.stroke();
-
-    // Glasses — two circles + bridge + temples
-    ctx.lineWidth = 1.6;
-    ctx.beginPath();
-    ctx.arc(cx - 5, cy - 3, 3.5, 0, Math.PI * 2);
-    ctx.moveTo(cx + 8.5, cy - 3);
-    ctx.arc(cx + 5, cy - 3, 3.5, 0, Math.PI * 2);
-    ctx.stroke();
-    ctx.beginPath();
-    ctx.moveTo(cx - 1.5, cy - 3);
-    ctx.lineTo(cx + 1.5, cy - 3);
-    // temples
-    ctx.moveTo(cx - 8.5, cy - 3);
-    ctx.lineTo(cx - 11, cy - 4);
-    ctx.moveTo(cx + 8.5, cy - 3);
-    ctx.lineTo(cx + 11, cy - 4);
-    ctx.stroke();
-
-    // Eyes (dots)
-    ctx.fillStyle = ink;
-    ctx.beginPath();
-    ctx.arc(cx - 5, cy - 3, 0.9, 0, Math.PI * 2);
-    ctx.arc(cx + 5, cy - 3, 0.9, 0, Math.PI * 2);
-    ctx.fill();
 
     ctx.restore();
   }
 
-  function drawDollar(ob) {
-    const ink = getInk();
-    ctx.strokeStyle = ink;
-    ctx.lineWidth = 2;
-    ctx.lineCap = 'round';
-    ctx.lineJoin = 'round';
-    const x = ob.x, y = ob.y, w = ob.w, h = ob.h;
-    // Vertical bar
+  // -------------------- Drawing: ground --------------------
+  function drawGround() {
+    ctx.strokeStyle = colorText;
+    setStrokeDefaults(2);
     ctx.beginPath();
-    ctx.moveTo(x + w / 2, y - 3);
-    ctx.lineTo(x + w / 2, y + h + 3);
+    ctx.moveTo(0, jitter(groundY));
+    let x = 0;
+    while (x < cssW) {
+      x += 20;
+      ctx.lineTo(x, jitter(groundY));
+    }
     ctx.stroke();
-    // S shape
+  }
+
+  // -------------------- Drawing: obstacles --------------------
+  function drawCharacterBody(x, y, w, h) {
+    // Rounded rectangle body
+    const r = 5;
     ctx.beginPath();
-    ctx.moveTo(x + w - 3, y + 4);
-    ctx.bezierCurveTo(x + w - 5, y, x + 3, y, x + 3, y + h * 0.3);
-    ctx.bezierCurveTo(x + 3, y + h * 0.5, x + w - 3, y + h * 0.5, x + w - 3, y + h * 0.7);
-    ctx.bezierCurveTo(x + w - 3, y + h, x + 3, y + h, x + 3, y + h - 4);
+    ctx.moveTo(jitter(x + r), jitter(y));
+    ctx.lineTo(jitter(x + w - r), jitter(y));
+    ctx.quadraticCurveTo(x + w, y, x + w, y + r);
+    ctx.lineTo(jitter(x + w), jitter(y + h - r));
+    ctx.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+    ctx.lineTo(jitter(x + r), jitter(y + h));
+    ctx.quadraticCurveTo(x, y + h, x, y + h - r);
+    ctx.lineTo(jitter(x), jitter(y + r));
+    ctx.quadraticCurveTo(x, y, x + r, y);
+    ctx.stroke();
+  }
+
+  function drawSquintEyes(x, y, w) {
+    // Two narrow horizontal squint lines
+    setStrokeDefaults(2);
+    const eyeY = y + 14;
+    const left = x + w * 0.3;
+    const right = x + w * 0.7;
+    ctx.beginPath();
+    ctx.moveTo(jitter(left - 3), jitter(eyeY));
+    ctx.lineTo(jitter(left + 3), jitter(eyeY));
+    ctx.moveTo(jitter(right - 3), jitter(eyeY));
+    ctx.lineTo(jitter(right + 3), jitter(eyeY));
+    ctx.stroke();
+  }
+
+  function drawCollar(x, y, w) {
+    // Two small triangles in top corners (suit collar)
+    setStrokeDefaults(2);
+    ctx.beginPath();
+    // left triangle
+    ctx.moveTo(jitter(x), jitter(y));
+    ctx.lineTo(jitter(x + 7), jitter(y + 8));
+    ctx.lineTo(jitter(x + 9), jitter(y));
+    // right triangle
+    ctx.moveTo(jitter(x + w), jitter(y));
+    ctx.lineTo(jitter(x + w - 7), jitter(y + 8));
+    ctx.lineTo(jitter(x + w - 9), jitter(y));
+    ctx.stroke();
+  }
+
+  function drawDollar(ob) {
+    ctx.strokeStyle = colorText;
+    ctx.fillStyle = 'transparent';
+    setStrokeDefaults(2);
+    drawCharacterBody(ob.x, ob.y, ob.w, ob.h);
+    drawCollar(ob.x, ob.y, ob.w);
+    drawSquintEyes(ob.x, ob.y, ob.w);
+
+    // $ symbol — vertical line + S shape (two arcs)
+    const cx = ob.x + ob.w / 2;
+    const sy = ob.y + 22;
+    const sh = 12;
+    setStrokeDefaults(2);
+    ctx.beginPath();
+    ctx.moveTo(jitter(cx), jitter(sy - 2));
+    ctx.lineTo(jitter(cx), jitter(sy + sh + 2));
+    ctx.stroke();
+    // top arc of S
+    ctx.beginPath();
+    ctx.arc(cx, sy + 3, 4, Math.PI * 0.2, Math.PI * 1.4, false);
+    ctx.stroke();
+    // bottom arc of S
+    ctx.beginPath();
+    ctx.arc(cx, sy + sh - 1, 4, Math.PI * 1.2, Math.PI * 0.4, false);
     ctx.stroke();
   }
 
   function drawEuro(ob) {
-    const ink = getInk();
-    ctx.strokeStyle = ink;
-    ctx.lineWidth = 2;
-    ctx.lineCap = 'round';
-    ctx.lineJoin = 'round';
-    const x = ob.x, y = ob.y, w = ob.w, h = ob.h;
-    const cx = x + w * 0.6;
-    const cy = y + h / 2;
-    const r = h / 2;
-    // C arc
+    ctx.strokeStyle = colorText;
+    ctx.fillStyle = 'transparent';
+    setStrokeDefaults(2);
+    drawCharacterBody(ob.x, ob.y, ob.w, ob.h);
+
+    // Flat hat on top
+    const hatW = 20, hatH = 8;
+    const hx = ob.x + (ob.w - hatW) / 2;
+    const hy = ob.y - hatH;
     ctx.beginPath();
-    ctx.arc(cx, cy, r, Math.PI * 0.25, Math.PI * 1.75, true);
+    ctx.moveTo(jitter(hx), jitter(hy + hatH));
+    ctx.lineTo(jitter(hx), jitter(hy));
+    ctx.lineTo(jitter(hx + hatW), jitter(hy));
+    ctx.lineTo(jitter(hx + hatW), jitter(hy + hatH));
     ctx.stroke();
-    // two horizontal bars
+    // hat brim
     ctx.beginPath();
-    ctx.moveTo(x, cy - 3);
-    ctx.lineTo(cx + 2, cy - 3);
-    ctx.moveTo(x, cy + 3);
-    ctx.lineTo(cx + 2, cy + 3);
+    ctx.moveTo(jitter(hx - 3), jitter(hy + hatH));
+    ctx.lineTo(jitter(hx + hatW + 3), jitter(hy + hatH));
+    ctx.stroke();
+
+    drawSquintEyes(ob.x, ob.y, ob.w);
+
+    // € symbol — large left-facing arc + two horizontal bars
+    const cx = ob.x + ob.w / 2;
+    const cy = ob.y + 28;
+    setStrokeDefaults(2);
+    ctx.beginPath();
+    ctx.arc(cx + 1, cy, 5, Math.PI * 0.25, Math.PI * 1.75, true);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(jitter(cx - 6), jitter(cy - 2));
+    ctx.lineTo(jitter(cx + 3), jitter(cy - 2));
+    ctx.moveTo(jitter(cx - 6), jitter(cy + 2));
+    ctx.lineTo(jitter(cx + 3), jitter(cy + 2));
     ctx.stroke();
   }
 
   function drawError(ob) {
-    ctx.fillStyle = ERROR_RED;
-    ctx.strokeStyle = ERROR_RED;
-    ctx.lineWidth = 2;
-    ctx.lineCap = 'round';
-    ctx.font = "600 16px 'IBM Plex Mono', monospace";
-    ctx.textBaseline = 'top';
-    ctx.fillText('error', ob.x, ob.y);
-    // strike-through line
+    ctx.strokeStyle = colorText;
+    ctx.fillStyle = 'transparent';
+    setStrokeDefaults(2);
+    // Body with bent top-right corner
+    const x = ob.x, y = ob.y, w = ob.w, h = ob.h;
+    const fold = 6;
     ctx.beginPath();
-    ctx.moveTo(ob.x - 2, ob.y + ob.h - 2);
-    ctx.lineTo(ob.x + ob.w + 2, ob.y + ob.h - 4);
+    ctx.moveTo(jitter(x), jitter(y));
+    ctx.lineTo(jitter(x + w - fold), jitter(y));
+    ctx.lineTo(jitter(x + w), jitter(y + fold));
+    ctx.lineTo(jitter(x + w), jitter(y + h));
+    ctx.lineTo(jitter(x), jitter(y + h));
+    ctx.closePath();
+    ctx.stroke();
+    // Folded corner triangle
+    ctx.beginPath();
+    ctx.moveTo(jitter(x + w - fold), jitter(y));
+    ctx.lineTo(jitter(x + w - fold), jitter(y + fold));
+    ctx.lineTo(jitter(x + w), jitter(y + fold));
+    ctx.stroke();
+
+    // Sad eyes — diagonal short lines toward center
+    setStrokeDefaults(2);
+    const eyeY = y + 12;
+    const left = x + w * 0.3;
+    const right = x + w * 0.7;
+    ctx.beginPath();
+    // left eye: slope from outside-up to inside-down
+    ctx.moveTo(jitter(left - 3), jitter(eyeY - 2));
+    ctx.lineTo(jitter(left + 3), jitter(eyeY + 1));
+    // right eye: mirror
+    ctx.moveTo(jitter(right + 3), jitter(eyeY - 2));
+    ctx.lineTo(jitter(right - 3), jitter(eyeY + 1));
+    ctx.stroke();
+
+    // "err" text
+    ctx.fillStyle = colorError;
+    ctx.font = '600 10px "IBM Plex Mono", monospace';
+    ctx.textBaseline = 'alphabetic';
+    ctx.fillText('err', x + 6, y + 28);
+
+    // Red strike line under "err"
+    ctx.strokeStyle = colorError;
+    setStrokeDefaults(2);
+    ctx.beginPath();
+    ctx.moveTo(jitter(x + 5), jitter(y + 31));
+    ctx.lineTo(jitter(x + w - 5), jitter(y + 31));
     ctx.stroke();
   }
 
-  function drawWave(ob) {
-    const ink = getInk();
-    ctx.strokeStyle = ink;
-    ctx.lineWidth = 2;
-    ctx.lineCap = 'round';
-    ctx.lineJoin = 'round';
-    const x = ob.x, y = ob.y + ob.h / 2, w = ob.w;
-    ctx.beginPath();
-    const segs = 30;
-    for (let i = 0; i <= segs; i++) {
-      const t = i / segs;
-      const px = x + t * w;
-      const py = y + Math.sin(t * Math.PI * 3) * 7;
-      if (i === 0) ctx.moveTo(px, py);
-      else ctx.lineTo(px, py);
+  function drawWind(ob) {
+    ctx.strokeStyle = colorText;
+    ctx.fillStyle = 'transparent';
+    setStrokeDefaults(2.5);
+    const cx = ob.x;
+    const cy = ob.cy;
+    // Three curved hooked lines, decreasing length, vertical offsets
+    const lines = [
+      { y: cy - 10, len: 50 },
+      { y: cy,      len: 40 },
+      { y: cy + 10, len: 30 },
+    ];
+    for (const line of lines) {
+      const sx = cx;
+      const ex = cx + line.len;
+      const ey = line.y + 6;
+      ctx.beginPath();
+      ctx.moveTo(jitter(sx), jitter(line.y));
+      // Bezier curving right and down
+      ctx.bezierCurveTo(
+        sx + line.len * 0.4, line.y,
+        sx + line.len * 0.7, line.y,
+        ex, ey
+      );
+      ctx.stroke();
+      // Small spiral (semi-circle) at end
+      ctx.beginPath();
+      ctx.arc(ex - 2, ey + 2, 3, -Math.PI / 2, Math.PI, false);
+      ctx.stroke();
     }
-    ctx.stroke();
-    // small trailing puff
-    ctx.beginPath();
-    ctx.moveTo(x - 4, y);
-    ctx.lineTo(x - 10, y - 2);
-    ctx.moveTo(x - 4, y + 4);
-    ctx.lineTo(x - 9, y + 5);
-    ctx.stroke();
   }
 
   function drawObstacle(ob) {
     if (ob.type === 'dollar') drawDollar(ob);
     else if (ob.type === 'euro') drawEuro(ob);
     else if (ob.type === 'error') drawError(ob);
-    else if (ob.type === 'wave') drawWave(ob);
+    else if (ob.type === 'wind') drawWind(ob);
   }
 
-  // Loop ---------------------------------------------------------
+  // -------------------- Loop --------------------
   let lastTime = 0;
   function loop(now) {
     requestAnimationFrame(loop);
     if (!lastTime) lastTime = now;
     const dt = Math.min(50, now - lastTime);
     lastTime = now;
-    // normalize to ~60fps frames
     const frames = dt / (1000 / 60);
 
+    refreshColors();
     ctx.clearRect(0, 0, cssW, cssH);
+    frameCount += frames;
 
-    if (state === STATE.RUNNING || state === STATE.BLOWING) {
+    if (state === STATE.RUNNING) {
       // Physics
-      if (state === STATE.RUNNING) {
-        player.vy += gravity * frames;
-        player.y += player.vy * frames;
-        if (player.y + player.h >= groundY) {
-          player.y = groundY - player.h;
-          player.vy = 0;
-          player.onGround = true;
-        }
-      } else if (state === STATE.BLOWING) {
-        const elapsed = now - player.blowStart;
-        player.blowOffset = (elapsed / 500) * (cssW - player.x);
-        player.blowAlpha = Math.max(0, 1 - elapsed / 500);
-        if (elapsed >= 500) {
-          finishGameOver(true);
-        }
+      player.vy += gravity * frames;
+      player.y += player.vy * frames;
+      if (player.y + player.h >= groundY) {
+        player.y = groundY - player.h;
+        player.vy = 0;
+        player.onGround = true;
       }
 
-      // Move obstacles + spawn (only while running)
-      if (state === STATE.RUNNING) {
-        const move = speed * frames;
-        distSinceSpawn += move;
-        for (const ob of obstacles) ob.x -= move;
-        obstacles = obstacles.filter(ob => ob.x + ob.w > -10);
+      // Move obstacles
+      const move = speed * frames;
+      distSinceSpawn += move;
+      for (const ob of obstacles) ob.x -= move;
+      obstacles = obstacles.filter(ob => ob.x + ob.w > -20);
 
-        if (distSinceSpawn >= nextSpawnDist) {
-          spawnObstacle();
-          distSinceSpawn = 0;
-          nextSpawnDist = 600 + Math.random() * 600;
+      if (distSinceSpawn >= nextSpawnDist) {
+        spawnObstacle();
+        distSinceSpawn = 0;
+        nextSpawnDist = 700 + Math.random() * 700;
+      }
+
+      // Score & speed
+      score += frames;
+      speed = Math.min(12, 4 + Math.floor(score / 300) * 0.5);
+
+      // Collisions — 25% tolerance
+      const tol = 0.25;
+      const px = player.x + player.w * tol;
+      const py = player.y + player.h * tol;
+      const pw = player.w * (1 - 2 * tol);
+      const ph = player.h * (1 - 2 * tol);
+      for (const ob of obstacles) {
+        let bx, by, bw, bh;
+        if (ob.type === 'wind') {
+          // wind hitbox approx around its bounding box
+          bx = ob.x; by = ob.cy - ob.h / 2; bw = ob.w; bh = ob.h;
+        } else {
+          bx = ob.x; by = ob.y; bw = ob.w; bh = ob.h;
         }
-
-        // Score & speed
-        score += frames;
-        if (score > 0 && Math.floor(score) % 300 === 0) {
-          // smooth speed up via score buckets
-        }
-        speed = Math.min(12, 4 + Math.floor(score / 300) * 0.5);
-
-        // Collisions (20% tolerance)
-        const tol = 0.2;
-        const px = player.x + player.w * tol;
-        const py = player.y + player.h * tol;
-        const pw = player.w * (1 - 2 * tol);
-        const ph = player.h * (1 - 2 * tol);
-        for (const ob of obstacles) {
-          const ox = ob.x + ob.w * tol;
-          const oy = ob.y + ob.h * tol;
-          const ow = ob.w * (1 - 2 * tol);
-          const oh = ob.h * (1 - 2 * tol);
-          if (rectsOverlap(px, py, pw, ph, ox, oy, ow, oh)) {
-            if (ob.type === 'wave') gameOver(true);
-            else gameOver(false);
-            break;
+        const ox = bx + bw * tol;
+        const oy = by + bh * tol;
+        const ow = bw * (1 - 2 * tol);
+        const oh = bh * (1 - 2 * tol);
+        if (rectsOverlap(px, py, pw, ph, ox, oy, ow, oh)) {
+          if (ob.type === 'wind') {
+            triggerWindOut();
+          } else {
+            finishGameOver(false);
           }
+          break;
         }
-        updateHud();
       }
+      updateHud();
+    } else if (state === STATE.BLOWING) {
+      // Animate blow-out: right + up, fade over 40 frames
+      player.blowFrames += frames;
+      const t = Math.min(1, player.blowFrames / 40);
+      player.blowOffsetX = t * (cssW - player.x);
+      player.blowOffsetY = -t * 60;
+      player.blowAlpha = 1 - t;
+      if (t >= 1) {
+        finishGameOver(true);
+      }
+    }
 
-      // Draw
+    // Draw
+    if (state === STATE.RUNNING || state === STATE.BLOWING || state === STATE.IDLE) {
       drawGround();
       for (const ob of obstacles) drawObstacle(ob);
-      drawPlayer();
-    } else if (state === STATE.IDLE) {
-      drawGround();
       drawPlayer();
     } else if (state === STATE.OVER) {
       drawGround();
@@ -449,9 +599,9 @@
     }
   }
 
-  // Input --------------------------------------------------------
-  function onAction(e) {
-    if (state === STATE.IDLE) {
+  // -------------------- Input --------------------
+  function onAction() {
+    if (state === STATE.IDLE || state === STATE.OVER) {
       startGame();
     } else if (state === STATE.RUNNING) {
       jump();
@@ -460,24 +610,23 @@
 
   window.addEventListener('keydown', (e) => {
     if (e.code === 'Space' || e.key === ' ') {
-      // Only handle if game section is in viewport-ish or has been interacted
       const rect = wrapper.getBoundingClientRect();
       const inView = rect.top < window.innerHeight && rect.bottom > 0;
       if (!inView) return;
       e.preventDefault();
-      onAction(e);
+      onAction();
     }
   });
 
   wrapper.addEventListener('click', (e) => {
     if (e.target === restartBtn) return;
-    onAction(e);
+    onAction();
   });
 
   wrapper.addEventListener('touchstart', (e) => {
     if (e.target === restartBtn) return;
     e.preventDefault();
-    onAction(e);
+    onAction();
   }, { passive: false });
 
   restartBtn.addEventListener('click', (e) => {
@@ -485,18 +634,9 @@
     startGame();
   });
 
-  // Resize handling
-  window.addEventListener('resize', () => {
-    resize();
-    groundY = cssH - 28;
-    if (state !== STATE.RUNNING && state !== STATE.BLOWING) {
-      player.y = groundY - player.h;
-    }
-  });
-
-  // Init
+  // -------------------- Init --------------------
   resize();
-  groundY = cssH - 28;
+  refreshColors();
   player.y = groundY - player.h;
   requestAnimationFrame(loop);
 })();
