@@ -131,6 +131,40 @@
   observer.observe(media);
 })();
 
+// Ukázky — 3D coverflow carousel s auto rotací každé 4 s
+(function () {
+  const carousel = document.querySelector(".works__carousel");
+  if (!carousel) return;
+  const cards = Array.from(carousel.querySelectorAll(".work-card"));
+  if (cards.length < 2) return;
+
+  const total = cards.length;
+  const POSITION_CLASSES = ["is-center", "is-left", "is-right", "is-far-left", "is-far-right"];
+  let active = 0;
+
+  function update() {
+    cards.forEach((card, i) => {
+      let offset = i - active;
+      // Wrap to nearest signed offset (carousel runs in a loop)
+      if (offset > total / 2) offset -= total;
+      if (offset < -total / 2) offset += total;
+
+      POSITION_CLASSES.forEach((c) => card.classList.remove(c));
+      if (offset === 0) card.classList.add("is-center");
+      else if (offset === -1) card.classList.add("is-left");
+      else if (offset === 1) card.classList.add("is-right");
+      else if (offset === -2) card.classList.add("is-far-left");
+      else if (offset === 2) card.classList.add("is-far-right");
+    });
+  }
+
+  update();
+  setInterval(() => {
+    active = (active + 1) % total;
+    update();
+  }, 4000);
+})();
+
 // Theme toggle — light/dark s perzistencí v localStorage
 (function () {
   const STORAGE_KEY = "km-theme";
