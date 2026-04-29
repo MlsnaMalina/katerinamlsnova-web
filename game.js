@@ -102,6 +102,24 @@
     });
   }
 
+  function loadSVGRecolored(path, replacements) {
+    return fetch(path)
+      .then(r => r.text())
+      .then(text => {
+        let out = text;
+        for (const [from, to] of replacements) {
+          out = out.split(from).join(to);
+        }
+        const url = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(out);
+        return new Promise((resolve, reject) => {
+          const img = new Image();
+          img.onload = () => resolve(img);
+          img.onerror = () => reject(new Error('Failed to load recolored ' + path));
+          img.src = url;
+        });
+      });
+  }
+
   let images = {};
   let imagesReady = false;
 
@@ -251,6 +269,7 @@
   }
 
   function drawPlayer() {
+    const malinaImg = isDark() ? images.malinaDark : images.malina;
     let bob = 0;
     if (state === STATE.RUNNING && player.onGround) {
       bob = Math.sin(frameCount * 0.15) * 2;
@@ -263,10 +282,10 @@
       ctx.translate(cx, cy);
       ctx.rotate(player.blowRotation);
       ctx.scale(player.blowScale, player.blowScale);
-      ctx.drawImage(images.malina, -PLAYER_W / 2, -PLAYER_H / 2, PLAYER_W, PLAYER_H);
+      ctx.drawImage(malinaImg, -PLAYER_W / 2, -PLAYER_H / 2, PLAYER_W, PLAYER_H);
       ctx.restore();
     } else {
-      drawImageThemed(images.malina, player.x, player.y + bob, PLAYER_W, PLAYER_H);
+      drawImageThemed(malinaImg, player.x, player.y + bob, PLAYER_W, PLAYER_H);
     }
   }
 
@@ -423,11 +442,12 @@
 
   Promise.all([
     loadSVG('assets/malina-game.svg'),
+    loadSVGRecolored('assets/malina-game.svg', [['#1a1a1a', '#f0f0f0']]),
     loadSVG('assets/mravenec-game.svg'),
     loadSVG('assets/brouk-game.svg'),
     loadSVG('assets/wind-game.svg'),
-  ]).then(([malina, ant, beetle, wind]) => {
-    images = { malina, ant, beetle, wind };
+  ]).then(([malina, malinaDark, ant, beetle, wind]) => {
+    images = { malina, malinaDark, ant, beetle, wind };
     imagesReady = true;
     requestAnimationFrame(loop);
   }).catch((err) => {
