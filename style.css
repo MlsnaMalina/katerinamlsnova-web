@@ -1807,27 +1807,35 @@ body.lightbox-open {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1rem;
-  padding: 2.5rem 1.5rem;
-  background-color: rgba(184, 48, 102, 0.06);
-  border-radius: 14px;
+  gap: 0.75rem;
+  padding: 2rem 1rem;
   text-align: center;
+  background: none;
+  border: none;
+  box-shadow: none;
+  opacity: 0;
+  transform: translateY(-10px);
+  animation: contact-success-in 0.55s ease forwards;
 }
 
-[data-theme="dark"] .contact__success {
-  background-color: rgba(184, 48, 102, 0.12);
+.contact__success[hidden] {
+  display: none;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) .contact__success {
-    background-color: rgba(184, 48, 102, 0.12);
+@keyframes contact-success-in {
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
 .contact__success-heart {
   display: inline-flex;
-  width: 3rem;
-  height: 2.6rem;
+  width: 48px;
+  height: 42px;
+  animation: contact-heart-pop 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  animation-delay: 0.15s;
+  transform: scale(0);
 }
 
 .contact__success-heart svg {
@@ -1839,16 +1847,67 @@ body.lightbox-open {
 .contact__success-heart svg path {
   fill: none;
   stroke: var(--accent);
-  stroke-width: 2.4;
+  stroke-width: 2.6;
   stroke-linecap: round;
   stroke-linejoin: round;
 }
 
-.contact__success-text {
+@keyframes contact-heart-pop {
+  0% {
+    transform: scale(0) rotate(-12deg);
+  }
+  60% {
+    transform: scale(1.15) rotate(4deg);
+  }
+  100% {
+    transform: scale(1) rotate(0);
+  }
+}
+
+.contact__success-title {
+  margin: 0.25rem 0 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 1.4rem;
+  letter-spacing: -0.01em;
+  color: var(--accent);
+}
+
+.contact__success-underline {
+  display: block;
+  width: min(220px, 80%);
+  height: 12px;
+  overflow: visible;
+}
+
+.contact__success-underline path {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 2.4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 700;
+  stroke-dashoffset: 700;
+  animation: contact-underline-draw 0.9s ease forwards;
+  animation-delay: 0.5s;
+  vector-effect: non-scaling-stroke;
+}
+
+@keyframes contact-underline-draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+.contact__success-sub {
   margin: 0;
   font-family: var(--font-body);
-  font-weight: 500;
-  font-size: 1.1rem;
+  font-weight: 400;
+  font-size: 1rem;
   color: var(--text);
 }
 
