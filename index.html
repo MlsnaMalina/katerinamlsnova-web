@@ -37,6 +37,7 @@
       <li><a href="#ukazky">Ukázky</a></li>
       <li><a href="#ceny">Ceny</a></li>
       <li><a href="#o-mne">O mně</a></li>
+      <li><a href="#hra">Hra</a></li>
       <li><a href="#kontakt">Kontakt</a></li>
     </ul>
 
@@ -77,6 +78,7 @@
       <li><a href="#ukazky">Ukázky</a></li>
       <li><a href="#ceny">Ceny</a></li>
       <li><a href="#o-mne">O mně</a></li>
+      <li><a href="#hra">Hra</a></li>
       <li><a href="#kontakt">Kontakt</a></li>
     </ul>
   </div>
@@ -707,6 +709,40 @@
       </div>
     </section>
 
+    <section class="game-section" id="hra">
+      <div class="game-section__inner">
+        <h2 class="section-title section-title--underlined">
+          <span class="section-title__text">Malá přestávka</span>
+          <svg class="section-title__underline" viewBox="0 0 600 14" preserveAspectRatio="none" aria-hidden="true">
+            <path filter="url(#rough)" d="M 6,8 C 100,4 220,11 340,7 C 440,4 520,9 594,6" />
+          </svg>
+        </h2>
+        <p class="game-section__subtitle">Zvládnete přeskočit všechny překážky?</p>
+
+        <div class="game-wrapper">
+          <svg class="game-wrapper__frame" preserveAspectRatio="none" aria-hidden="true">
+            <rect width="100%" height="100%" rx="14" ry="14" filter="url(#rough)" />
+          </svg>
+          <canvas id="gameCanvas"></canvas>
+          <div id="game-ui">
+            <div id="game-start-screen">
+              <p class="game-hint">Stiskněte <kbd>mezerník</kbd> nebo <strong>klepněte</strong> pro start</p>
+            </div>
+            <div id="game-over-screen" class="hidden">
+              <p id="game-message"></p>
+              <p id="game-score-display"></p>
+              <p id="game-highscore-display"></p>
+              <button id="game-restart-btn" type="button">Hrát znovu</button>
+            </div>
+            <div id="game-hud" class="hidden">
+              <span id="hud-score">0</span>
+              <span id="hud-highscore"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <section class="contact" id="kontakt">
       <div class="contact__inner">
         <h2 class="section-title section-title--underlined">
@@ -844,5 +880,6 @@
   </div>
 
   <script src="script.js"></script>
+  <script src="game.js"></script>
 </body>
 </html>

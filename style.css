@@ -2085,3 +2085,159 @@ body.lightbox-open {
     font-size: 1rem;
   }
 }
+
+/* ============================================
+   Game — Skákající malina
+   ============================================ */
+
+.game-section {
+  padding: 6rem 1.5rem 8rem;
+}
+
+.game-section__inner {
+  max-width: 56rem;
+  margin: 0 auto;
+}
+
+.game-section__subtitle {
+  text-align: center;
+  font-family: var(--font-body);
+  color: var(--text-muted);
+  margin-top: 1rem;
+  margin-bottom: 2.5rem;
+  font-size: 1rem;
+}
+
+.game-wrapper {
+  position: relative;
+  width: 100%;
+  border-radius: 14px;
+  overflow: hidden;
+  cursor: pointer;
+  background-color: var(--bg-elevated);
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.game-wrapper__frame {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  fill: none;
+  stroke: var(--text);
+  stroke-width: 2;
+  overflow: visible;
+}
+
+#gameCanvas {
+  display: block;
+  width: 100%;
+  height: 220px;
+  background: transparent;
+  touch-action: manipulation;
+}
+
+#game-ui {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+#game-start-screen,
+#game-over-screen {
+  text-align: center;
+  font-family: var(--font-body);
+  color: var(--text);
+  padding: 1rem 1.5rem;
+}
+
+#game-start-screen .game-hint {
+  font-size: 1rem;
+  opacity: 0.85;
+}
+
+#game-start-screen kbd {
+  font-family: var(--font-mono);
+  font-weight: 600;
+  font-size: 0.85rem;
+  padding: 2px 8px;
+  border: 1.5px solid currentColor;
+  border-radius: 4px;
+  margin: 0 2px;
+}
+
+#game-over-screen {
+  pointer-events: all;
+}
+
+#game-message {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 1.3rem;
+  margin-bottom: 0.6rem;
+  color: var(--accent);
+}
+
+#game-score-display,
+#game-highscore-display {
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  opacity: 0.8;
+  margin: 0.2rem 0;
+}
+
+#game-restart-btn {
+  margin-top: 1rem;
+  padding: 0.5rem 1.4rem;
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: 0.95rem;
+  border: 2px solid currentColor;
+  border-radius: 999px;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+#game-restart-btn:hover,
+#game-restart-btn:focus-visible {
+  background-color: var(--accent);
+  color: var(--color-cream);
+  border-color: var(--accent);
+  outline: none;
+}
+
+#game-hud {
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--text);
+  opacity: 0.65;
+  display: flex;
+  gap: 1rem;
+  pointer-events: none;
+}
+
+.game-wrapper .hidden {
+  display: none !important;
+}
+
+@media (max-width: 600px) {
+  .game-section {
+    padding: 4rem 1rem 5rem;
+  }
+  #gameCanvas {
+    height: 180px;
+  }
+  #game-message {
+    font-size: 1.1rem;
+  }
+}
