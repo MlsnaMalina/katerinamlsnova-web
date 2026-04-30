@@ -63,8 +63,10 @@
   const OBSTACLE_GAP = 10;
   const WIND_W = 100;
   const WIND_H = 65;
-  const gravity = 0.6;
-  const jumpForce = -7;
+  const gravity = 0.3;
+  const holdGravity = 0.075;
+  const jumpForce = -6;
+  const LONG_JUMP_HOLD_MS = 175;
 
   // -------------------- State --------------------
   let state = STATE.IDLE;
@@ -80,7 +82,6 @@
     y: 0,
     vy: 0,
     onGround: true,
-    boostFrames: 0,
     blowFrames: 0,
     blowOffsetX: 0,
     blowOffsetY: 0,
@@ -90,8 +91,9 @@
   };
 
   let jumpHeld = false;
-  const MAX_BOOST_FRAMES = 8;
-  const BOOST_GRAVITY_REDUCTION = 0.4;
+  let arrowUpHeld = false;
+  let isLongJump = false;
+  let jumpStartTime = 0;
 
   let groups = [];
   let distSinceSpawn = 0;
@@ -215,7 +217,7 @@
     startTime = performance.now();
     player.vy = 0;
     player.onGround = true;
-    player.boostFrames = 0;
+    isLongJump = false;
     player.y = groundY - PLAYER_H;
     player.blowFrames = 0;
     player.blowOffsetX = 0;
@@ -244,7 +246,8 @@
     if (state === STATE.RUNNING && player.onGround) {
       player.vy = jumpForce;
       player.onGround = false;
-      player.boostFrames = MAX_BOOST_FRAMES;
+      isLongJump = false;
+      jumpStartTime = performance.now();
     }
   }
 
@@ -417,21 +420,22 @@
     frameCount += frames;
 
     if (state === STATE.RUNNING) {
-      // Physics — variable jump height: while jump key is held during ascent,
-      // counter-gravity briefly so peak rises with hold duration.
-      let g = gravity;
-      if (jumpHeld && player.boostFrames > 0 && player.vy < 0) {
-        g = gravity - BOOST_GRAVITY_REDUCTION;
-        player.boostFrames -= frames;
-      } else {
-        player.boostFrames = 0;
+      // Two jump modes — same apex (gravity equal during ascent), different
+      // hang time. Holding jump for >LONG_JUMP_HOLD_MS after liftoff (or
+      // pressing arrow-up) commits to the long jump: slower descent.
+      const heldForLong = jumpHeld || arrowUpHeld;
+      if (!isLongJump && !player.onGround && heldForLong &&
+          (now - jumpStartTime) >= LONG_JUMP_HOLD_MS) {
+        isLongJump = true;
       }
+      const g = (isLongJump && player.vy >= 0) ? holdGravity : gravity;
       player.vy += g * frames;
       player.y += player.vy * frames;
       if (player.y + PLAYER_H >= groundY) {
         player.y = groundY - PLAYER_H;
         player.vy = 0;
         player.onGround = true;
+        isLongJump = false;
       }
 
       // First-spawn 2s gate
@@ -525,12 +529,20 @@
       e.preventDefault();
       jumpHeld = true;
       onAction();
+    } else if (e.code === 'ArrowUp' || e.key === 'ArrowUp') {
+      const rect = wrapper.getBoundingClientRect();
+      const inView = rect.top < window.innerHeight && rect.bottom > 0;
+      if (!inView) return;
+      e.preventDefault();
+      arrowUpHeld = true;
     }
   });
 
   window.addEventListener('keyup', (e) => {
     if (e.code === 'Space' || e.key === ' ') {
       jumpHeld = false;
+    } else if (e.code === 'ArrowUp' || e.key === 'ArrowUp') {
+      arrowUpHeld = false;
     }
   });
 
@@ -548,7 +560,7 @@
 
   wrapper.addEventListener('touchend', () => { jumpHeld = false; });
   wrapper.addEventListener('touchcancel', () => { jumpHeld = false; });
-  window.addEventListener('blur', () => { jumpHeld = false; });
+  window.addEventListener('blur', () => { jumpHeld = false; arrowUpHeld = false; });
 
   restartBtn.addEventListener('click', (e) => {
     e.stopPropagation();
