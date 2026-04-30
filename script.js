@@ -407,6 +407,77 @@
   });
 })();
 
+(function initCookieConsent() {
+  const CONSENT_KEY = "cookie_consent";
+  const GA_ID = "G-XXXXXXXXXX"; // TODO: doplnit reálné GA4 ID
+
+  function initGA() {
+    if (GA_ID === "G-XXXXXXXXXX") return;
+    const script = document.createElement("script");
+    script.src = "https://www.googletagmanager.com/gtag/js?id=" + GA_ID;
+    script.async = true;
+    document.head.appendChild(script);
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+      window.dataLayer.push(arguments);
+    }
+    window.gtag = gtag;
+    gtag("js", new Date());
+    gtag("config", GA_ID, { anonymize_ip: true });
+  }
+
+  function getBanner() {
+    return document.getElementById("cookie-banner");
+  }
+
+  function hideBanner() {
+    const banner = getBanner();
+    if (banner) banner.hidden = true;
+  }
+
+  function showBanner() {
+    const banner = getBanner();
+    if (banner) banner.hidden = false;
+  }
+
+  const consent = localStorage.getItem(CONSENT_KEY);
+  if (consent === "granted") {
+    initGA();
+  }
+
+  function onReady() {
+    if (consent === null) {
+      setTimeout(showBanner, 800);
+    }
+
+    const btnAccept = document.getElementById("cookie-accept");
+    const btnReject = document.getElementById("cookie-reject");
+    const btnManage = document.getElementById("cookie-manage");
+
+    btnAccept?.addEventListener("click", () => {
+      localStorage.setItem(CONSENT_KEY, "granted");
+      hideBanner();
+      initGA();
+    });
+
+    btnReject?.addEventListener("click", () => {
+      localStorage.setItem(CONSENT_KEY, "denied");
+      hideBanner();
+    });
+
+    btnManage?.addEventListener("click", () => {
+      localStorage.removeItem(CONSENT_KEY);
+      showBanner();
+    });
+  }
+
+  if (document.readyState === "loading") {
+    window.addEventListener("DOMContentLoaded", onReady);
+  } else {
+    onReady();
+  }
+})();
+
 (function initFooterAddress() {
   const trigger = document.querySelector(".footer-address-trigger");
   const target = document.getElementById("footer-address");
