@@ -11,7 +11,7 @@ Tato stránka vysvětluje, jaké osobní údaje zpracovávám, proč a jak dlouh
 **Mgr. Kateřina Mlsnová**
 IČO: 22031383
 Sídlo: Průhonice (fyzická adresa je k dispozici na vyžádání)
-E-mail: [e-mail správce]
+E-mail: k.mlsnova@seznam.cz
 
 ---
 
@@ -19,17 +19,18 @@ E-mail: [e-mail správce]
 
 | Účel | Údaje | Právní základ | Doba uchování |
 | --- | --- | --- | --- |
-| Odpověď na váš dotaz (kontaktní formulář) | Jméno, e-mail, obsah zprávy | Oprávněný zájem (čl. 6 odst. 1 písm. f) GDPR) | Do vyřízení dotazu, max. 1 rok |
-| Analytika webu (Google Analytics) | IP adresa (anonymizovaná), chování na webu, typ zařízení | Souhlas (čl. 6 odst. 1 písm. a) GDPR) | Dle nastavení Google Analytics (výchozí 14 měsíců) |
+| Odpověď na váš dotaz (kontaktní formulář) | Jméno, e-mail, obsah zprávy | Oprávněný zájem [čl. 6 odst. 1 písm. f) GDPR*] | Do vyřízení dotazu, max. 1 rok |
+| Analytika webu (Google Analytics) | IP adresa (anonymizovaná), chování na webu, typ zařízení | Souhlas [čl. 6 odst. 1 písm. a) GDPR*] | Dle nastavení Google Analytics (výchozí 14 měsíců) |
 
+* GDPR = Nařízení Evropského parlamentu a Rady (EU) 2016/679 ze dne 27. dubna 2016 o ochraně fyzických osob v souvislosti se zpracováním osobních údajů a o volném pohybu těchto údajů a o zrušení směrnice 95/46/ES (obecné nařízení o ochraně osobních údajů)
 ---
 
 ## 3. Příjemci osobních údajů
 
 Vaše údaje mohou být předány těmto zpracovatelům:
 
-- **Formspree, Inc.** — zpracování kontaktního formuláře (USA; přenos na základě standardních smluvních doložek)
-- **Google LLC** — analytika webu prostřednictvím Google Analytics 4 (USA; přenos na základě standardních smluvních doložek, IP anonymizace zapnuta)
+- **Formspree, Inc.** — zpracování kontaktního formuláře (Spojené státy americké; přenos na základě standardních smluvních doložek),
+- **Google LLC** — analytika webu prostřednictvím Google Analytics 4 (Spojené státy americké; přenos na základě standardních smluvních doložek, IP anonymizace zapnuta).
 
 Údaje neprodávám ani neposkytuji třetím stranám pro marketingové účely.
 
@@ -39,8 +40,8 @@ Vaše údaje mohou být předány těmto zpracovatelům:
 
 Web používá tyto typy cookies:
 
-- **Technické cookies** — nezbytné pro fungování webu (nepotřebují souhlas)
-- **Analytické cookies** — Google Analytics 4; ukládají se pouze po udělení souhlasu prostřednictvím cookie lišty na webu
+- **Technické cookies** — nezbytné pro fungování webu (nepotřebují souhlas),
+- **Analytické cookies** — Google Analytics 4; ukládají se pouze po udělení souhlasu prostřednictvím cookie lišty na webu.
 
 Souhlas s analytickými cookies můžete kdykoli odvolat prostřednictvím cookie lišty (odkaz v zápatí webu). Po odvolání souhlasu se analytické cookies přestanou ukládat.
 
@@ -66,4 +67,4 @@ Máte také právo podat stížnost u dozorového úřadu — **Úřadu pro ochr
 
 ## 6. Aktuálnost dokumentu
 
-Tento dokument byl naposledy aktualizován: **května 2025**.
+Tento dokument byl naposledy aktualizován: **květen 2026**.

@@ -2649,6 +2649,15 @@ body.lightbox-open {
   border-bottom: none;
 }
 
+.legal__footnote {
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  line-height: 1.6;
+  color: var(--text-muted);
+  margin-top: 0.75rem;
+  font-style: italic;
+}
+
 .protected-email {
   display: inline;
 }
