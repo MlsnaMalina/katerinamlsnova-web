@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Zásady ochrany osobních údajů — Kateřina Mlsnová." />
+  <title>Zásady ochrany osobních údajů — Kateřina Mlsnová</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Syne:wght@800&family=Space+Grotesk:wght@400;500&family=IBM+Plex+Mono:wght@600&display=swap"
+    rel="stylesheet"
+  />
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body id="top">
+  <!-- Sdílené SVG filtry (rough/hand-drawn ohraničení) -->
+  <svg class="svg-defs" width="0" height="0" aria-hidden="true" focusable="false">
+    <defs>
+      <filter id="rough" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3" result="noise" />
+        <feDisplacementMap in="SourceGraphic" in2="noise" scale="3" />
+      </filter>
+      <filter id="rough-strong" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.03" numOctaves="2" seed="7" result="noise" />
+        <feDisplacementMap in="SourceGraphic" in2="noise" scale="2" />
+      </filter>
+    </defs>
+  </svg>
+
+  <nav id="nav" class="nav nav--simple" aria-label="Hlavní navigace">
+    <a href="index.html" class="nav__brand">KM<span class="nav__brand-cursor" aria-hidden="true">▌</span></a>
+
+    <a href="index.html" class="nav__back">← Zpět na hlavní stránku</a>
+
+    <button
+      id="theme-toggle"
+      class="theme-toggle"
+      type="button"
+      aria-label="Přepnout světlý/tmavý režim"
+    >
+      <span class="theme-toggle__icon" aria-hidden="true">🌙</span>
+    </button>
+  </nav>
+
+  <main class="legal-page">
+    <article class="legal__inner">
+      <h1 class="legal__title">
+        <span class="legal__title-text">Zásady ochrany osobních údajů</span>
+        <svg class="legal__title-underline" viewBox="0 0 600 14" preserveAspectRatio="none" aria-hidden="true">
+          <path filter="url(#rough)" d="M 6,8 C 100,4 220,11 340,7 C 440,4 520,9 594,6" />
+        </svg>
+      </h1>
+
+      <p class="legal__lead">
+        Tato stránka vysvětluje, jaké osobní údaje zpracovávám, proč a jak dlouho.
+      </p>
+
+      <hr class="legal__divider" aria-hidden="true" />
+
+      <section class="legal__section">
+        <h2 class="legal__heading"><span class="legal__heading-num">1.</span> Správce osobních údajů</h2>
+        <p class="legal__contact">
+          <strong>Mgr. Kateřina Mlsnová</strong><br />
+          IČO: 22031383<br />
+          Sídlo: Průhonice (fyzická adresa je k dispozici na vyžádání)<br />
+          E-mail:
+          <span id="gdpr-email" class="protected-email">
+            <button type="button" class="email-reveal-btn">Zobrazit e-mail správce</button>
+          </span>
+        </p>
+      </section>
+
+      <hr class="legal__divider" aria-hidden="true" />
+
+      <section class="legal__section">
+        <h2 class="legal__heading"><span class="legal__heading-num">2.</span> Jaké údaje zpracovávám a proč</h2>
+
+        <div class="legal__table-wrap">
+          <table class="legal__table">
+            <thead>
+              <tr>
+                <th>Účel</th>
+                <th>Údaje</th>
+                <th>Právní základ</th>
+                <th>Doba uchování</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Odpověď na váš dotaz (kontaktní formulář)</td>
+                <td>Jméno, e-mail, obsah zprávy</td>
+                <td>Oprávněný zájem (čl.&nbsp;6 odst.&nbsp;1 písm.&nbsp;f) GDPR)</td>
+                <td>Do vyřízení dotazu, max.&nbsp;1&nbsp;rok</td>
+              </tr>
+              <tr>
+                <td>Analytika webu (Google Analytics)</td>
+                <td>IP adresa (anonymizovaná), chování na webu, typ zařízení</td>
+                <td>Souhlas (čl.&nbsp;6 odst.&nbsp;1 písm.&nbsp;a) GDPR)</td>
+                <td>Dle nastavení Google Analytics (výchozí 14&nbsp;měsíců)</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <hr class="legal__divider" aria-hidden="true" />
+
+      <section class="legal__section">
+        <h2 class="legal__heading"><span class="legal__heading-num">3.</span> Příjemci osobních údajů</h2>
+        <p>Vaše údaje mohou být předány těmto zpracovatelům:</p>
+        <ul class="legal__list">
+          <li><strong>Formspree, Inc.</strong> — zpracování kontaktního formuláře (USA; přenos na základě standardních smluvních doložek)</li>
+          <li><strong>Google LLC</strong> — analytika webu prostřednictvím Google Analytics 4 (USA; přenos na základě standardních smluvních doložek, IP anonymizace zapnuta)</li>
+        </ul>
+        <p>Údaje neprodávám ani neposkytuji třetím stranám pro marketingové účely.</p>
+      </section>
+
+      <hr class="legal__divider" aria-hidden="true" />
+
+      <section class="legal__section">
+        <h2 class="legal__heading"><span class="legal__heading-num">4.</span> Cookies</h2>
+        <p>Web používá tyto typy cookies:</p>
+        <ul class="legal__list">
+          <li><strong>Technické cookies</strong> — nezbytné pro fungování webu (nepotřebují souhlas)</li>
+          <li><strong>Analytické cookies</strong> — Google Analytics 4; ukládají se pouze po udělení souhlasu prostřednictvím cookie lišty na webu</li>
+        </ul>
+        <p>Souhlas s analytickými cookies můžete kdykoli odvolat prostřednictvím cookie lišty (odkaz v zápatí webu). Po odvolání souhlasu se analytické cookies přestanou ukládat.</p>
+      </section>
+
+      <hr class="legal__divider" aria-hidden="true" />
+
+      <section class="legal__section">
+        <h2 class="legal__heading"><span class="legal__heading-num">5.</span> Vaše práva</h2>
+        <p>Máte právo:</p>
+        <ul class="legal__list">
+          <li><strong>na přístup</strong> k vašim osobním údajům,</li>
+          <li><strong>na opravu</strong> nepřesných údajů,</li>
+          <li><strong>na výmaz</strong> („právo být zapomenut"),</li>
+          <li><strong>na omezení zpracování</strong>,</li>
+          <li><strong>na přenositelnost</strong> údajů,</li>
+          <li><strong>vznést námitku</strong> proti zpracování na základě oprávněného zájmu,</li>
+          <li><strong>odvolat souhlas</strong> kdykoli, aniž by to ovlivnilo zákonnost zpracování před odvoláním.</li>
+        </ul>
+        <p>Svá práva můžete uplatnit e-mailem na adresu správce (viz výše) nebo prostřednictvím kontaktního formuláře na webu.</p>
+        <p>Máte také právo podat stížnost u dozorového úřadu — <strong>Úřadu pro ochranu osobních údajů</strong> (<a class="legal__link" href="https://www.uoou.cz" target="_blank" rel="noopener">www.uoou.cz</a>).</p>
+      </section>
+
+      <hr class="legal__divider" aria-hidden="true" />
+
+      <section class="legal__section">
+        <h2 class="legal__heading"><span class="legal__heading-num">6.</span> Aktuálnost dokumentu</h2>
+        <p>Tento dokument byl naposledy aktualizován: <strong>května 2025</strong>.</p>
+      </section>
+    </article>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-divider" aria-hidden="true">
+      <svg viewBox="0 0 600 16" preserveAspectRatio="none">
+        <path filter="url(#rough)" d="M 4,8 C 60,4 120,12 180,8 C 240,4 300,12 360,8 C 420,4 480,12 540,8 C 570,6 590,8 596,8" />
+      </svg>
+    </div>
+
+    <div class="footer-content">
+      <div class="footer-columns">
+        <div class="footer-col footer-col-info">
+          <p class="footer-name">Mgr. Kateřina Mlsnová</p>
+
+          <p class="footer-legal">
+            IČO: 22031383<br />
+            Fyzická osoba zapsaná v živnostenském rejstříku vedeném Městským úřadem Černošice, č.&nbsp;j.&nbsp;MCP11/24/062772
+          </p>
+
+          <p class="footer-location">
+            <button type="button" class="footer-address-trigger" aria-expanded="false" aria-controls="footer-address">
+              Sídlo: Průhonice
+            </button>
+            <span id="footer-address" class="footer-address" hidden></span>
+          </p>
+        </div>
+
+        <div class="footer-col footer-col-links">
+          <p class="footer-col-heading">Právní informace</p>
+          <ul class="footer-links-list">
+            <li><span class="footer-links-current" aria-current="page">Zásady ochrany osobních údajů</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p class="footer-copyright">© 2026 Kateřina Mlsnová</p>
+        <p class="footer-credit">vytvořila vibe codováním <span class="footer-credit-berry" aria-hidden="true"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="13" r="7" /><path d="M12 6 Q11 3 14 2" /></svg></span></p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+  <script>
+    (function () {
+      const btn = document.querySelector(".email-reveal-btn");
+      if (!btn) return;
+      const parts = ["k.schmied", "tova", "@", "sez", "nam.cz"];
+      btn.addEventListener("click", () => {
+        const email = parts.join("");
+        const link = document.createElement("a");
+        link.href = "mailto:" + email;
+        link.textContent = email;
+        link.className = "email-link";
+        btn.parentNode.replaceChild(link, btn);
+      });
+    })();
+  </script>
+</body>
+</html>
