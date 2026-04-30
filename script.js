@@ -406,3 +406,24 @@
     localStorage.setItem(STORAGE_KEY, next);
   });
 })();
+
+(function initFooterAddress() {
+  const trigger = document.querySelector(".footer-address-trigger");
+  const target = document.getElementById("footer-address");
+  if (!trigger || !target) return;
+
+  const parts = ["U Parku", " ", "280", ", ", "252", " ", "43", " ", "Průhonice"];
+
+  let revealed = false;
+  trigger.addEventListener("click", () => {
+    if (!revealed) {
+      target.textContent = " — " + parts.join("");
+      target.hidden = false;
+      trigger.setAttribute("aria-expanded", "true");
+      revealed = true;
+    } else {
+      target.hidden = !target.hidden;
+      trigger.setAttribute("aria-expanded", String(!target.hidden));
+    }
+  });
+})();
