@@ -92,7 +92,6 @@
 
   let jumpHeld = false;
   let arrowUpHeld = false;
-  let isLongJump = false;
   let jumpStartTime = 0;
 
   let groups = [];
@@ -217,7 +216,6 @@
     startTime = performance.now();
     player.vy = 0;
     player.onGround = true;
-    isLongJump = false;
     player.y = groundY - PLAYER_H;
     player.blowFrames = 0;
     player.blowOffsetX = 0;
@@ -246,8 +244,7 @@
     if (state === STATE.RUNNING && player.onGround) {
       player.vy = jumpForce;
       player.onGround = false;
-      isLongJump = false;
-      jumpStartTime = performance.now();
+      jumpStartTime = Date.now();
     }
   }
 
@@ -420,22 +417,27 @@
     frameCount += frames;
 
     if (state === STATE.RUNNING) {
-      // Two jump modes — same apex (gravity equal during ascent), different
-      // hang time. Holding jump for >LONG_JUMP_HOLD_MS after liftoff (or
-      // pressing arrow-up) commits to the long jump: slower descent.
-      const heldForLong = jumpHeld || arrowUpHeld;
-      if (!isLongJump && !player.onGround && heldForLong &&
-          (now - jumpStartTime) >= LONG_JUMP_HOLD_MS) {
-        isLongJump = true;
+      // Two jump modes — same apex. Slow fall (holdGravity) only while still
+      // holding past LONG_JUMP_HOLD_MS during descent. Releasing reverts to
+      // normal fall immediately.
+      const isHoldingJump = jumpHeld || arrowUpHeld;
+      const heldDuration = Date.now() - jumpStartTime;
+      let g;
+      if (isHoldingJump && heldDuration < LONG_JUMP_HOLD_MS) {
+        g = gravity;
+      } else if (player.vy < 0) {
+        g = gravity;
+      } else if (isHoldingJump) {
+        g = holdGravity;
+      } else {
+        g = gravity;
       }
-      const g = (isLongJump && player.vy >= 0) ? holdGravity : gravity;
       player.vy += g * frames;
       player.y += player.vy * frames;
       if (player.y + PLAYER_H >= groundY) {
         player.y = groundY - PLAYER_H;
         player.vy = 0;
         player.onGround = true;
-        isLongJump = false;
       }
 
       // First-spawn 2s gate
