@@ -294,8 +294,8 @@ body {
 .hero-col--left .logo { align-items: flex-start; gap: 0.4rem; }
 .hero-col--left .logo__first {
   padding-left: 0;
-  font-size: clamp(0.9rem, 2.55vw, 2.25rem);
-  letter-spacing: 0.4em;
+  font-size: clamp(1.3rem, 3.5vw, 3.1rem);
+  letter-spacing: 0.55em;
   color: #999;
   font-weight: 500;
 }
@@ -366,7 +366,7 @@ body {
   transform: translate(-50%, 0) translateY(20px) scale(0.9);
   width: 65px;
   height: 72px;
-  margin: 0.5rem 0 0;
+  margin: 6rem 0 0;
   z-index: 2;
 }
 .hero #hero-mascot-container.visible-element {
