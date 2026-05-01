@@ -87,20 +87,27 @@
     <section class="hero" id="hero">
       <div class="hero-grid">
         <div class="hero-col hero-col--left">
-          <h1 class="logo">
-            <span class="logo__first">KATEŘINA</span>
-            <span class="logo__last">
-              <span class="logo__name">MLSNOVÁ</span><span class="logo__cursor is-blinking" aria-hidden="true">▌</span>
-            </span>
-          </h1>
+          <div class="logo-wrap">
+            <h1 class="logo">
+              <span class="logo__first">KATEŘINA</span>
+              <span class="logo__last">
+                <span class="logo__name">MLSNOVÁ</span><span class="logo__cursor is-blinking" aria-hidden="true">▌</span>
+              </span>
+            </h1>
+            <div id="hero-mascot-container" class="hidden-element mascot-pop" role="button" tabindex="0" aria-label="Kliknutím seber malinu a spusť hru">
+              <img src="assets/malina.svg" id="hero-malina-mascot" alt="Mlsná Malina" class="doodle-mascot">
+              <div id="mascot-eyes-container">
+                <div class="eye left-eye"><div class="pupil"></div></div>
+                <div class="eye right-eye"><div class="pupil"></div></div>
+              </div>
+            </div>
+          </div>
           <p class="tagline is-visible">
             Knižní redaktorka, která se naučila vibe kódovat. A baví ji to.
           </p>
         </div>
 
         <div class="hero-col hero-col--right">
-          <p id="hero-pitch" class="hidden-element">Vyrábím weby a interaktivní materiály tak, aby byly podle vašich představ.</p>
-
           <div class="win-terminal">
             <div class="win-terminal-header">
               <span class="win-terminal-title">C:\Users\Kateřina> _</span>
@@ -117,15 +124,8 @@
             </div>
           </div>
 
+          <p id="hero-pitch" class="hidden-element">Vyrábím weby a interaktivní materiály tak, aby byly podle vašich představ.</p>
           <p id="hero-subtext" class="hidden-element">Bez agentury, bez šablon, bez složitostí.</p>
-        </div>
-      </div>
-
-      <div id="hero-mascot-container" class="hidden-element mascot-pop" role="button" tabindex="0" aria-label="Kliknutím seber malinu a spusť hru">
-        <img src="assets/malina.svg" id="hero-malina-mascot" alt="Mlsná Malina" class="doodle-mascot">
-        <div id="mascot-eyes-container">
-          <div class="eye left-eye"><div class="pupil"></div></div>
-          <div class="eye right-eye"><div class="pupil"></div></div>
         </div>
       </div>
     </section>

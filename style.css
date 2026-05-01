@@ -270,9 +270,15 @@ body {
   display: grid;
   grid-template-columns: 65fr 35fr;
   gap: 3rem;
-  align-items: center;
+  align-items: start;
   width: 100%;
   max-width: 80rem;
+}
+
+.logo-wrap {
+  position: relative;
+  width: max-content;
+  max-width: 100%;
 }
 
 .hero-col {
@@ -285,23 +291,18 @@ body {
 }
 
 /* Levý sloupec — dominantní logo */
-.hero-col--left .logo { align-items: stretch; gap: 0.2rem; width: max-content; max-width: 100%; }
+.hero-col--left .logo { align-items: flex-start; gap: 0.4rem; }
 .hero-col--left .logo__first {
   padding-left: 0;
-  font-size: clamp(1.4rem, 4.3vw, 3.8rem);
-  letter-spacing: 0.075em;
+  font-size: clamp(1.1rem, 1.6vw, 1.5rem);
+  letter-spacing: 0.4em;
   color: #999;
   font-weight: 500;
-  display: block;
-  text-align: center;
-  width: 100%;
-  line-height: 1;
 }
 .hero-col--left .logo__last {
   font-size: clamp(2.8rem, 8.5vw, 7.5rem);
   line-height: 0.95;
   letter-spacing: -0.02em;
-  display: block;
 }
 .hero-col--left .logo__cursor {
   font-size: 0.7em;
@@ -313,11 +314,11 @@ body {
   font-size: 1.05rem;
 }
 
-/* Pravý sloupec — kompaktní doplněk; obsah u spodu (kde dřív byl maskot) */
+/* Pravý sloupec — terminál + pitch + subtext, posunutý dolů pod MLSNOVÁ */
 .hero-col--right {
   gap: 0.9rem;
-  justify-content: flex-end;
-  align-self: stretch;
+  align-self: start;
+  margin-top: clamp(3rem, 10vw, 9rem);
 }
 
 .hero-col--right .win-terminal {
@@ -357,19 +358,19 @@ body {
 }
 #hero-subtext.visible-element { opacity: 0.55; }
 
-/* Maskot — absolutně uprostřed hero, na výšce pitch textu */
+/* Maskot — absolutně pod písmenem O ve slově MLSNOVÁ */
 .hero #hero-mascot-container {
   position: absolute;
-  left: 42%;
-  top: 82%;
-  transform: translate(-50%, -50%) translateY(20px) scale(0.9);
+  left: 62%;
+  top: 100%;
+  transform: translate(-50%, 0) translateY(20px) scale(0.9);
   width: 65px;
   height: 72px;
-  margin: 0;
+  margin: 0.5rem 0 0;
   z-index: 2;
 }
 .hero #hero-mascot-container.visible-element {
-  transform: translate(-50%, -50%) translateY(0) scale(1);
+  transform: translate(-50%, 0) translateY(0) scale(1);
 }
 .hero .doodle-mascot { width: 65px; }
 .hero #mascot-eyes-container {
@@ -2393,7 +2394,7 @@ body.lightbox-open {
   }
 
   .logo__first {
-    font-size: 1.4rem;
+    font-size: 0.85rem;
   }
 
   .tagline {
