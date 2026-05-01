@@ -499,10 +499,9 @@
   });
 })();
 
-// Doodle fly-in + hero envelope unwrap (GSAP ScrollTrigger)
-(function initDoodleAnimations() {
+// Hero obálka rip + doodle vysypání (jeden GSAP scrub timeline)
+(function initEnvelopeBurst() {
   if (typeof window.gsap === "undefined" || typeof window.ScrollTrigger === "undefined") {
-    // Fallback: zobrazit doodly bez animace
     document.querySelectorAll(".doodle").forEach((el) => el.classList.add("doodle--in"));
     return;
   }
@@ -511,109 +510,119 @@
   const ScrollTrigger = window.ScrollTrigger;
   gsap.registerPlugin(ScrollTrigger);
 
-  // Hero obálka — scrub: pečeť praskne, klopa se zvedne, strany se rozevřou
-  const envelopeEl = document.querySelector(".hero-envelope");
-  if (envelopeEl) {
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: ".hero",
-        start: "top top",
-        end: "bottom top",
-        scrub: 1,
-      },
-    });
-    tl.to(".hero-envelope__seal", {
-      scale: 0,
-      rotation: 90,
-      autoAlpha: 0,
-      transformOrigin: "120px 86px",
-      ease: "power2.in",
-      duration: 0.25,
-    }, 0)
-      .to(".hero-envelope__flap", {
-        rotation: -170,
-        transformOrigin: "120px 62px",
-        ease: "power2.inOut",
-        duration: 0.5,
-      }, 0.1)
-      .to(".hero-envelope__side--left", {
-        rotation: -22,
-        x: -45,
-        transformOrigin: "22px 126px",
-        ease: "power2.out",
-        duration: 0.45,
-      }, 0.35)
-      .to(".hero-envelope__side--right", {
-        rotation: 22,
-        x: 45,
-        transformOrigin: "218px 126px",
-        ease: "power2.out",
-        duration: 0.45,
-      }, 0.35)
-      .to(".hero-envelope__body", {
-        scale: 0.85,
-        autoAlpha: 0.4,
-        transformOrigin: "50% 50%",
-        duration: 0.4,
-      }, 0.5)
-      .to(".hero-envelope", { autoAlpha: 0, duration: 0.2 }, 0.85);
+  const envelope = document.querySelector(".hero-envelope-wrap");
+  if (!envelope) return;
+
+  const doodles = gsap.utils.toArray(".doodle").filter((el) => {
+    // Skip skryté na malých viewportech (display: none → offsetParent null)
+    return el.offsetParent !== null;
+  });
+
+  // Funkce-hodnoty: spočítáme delta od přirozené pozice doodle k centru obálky
+  // Vrací se v transform space → posun, který umístí doodle vizuálně na obálku.
+  function envelopeCenter() {
+    const r = envelope.getBoundingClientRect();
+    return {
+      x: r.left + r.width / 2 + window.scrollX,
+      y: r.top + r.height / 2 + window.scrollY,
+    };
   }
 
-  // Section doodles — vyletí ze směru "obálky" (z hera) do své pozice
-  // Použijeme náhodný směr + rotaci, aby letěly živě, ne jen appearovaly.
-  gsap.utils.toArray(".doodle").forEach((el, i) => {
-    const section = el.closest("section");
-    if (!section) return;
+  function doodleCenter(el) {
+    // Dočasně vyresetujeme transform, abychom dostali "přirozenou" pozici
+    const prev = el.style.transform;
+    el.style.transform = "none";
+    const r = el.getBoundingClientRect();
+    el.style.transform = prev;
+    return {
+      x: r.left + r.width / 2 + window.scrollX,
+      y: r.top + r.height / 2 + window.scrollY,
+    };
+  }
 
-    // Pseudo-náhodné, ale deterministické per index pro klid v duši
-    const seed = (i * 9301 + 49297) % 233280;
-    const r1 = (seed % 1000) / 1000;
-    const r2 = ((seed * 7) % 1000) / 1000;
-    const r3 = ((seed * 13) % 1000) / 1000;
+  // Per-doodle deterministické "šum" hodnoty
+  const seedData = doodles.map((_, i) => {
+    const s = (i * 9301 + 49297) % 233280;
+    return {
+      rot: ((s % 1000) / 1000 - 0.5) * 240,
+      scale: 0.33 + (((s * 7) % 100) / 100) * 0.17, // 0.33–0.50
+    };
+  });
 
-    const angle = r1 * Math.PI * 2;
-    const dist = 240 + r2 * 200;
-    const fromX = Math.cos(angle) * dist;
-    const fromY = Math.sin(angle) * dist - 80; // mírně shora (z obálky)
-    const fromR = (r3 - 0.5) * 220;
+  const tl = gsap.timeline({
+    scrollTrigger: {
+      trigger: ".hero",
+      start: "top top",
+      end: "+=420",
+      scrub: 0.8,
+      invalidateOnRefresh: true,
+    },
+  });
 
-    gsap.set(el, { x: fromX, y: fromY, rotation: fromR, scale: 0.35 });
+  // === Fáze 1: obálka se trhá (progress 0 → 0.4) ===
+  tl.to(".hero-envelope__seal", {
+    scale: 0,
+    rotation: 90,
+    autoAlpha: 0,
+    ease: "power2.in",
+    duration: 0.18,
+  }, 0)
+    .to(".hero-envelope__flap", {
+      rotation: -160,
+      transformOrigin: "120px 62px",
+      ease: "power2.inOut",
+      duration: 0.32,
+    }, 0.04)
+    .to(".hero-envelope__side--left", {
+      rotation: -28,
+      x: -55,
+      transformOrigin: "22px 126px",
+      ease: "power2.out",
+      duration: 0.28,
+    }, 0.18)
+    .to(".hero-envelope__side--right", {
+      rotation: 28,
+      x: 55,
+      transformOrigin: "218px 126px",
+      ease: "power2.out",
+      duration: 0.28,
+    }, 0.18)
+    .to(".hero-envelope__body", {
+      scale: 0.78,
+      transformOrigin: "50% 50%",
+      duration: 0.22,
+    }, 0.32)
+    .to(".hero-envelope, .hero-envelope__seal", {
+      autoAlpha: 0,
+      duration: 0.18,
+    }, 0.5);
 
-    function flyIn() {
-      el.classList.add("doodle--in");
-      gsap.to(el, {
-        x: 0,
-        y: 0,
-        rotation: 0,
-        scale: 1,
-        duration: 1.1,
-        ease: "back.out(1.4)",
-        overwrite: "auto",
-      });
+  // === Fáze 2: doodly vyletí z obálky a přistanou na své pozice (0.3 → 1.0) ===
+  doodles.forEach((el, i) => {
+    const { rot, scale } = seedData[i];
+
+    function fromX() {
+      const ec = envelopeCenter();
+      const dc = doodleCenter(el);
+      return ec.x - dc.x;
+    }
+    function fromY() {
+      const ec = envelopeCenter();
+      const dc = doodleCenter(el);
+      return ec.y - dc.y;
     }
 
-    function flyOut() {
-      el.classList.remove("doodle--in");
-      gsap.to(el, {
-        x: fromX * 0.5,
-        y: fromY * 0.5,
-        rotation: fromR * 0.6,
-        scale: 0.4,
-        duration: 0.6,
-        ease: "power2.in",
-        overwrite: "auto",
-      });
-    }
-
-    ScrollTrigger.create({
-      trigger: section,
-      start: "top 78%",
-      end: "bottom 22%",
-      onEnter: flyIn,
-      onEnterBack: flyIn,
-      onLeave: flyOut,
-      onLeaveBack: flyOut,
-    });
+    // FromTo s immediateRender: fromVars aplikované hned → doodle je schovaný
+    // v obálce. Pak fade-in v 0.3, let v 0.35–1.0.
+    tl.fromTo(el,
+      { x: fromX, y: fromY, scale: scale, rotation: rot, "--doodle-progress": 0 },
+      { "--doodle-progress": 1, duration: 0.06, ease: "none" },
+      0.3
+    );
+    tl.to(el,
+      { x: 0, y: 0, scale: 1, rotation: 0, ease: "power2.out", duration: 0.65 },
+      0.35
+    );
   });
 })();
 
