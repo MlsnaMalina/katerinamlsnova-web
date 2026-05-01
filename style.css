@@ -1601,16 +1601,18 @@ body.lightbox-open {
 }
 
 .pricing-row__cta-btn {
-  display: inline-block;
+  display: block;
+  width: fit-content;
   background-color: #a31f4f;
   color: #f5f0e8;
   font-family: 'Space Grotesk', sans-serif;
   font-weight: bold;
   padding: 12px 24px;
-  margin-top: 15px;
+  margin: 15px auto 0;
   border: none;
   cursor: pointer;
   text-decoration: none;
+  text-align: center;
   border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;
   transition: transform 0.2s ease, background-color 0.2s ease;
 }
