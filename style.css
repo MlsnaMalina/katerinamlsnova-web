@@ -1393,7 +1393,7 @@ body.lightbox-open {
 
 .pricing__intro {
   position: relative;
-  max-width: 56rem;
+  max-width: 800px;
   margin: 0 auto 3.5rem;
   padding: 1.75rem 1.75rem 1.5rem;
   background-color: rgba(184, 48, 102, 0.06);
@@ -1598,44 +1598,30 @@ body.lightbox-open {
   font-size: 1.25rem;
   color: var(--accent);
   white-space: nowrap;
-  opacity: 0;
-  max-height: 0;
-  overflow: hidden;
-  transition: opacity 0.3s ease, max-height 0.3s ease;
 }
 
-.pricing-row:hover .pricing-row__price,
-.pricing-row:focus-within .pricing-row__price {
-  opacity: 1;
-  max-height: 3rem;
+.pricing-row__cta-btn {
+  display: inline-block;
+  margin-top: 1rem;
+  padding: 10px 22px;
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 500;
+  color: #fff;
+  background-color: #a31f4f;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: background-color 0.2s ease, transform 0.1s ease;
 }
 
-.pricing-row__hint {
-  font-family: var(--font-mono);
-  font-weight: 600;
-  font-size: 0.78rem;
-  color: var(--accent);
-  opacity: 0.5;
-  white-space: nowrap;
-  transition: opacity 0.3s ease, max-height 0.3s ease;
-  max-height: 3rem;
-  overflow: hidden;
+.pricing-row__cta-btn:hover,
+.pricing-row__cta-btn:focus-visible {
+  background-color: #8a1942;
+  outline: none;
 }
 
-.pricing-row:hover .pricing-row__hint,
-.pricing-row:focus-within .pricing-row__hint {
-  opacity: 0;
-  max-height: 0;
-}
-
-@media (hover: none) {
-  .pricing-row__price {
-    opacity: 1;
-    max-height: 3rem;
-  }
-  .pricing-row__hint {
-    display: none;
-  }
+.pricing-row__cta-btn:active {
+  transform: translateY(1px);
 }
 
 .pricing-row__cta {
