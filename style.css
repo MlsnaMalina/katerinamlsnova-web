@@ -294,7 +294,7 @@ body {
 .hero-col--left .logo { align-items: flex-start; gap: 0.4rem; }
 .hero-col--left .logo__first {
   padding-left: 0;
-  font-size: clamp(1.1rem, 1.6vw, 1.5rem);
+  font-size: clamp(0.75rem, 2.1vw, 1.85rem);
   letter-spacing: 0.4em;
   color: #999;
   font-weight: 500;
@@ -318,7 +318,7 @@ body {
 .hero-col--right {
   gap: 0.9rem;
   align-self: start;
-  margin-top: clamp(3rem, 10vw, 9rem);
+  margin-top: clamp(5rem, 13vw, 12rem);
 }
 
 .hero-col--right .win-terminal {
@@ -361,7 +361,7 @@ body {
 /* Maskot — absolutně pod písmenem O ve slově MLSNOVÁ */
 .hero #hero-mascot-container {
   position: absolute;
-  left: 62%;
+  left: 66%;
   top: 100%;
   transform: translate(-50%, 0) translateY(20px) scale(0.9);
   width: 65px;

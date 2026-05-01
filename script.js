@@ -1,4 +1,4 @@
-// Hero intro: terminal (2 sekvence) → pitch → subtext → maskot Malina
+// Hero intro: terminal seq1 → pitch → subtext → terminal seq2 → maskot Malina
 document.addEventListener('DOMContentLoaded', () => {
   const textToType1 = "> kateřino, vytvoř mi jednoduchý web";
   const textToType2 = "> system --spust_malinu";
@@ -17,28 +17,28 @@ document.addEventListener('DOMContentLoaded', () => {
       setTimeout(typeWriter1, 50);
     } else {
       setTimeout(() => {
-        typewriterEl.innerHTML = "";
-        let j = 0;
-        function typeWriter2() {
-          if (j < textToType2.length) {
-            typewriterEl.innerHTML += textToType2.charAt(j);
-            j++;
-            setTimeout(typeWriter2, 50);
-          } else {
-            setTimeout(() => {
-              pitchEl?.classList.add('visible-element');
-              setTimeout(() => {
-                subtextEl?.classList.add('visible-element');
+        pitchEl?.classList.add('visible-element');
+        setTimeout(() => {
+          subtextEl?.classList.add('visible-element');
+          setTimeout(() => {
+            typewriterEl.innerHTML = "";
+            let j = 0;
+            function typeWriter2() {
+              if (j < textToType2.length) {
+                typewriterEl.innerHTML += textToType2.charAt(j);
+                j++;
+                setTimeout(typeWriter2, 50);
+              } else {
                 setTimeout(() => {
                   mascotEl.classList.add('visible-element');
                   initEyes();
-                }, 600);
-              }, 600);
-            }, 600);
-          }
-        }
-        typeWriter2();
-      }, 2500);
+                }, 400);
+              }
+            }
+            typeWriter2();
+          }, 1200);
+        }, 700);
+      }, 700);
     }
   }
 
