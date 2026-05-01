@@ -720,10 +720,6 @@ document.addEventListener('DOMContentLoaded', () => {
   window.startEggHunt = function () {
     if (!found.has(HERO_ID)) {
       registerFound(HERO_ID);
-      // První malina — krátké úvodní upozornění navíc
-      setTimeout(() => {
-        showCounter("Jejda, rozsypaly se mi maliny! Najdi všech 5 pro slevu.");
-      }, 50);
     }
   };
 
