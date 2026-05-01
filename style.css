@@ -275,16 +275,48 @@ body {
   position: relative;
 }
 
+/* macOS-style terminál */
+.mac-terminal {
+  background-color: #1e1e1e;
+  border-radius: 8px;
+  width: 100%;
+  max-width: 600px;
+  margin: 2rem auto;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+  overflow: hidden;
+  text-align: left;
+}
+.mac-terminal-header {
+  background-color: #333;
+  padding: 10px 15px;
+  display: flex;
+  gap: 8px;
+}
+.mac-terminal-header .dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+.dot.red { background-color: #ff5f56; }
+.dot.yellow { background-color: #ffbd2e; }
+.dot.green { background-color: #27c93f; }
+.mac-terminal-body {
+  padding: 20px;
+  min-height: 60px;
+}
+
 .terminal-text {
   font-family: var(--font-mono);
-  color: var(--accent);
-  font-size: 1.15rem;
-  margin-bottom: 2rem;
-  min-height: 2rem;
   word-break: break-word;
   text-align: left;
-  width: 100%;
-  max-width: 36rem;
+}
+
+#hero-terminal {
+  color: #f5f0e8;
+  font-size: 1.1rem;
+  font-family: var(--font-mono);
+  margin: 0;
+  min-height: 1.6rem;
 }
 
 .blinking-cursor {
@@ -313,11 +345,12 @@ body {
 #hero-main-heading h1 {
   font-family: var(--font-display);
   font-weight: 800;
-  font-size: clamp(1.9rem, 4.6vw, 3.4rem);
-  line-height: 1.1;
+  font-size: clamp(1.8rem, 4vw, 3rem);
+  line-height: 1.2;
   letter-spacing: -0.01em;
   color: var(--text);
-  margin: 0 0 1rem;
+  max-width: 800px;
+  margin: 0 auto 1rem;
 }
 
 #hero-main-heading p {

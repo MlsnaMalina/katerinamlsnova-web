@@ -1,3 +1,30 @@
+// Hero logo: KATEŘINA + blikající kurzor → typing efekt MLSNOVÁ
+(function () {
+  const nameEl = document.querySelector(".logo__name");
+  const cursor = document.querySelector(".logo__cursor");
+  if (!nameEl || !cursor) return;
+
+  const TEXT = "MLSNOVÁ";
+  const TYPE_DELAY = 90;
+  const START_DELAY = 1500;
+
+  setTimeout(() => {
+    cursor.classList.remove("is-blinking");
+    cursor.classList.add("is-paused");
+
+    let i = 0;
+    const interval = setInterval(() => {
+      i++;
+      nameEl.textContent = TEXT.slice(0, i);
+      if (i >= TEXT.length) {
+        clearInterval(interval);
+        cursor.classList.remove("is-paused");
+        cursor.classList.add("is-blinking");
+      }
+    }, TYPE_DELAY);
+  }, START_DELAY);
+})();
+
 // Hero intro: terminal → heading → maskot Malina (klik spustí egg hunt)
 document.addEventListener('DOMContentLoaded', () => {
   const textToType1 = "> katerina --vyrob jednostrankovy_web --bez_sablon";
