@@ -3363,6 +3363,85 @@ body.lightbox-open {
   text-align: center;
 }
 
+/* Hero malina — doodle šipka ukazující na malinu */
+.malina-arrow {
+  position: absolute;
+  left: 82%;
+  top: 100%;
+  margin-top: 4rem;
+  width: 56px;
+  height: 56px;
+  color: #999;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 1;
+  transform: rotate(8deg);
+}
+.malina-arrow.is-blinking {
+  animation: maliaArrowBlink 3s ease-in-out infinite;
+}
+.malina-arrow.is-hidden {
+  animation: none !important;
+  opacity: 0 !important;
+  display: none;
+}
+@keyframes maliaArrowBlink {
+  0%   { opacity: 0; }
+  13%  { opacity: 0.4; }
+  63%  { opacity: 0.4; }
+  77%  { opacity: 0; }
+  100% { opacity: 0; }
+}
+
+/* Hero malina modal — celostránkový dialog s gratulací */
+.hero-malina-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  padding: 1rem;
+}
+.hero-malina-modal.is-open { display: flex; }
+.hero-malina-modal__panel {
+  background: var(--bg, #fff);
+  color: var(--text, #1a1714);
+  border-radius: 12px;
+  padding: 2rem;
+  max-width: 26rem;
+  width: 100%;
+  text-align: center;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+}
+.hero-malina-modal__title {
+  font-family: var(--font-body);
+  font-size: 1.25rem;
+  font-weight: 500;
+  margin: 0 0 0.5rem;
+  color: var(--text, #1a1714);
+}
+.hero-malina-modal__text {
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  color: var(--text-muted, #666);
+  margin: 0 0 1.5rem;
+}
+.hero-malina-modal__btn {
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  font-weight: 500;
+  padding: 0.55rem 1.6rem;
+  border-radius: 6px;
+  cursor: pointer;
+  border: none;
+  background: #a31f4f;
+  color: #fff;
+  transition: background 0.2s ease;
+}
+.hero-malina-modal__btn:hover { background: #8a1942; }
+
 /* Egg modal */
 .egg-modal {
   position: fixed;

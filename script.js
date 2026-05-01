@@ -63,9 +63,35 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  const arrowEl = document.getElementById('hero-malina-arrow');
+  const heroModal = document.getElementById('hero-malina-modal');
+  const heroModalCloseBtn = document.getElementById('hero-malina-modal-close');
+
+  function openHeroModal() {
+    if (!heroModal) return;
+    heroModal.classList.add('is-open');
+    heroModal.setAttribute('aria-hidden', 'false');
+    setTimeout(() => heroModalCloseBtn?.focus(), 50);
+  }
+  function closeHeroModal() {
+    if (!heroModal) return;
+    heroModal.classList.remove('is-open');
+    heroModal.setAttribute('aria-hidden', 'true');
+  }
+
+  heroModalCloseBtn?.addEventListener('click', closeHeroModal);
+  heroModal?.addEventListener('click', (e) => {
+    if (e.target === heroModal) closeHeroModal();
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && heroModal?.classList.contains('is-open')) closeHeroModal();
+  });
+
   function triggerHunt() {
     if (mascotEl.dataset.taken === "1") return;
     mascotEl.dataset.taken = "1";
+
+    if (arrowEl) arrowEl.classList.add('is-hidden');
 
     mascotEl.style.opacity = '0';
     setTimeout(() => {
@@ -75,6 +101,8 @@ document.addEventListener('DOMContentLoaded', () => {
     if (typeof window.startEggHunt === "function") {
       window.startEggHunt();
     }
+
+    openHeroModal();
   }
 
   mascotEl.addEventListener('click', triggerHunt);
@@ -84,6 +112,24 @@ document.addEventListener('DOMContentLoaded', () => {
       triggerHunt();
     }
   });
+
+  if (arrowEl) {
+    const startArrowBlink = () => {
+      if (mascotEl.dataset.taken === "1") return;
+      arrowEl.classList.add('is-blinking');
+    };
+    if (mascotEl.classList.contains('visible-element')) {
+      startArrowBlink();
+    } else {
+      const obs = new MutationObserver(() => {
+        if (mascotEl.classList.contains('visible-element')) {
+          startArrowBlink();
+          obs.disconnect();
+        }
+      });
+      obs.observe(mascotEl, { attributes: true, attributeFilter: ['class'] });
+    }
+  }
 });
 
 // Nav scroll behavior — pozadí navigace se objeví po scrollu > 80 px
