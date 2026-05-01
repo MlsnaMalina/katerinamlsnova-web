@@ -3283,7 +3283,7 @@ body.lightbox-open {
   position: absolute;
   width: 36px;
   height: 36px;
-  opacity: 0.25;
+  opacity: 1;
   cursor: pointer;
   background: none;
   border: 0;
@@ -3293,7 +3293,7 @@ body.lightbox-open {
   line-height: 0;
 }
 
-.egg-raspberry:hover { opacity: 0.55; }
+.egg-raspberry:hover { opacity: 1; transform: scale(1.15); }
 .egg-raspberry:focus-visible {
   opacity: 0.7;
   outline: 2px dashed var(--accent);
@@ -3324,7 +3324,8 @@ body.lightbox-open {
   left: auto;
   z-index: 10;
 }
-.egg-raspberry--pssst { display: inline-block; position: relative; opacity: 0.45; vertical-align: middle; margin-left: 0.4rem; top: 0; }
+.egg-raspberry--pssst { display: inline-block; position: relative; opacity: 1; vertical-align: middle; margin-left: 0.4rem; top: 0; }
+.egg-raspberry--pssst.is-found { opacity: 0.15; }
 .egg-raspberry--submit { position: absolute; bottom: -22px; left: 50%; transform: translateX(-50%); }
 .egg-raspberry--submit.is-found { transform: translateX(-50%) scale(1); animation: egg-pulse-translated 0.7s ease; }
 
