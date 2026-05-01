@@ -258,6 +258,7 @@ body {
 .hero {
   min-height: 100vh;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   padding: 2rem;
@@ -290,7 +291,7 @@ body {
   letter-spacing: 0.35em;
 }
 .hero-col--left .logo__last {
-  font-size: clamp(3.5rem, 11vw, 9.5rem);
+  font-size: clamp(2.8rem, 8.5vw, 7.5rem);
   line-height: 0.95;
   letter-spacing: -0.02em;
 }
@@ -320,25 +321,30 @@ body {
 }
 .hero-col--right #hero-terminal { font-size: 0.75rem; }
 
-.hero-col--right #hero-main-heading h1 {
+/* Pitch text v pravém sloupci — stejný styl jako tagline vlevo */
+#hero-pitch {
   font-family: var(--font-body);
   font-weight: 400;
-  font-size: clamp(0.95rem, 1.5vw, 1.2rem);
-  line-height: 1.35;
-  letter-spacing: 0;
+  font-size: 1.05rem;
+  line-height: 1.45;
   color: var(--text-muted);
+  text-align: left;
   margin: 0;
+  max-width: 100%;
 }
 
+/* Subtext pod celým gridem */
 #hero-subtext {
   font-family: var(--font-body);
-  font-size: 0.8rem;
+  font-size: 0.85rem;
   color: var(--text-muted);
   opacity: 0;
-  margin: 0;
+  margin: 2rem auto 0;
+  text-align: center;
+  width: 100%;
   transition: opacity 0.8s ease-out, visibility 0.8s ease-out;
 }
-#hero-subtext.visible-element { opacity: 0.55; }
+#hero-subtext.visible-element { opacity: 0.6; }
 
 /* Maskot v pravém sloupci — malý */
 .hero-col--right #hero-mascot-container {
@@ -375,6 +381,7 @@ body {
   .hero-col--left .logo__first { padding-left: 0.3em; }
   .hero-col--left .tagline { text-align: center; }
   .hero-col--right { max-width: 480px; width: 100%; margin: 0 auto; }
+  #hero-pitch { text-align: center; }
 }
 
 /* Windows-style terminál */

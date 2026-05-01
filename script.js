@@ -1,34 +1,48 @@
-// Hero intro: terminal → heading → subtext → maskot Malina (klik spustí egg hunt)
+// Hero intro: terminal (2 sekvence) → pitch → subtext → maskot Malina
 document.addEventListener('DOMContentLoaded', () => {
-  const textToType = "> system --spust_maskota";
+  const textToType1 = "> kateřino, vytvoř mi jednoduchý web";
+  const textToType2 = "> system --spust_malinu";
   const typewriterEl = document.getElementById('terminal-typewriter');
-  const headingEl = document.getElementById('hero-main-heading');
+  const pitchEl = document.getElementById('hero-pitch');
   const subtextEl = document.getElementById('hero-subtext');
   const mascotEl = document.getElementById('hero-mascot-container');
 
-  if (!typewriterEl || !headingEl || !mascotEl) return;
+  if (!typewriterEl || !mascotEl) return;
 
   let i = 0;
-  function typeWriter() {
-    if (i < textToType.length) {
-      typewriterEl.innerHTML += textToType.charAt(i);
+  function typeWriter1() {
+    if (i < textToType1.length) {
+      typewriterEl.innerHTML += textToType1.charAt(i);
       i++;
-      setTimeout(typeWriter, 50);
+      setTimeout(typeWriter1, 50);
     } else {
       setTimeout(() => {
-        headingEl.classList.add('visible-element');
-        setTimeout(() => {
-          subtextEl?.classList.add('visible-element');
-          setTimeout(() => {
-            mascotEl.classList.add('visible-element');
-            initEyes();
-          }, 600);
-        }, 600);
-      }, 600);
+        typewriterEl.innerHTML = "";
+        let j = 0;
+        function typeWriter2() {
+          if (j < textToType2.length) {
+            typewriterEl.innerHTML += textToType2.charAt(j);
+            j++;
+            setTimeout(typeWriter2, 50);
+          } else {
+            setTimeout(() => {
+              pitchEl?.classList.add('visible-element');
+              setTimeout(() => {
+                subtextEl?.classList.add('visible-element');
+                setTimeout(() => {
+                  mascotEl.classList.add('visible-element');
+                  initEyes();
+                }, 600);
+              }, 600);
+            }, 600);
+          }
+        }
+        typeWriter2();
+      }, 2500);
     }
   }
 
-  setTimeout(typeWriter, 800);
+  setTimeout(typeWriter1, 800);
 
   function initEyes() {
     const pupils = document.querySelectorAll('.pupil');
