@@ -264,47 +264,59 @@ body {
 }
 
 /* Hero story (terminal → heading → mascot) */
-.hero-story-container {
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  align-items: center;
+  width: 100%;
+  max-width: 80rem;
+}
+
+.hero-col {
+  min-width: 0;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  text-align: center;
-  width: 100%;
-  max-width: 60rem;
-  justify-content: center;
-  position: relative;
+  gap: 1.25rem;
 }
 
-/* Hero top row: logo vlevo, terminál vpravo */
-.hero-top-row {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  gap: 2.5rem;
-  width: 100%;
-  flex-wrap: wrap;
+.hero-col--left,
+.hero-col--right {
+  align-items: flex-start;
+  text-align: left;
 }
 
-.hero-top-row .logo {
-  flex: 0 0 auto;
-}
+.hero-col--left .logo { align-items: flex-start; }
+.hero-col--left .logo__first { padding-left: 0; }
+.hero-col--left .tagline { text-align: left; margin-top: 0.5rem; }
 
-.hero-top-row .win-terminal {
-  flex: 1 1 360px;
-  max-width: 600px;
+.hero-col--right .win-terminal { margin: 0; max-width: 480px; width: 100%; }
+.hero-col--right #hero-main-heading,
+.hero-col--right #hero-subtext { max-width: 480px; }
+
+#hero-subtext {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  color: var(--text);
+  opacity: 0;
   margin: 0;
+  transition: opacity 0.8s ease-out, visibility 0.8s ease-out;
 }
+#hero-subtext.visible-element { opacity: 0.7; }
 
-@media (max-width: 760px) {
-  .hero-top-row {
-    flex-direction: column;
-    gap: 1.5rem;
+@media (max-width: 900px) {
+  .hero-grid {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
   }
-  .hero-top-row .win-terminal {
-    flex: 1 1 auto;
-    width: 100%;
+  .hero-col--left,
+  .hero-col--right {
+    align-items: center;
+    text-align: center;
   }
+  .hero-col--left .logo { align-items: center; }
+  .hero-col--left .logo__first { padding-left: 0.3em; }
+  .hero-col--left .tagline { text-align: center; }
 }
 
 /* Windows-style terminál */
@@ -393,26 +405,13 @@ body {
   visibility: visible;
 }
 
-#hero-main-heading {
-  max-width: 800px;
-  margin: 0 auto;
-}
-
 #hero-main-heading h1 {
   font-family: var(--font-display);
   font-weight: 800;
-  font-size: clamp(2rem, 4vw, 3.5rem);
+  font-size: clamp(1.5rem, 3vw, 2.5rem);
   line-height: 1.2;
   letter-spacing: -0.01em;
   color: var(--text);
-  margin: 0 0 1rem;
-}
-
-#hero-main-heading p {
-  font-family: var(--font-body);
-  font-size: 1.15rem;
-  color: var(--text);
-  opacity: 0.85;
   margin: 0;
 }
 

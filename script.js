@@ -1,73 +1,34 @@
-// Hero logo: KATEŘINA + blikající kurzor → typing efekt MLSNOVÁ
-(function () {
-  const nameEl = document.querySelector(".logo__name");
-  const cursor = document.querySelector(".logo__cursor");
-  if (!nameEl || !cursor) return;
-
-  const TEXT = "MLSNOVÁ";
-  const TYPE_DELAY = 90;
-  const START_DELAY = 1500;
-
-  setTimeout(() => {
-    cursor.classList.remove("is-blinking");
-    cursor.classList.add("is-paused");
-
-    let i = 0;
-    const interval = setInterval(() => {
-      i++;
-      nameEl.textContent = TEXT.slice(0, i);
-      if (i >= TEXT.length) {
-        clearInterval(interval);
-        cursor.classList.remove("is-paused");
-        cursor.classList.add("is-blinking");
-      }
-    }, TYPE_DELAY);
-  }, START_DELAY);
-})();
-
-// Hero intro: terminal → heading → maskot Malina (klik spustí egg hunt)
+// Hero intro: terminal → heading → subtext → maskot Malina (klik spustí egg hunt)
 document.addEventListener('DOMContentLoaded', () => {
-  const textToType1 = "> katerina --vyrob jednostrankovy_web --bez_sablon";
-  const textToType2 = "> system --spust_maskota";
+  const textToType = "> system --spust_maskota";
   const typewriterEl = document.getElementById('terminal-typewriter');
   const headingEl = document.getElementById('hero-main-heading');
+  const subtextEl = document.getElementById('hero-subtext');
   const mascotEl = document.getElementById('hero-mascot-container');
 
   if (!typewriterEl || !headingEl || !mascotEl) return;
 
   let i = 0;
-  function typeWriter1() {
-    if (i < textToType1.length) {
-      typewriterEl.innerHTML += textToType1.charAt(i);
+  function typeWriter() {
+    if (i < textToType.length) {
+      typewriterEl.innerHTML += textToType.charAt(i);
       i++;
-      setTimeout(typeWriter1, 50);
+      setTimeout(typeWriter, 50);
     } else {
       setTimeout(() => {
         headingEl.classList.add('visible-element');
-
         setTimeout(() => {
-          typewriterEl.innerHTML = "";
-          let j = 0;
-          function typeWriter2() {
-            if (j < textToType2.length) {
-              typewriterEl.innerHTML += textToType2.charAt(j);
-              j++;
-              setTimeout(typeWriter2, 50);
-            } else {
-              setTimeout(() => {
-                mascotEl.classList.add('visible-element');
-                initEyes();
-              }, 500);
-            }
-          }
-          typeWriter2();
-        }, 1500);
-
-      }, 800);
+          subtextEl?.classList.add('visible-element');
+          setTimeout(() => {
+            mascotEl.classList.add('visible-element');
+            initEyes();
+          }, 600);
+        }, 600);
+      }, 600);
     }
   }
 
-  setTimeout(typeWriter1, 800);
+  setTimeout(typeWriter, 800);
 
   function initEyes() {
     const pupils = document.querySelectorAll('.pupil');
