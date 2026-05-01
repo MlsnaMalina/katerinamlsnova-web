@@ -709,7 +709,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (found.has(id)) return false;
     found.add(id);
     saveFound(found);
-    showCounter(`Našla jsi malinu ${found.size}/${TOTAL}!`);
+    showCounter(`Další malina - ${found.size}/${TOTAL}! 🍓`);
     if (found.size >= TOTAL) {
       setTimeout(openModal, 1200);
     }
