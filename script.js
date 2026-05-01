@@ -499,7 +499,7 @@
   });
 })();
 
-// Doodle reveal + hero gift unwrap (GSAP ScrollTrigger)
+// Doodle fly-in + hero envelope unwrap (GSAP ScrollTrigger)
 (function initDoodleAnimations() {
   if (typeof window.gsap === "undefined" || typeof window.ScrollTrigger === "undefined") {
     // Fallback: zobrazit doodly bez animace
@@ -511,9 +511,9 @@
   const ScrollTrigger = window.ScrollTrigger;
   gsap.registerPlugin(ScrollTrigger);
 
-  // Hero gift — scrub: mašle se rozváže, krabička zmizí
-  const giftEl = document.querySelector(".hero-gift");
-  if (giftEl) {
+  // Hero obálka — scrub: pečeť praskne, klopa se zvedne, strany se rozevřou
+  const envelopeEl = document.querySelector(".hero-envelope");
+  if (envelopeEl) {
     const tl = gsap.timeline({
       scrollTrigger: {
         trigger: ".hero",
@@ -522,35 +522,97 @@
         scrub: 1,
       },
     });
-    tl.to(".hero-gift__bow", {
-      y: -160,
-      rotation: -25,
+    tl.to(".hero-envelope__seal", {
+      scale: 0,
+      rotation: 90,
       autoAlpha: 0,
+      transformOrigin: "120px 86px",
       ease: "power2.in",
-      duration: 0.5,
+      duration: 0.25,
     }, 0)
-      .to(".hero-gift__box", {
-        scale: 0.3,
-        autoAlpha: 0,
-        transformOrigin: "50% 100%",
-        ease: "power2.in",
+      .to(".hero-envelope__flap", {
+        rotation: -170,
+        transformOrigin: "120px 62px",
+        ease: "power2.inOut",
         duration: 0.5,
-      }, 0.3)
-      .to(".hero-gift", { autoAlpha: 0, duration: 0.2 }, 0.7);
+      }, 0.1)
+      .to(".hero-envelope__side--left", {
+        rotation: -22,
+        x: -45,
+        transformOrigin: "22px 126px",
+        ease: "power2.out",
+        duration: 0.45,
+      }, 0.35)
+      .to(".hero-envelope__side--right", {
+        rotation: 22,
+        x: 45,
+        transformOrigin: "218px 126px",
+        ease: "power2.out",
+        duration: 0.45,
+      }, 0.35)
+      .to(".hero-envelope__body", {
+        scale: 0.85,
+        autoAlpha: 0.4,
+        transformOrigin: "50% 50%",
+        duration: 0.4,
+      }, 0.5)
+      .to(".hero-envelope", { autoAlpha: 0, duration: 0.2 }, 0.85);
   }
 
-  // Section doodles — fly in když sekce vstoupí do viewportu
-  document.querySelectorAll(".doodle").forEach((el) => {
+  // Section doodles — vyletí ze směru "obálky" (z hera) do své pozice
+  // Použijeme náhodný směr + rotaci, aby letěly živě, ne jen appearovaly.
+  gsap.utils.toArray(".doodle").forEach((el, i) => {
     const section = el.closest("section");
     if (!section) return;
+
+    // Pseudo-náhodné, ale deterministické per index pro klid v duši
+    const seed = (i * 9301 + 49297) % 233280;
+    const r1 = (seed % 1000) / 1000;
+    const r2 = ((seed * 7) % 1000) / 1000;
+    const r3 = ((seed * 13) % 1000) / 1000;
+
+    const angle = r1 * Math.PI * 2;
+    const dist = 240 + r2 * 200;
+    const fromX = Math.cos(angle) * dist;
+    const fromY = Math.sin(angle) * dist - 80; // mírně shora (z obálky)
+    const fromR = (r3 - 0.5) * 220;
+
+    gsap.set(el, { x: fromX, y: fromY, rotation: fromR, scale: 0.35 });
+
+    function flyIn() {
+      el.classList.add("doodle--in");
+      gsap.to(el, {
+        x: 0,
+        y: 0,
+        rotation: 0,
+        scale: 1,
+        duration: 1.1,
+        ease: "back.out(1.4)",
+        overwrite: "auto",
+      });
+    }
+
+    function flyOut() {
+      el.classList.remove("doodle--in");
+      gsap.to(el, {
+        x: fromX * 0.5,
+        y: fromY * 0.5,
+        rotation: fromR * 0.6,
+        scale: 0.4,
+        duration: 0.6,
+        ease: "power2.in",
+        overwrite: "auto",
+      });
+    }
+
     ScrollTrigger.create({
       trigger: section,
-      start: "top 80%",
-      end: "bottom 20%",
-      onEnter: () => el.classList.add("doodle--in"),
-      onEnterBack: () => el.classList.add("doodle--in"),
-      onLeave: () => el.classList.remove("doodle--in"),
-      onLeaveBack: () => el.classList.remove("doodle--in"),
+      start: "top 78%",
+      end: "bottom 22%",
+      onEnter: flyIn,
+      onEnterBack: flyIn,
+      onLeave: flyOut,
+      onLeaveBack: flyOut,
     });
   });
 })();

@@ -264,8 +264,50 @@ body {
 }
 
 .hero__inner {
-  text-align: center;
-  max-width: 60rem;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 4rem;
+  max-width: 80rem;
+  width: 100%;
+  text-align: left;
+}
+
+.hero__left {
+  flex: 0 1 auto;
+  text-align: left;
+}
+
+.hero__right {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero__left .logo {
+  align-items: flex-start;
+}
+
+.hero__left .logo__first {
+  padding-left: 0;
+}
+
+.hero__left .tagline {
+  text-align: left;
+}
+
+@media (max-width: 900px) {
+  .hero__inner {
+    flex-direction: column;
+    gap: 2.5rem;
+    text-align: center;
+  }
+  .hero__left { text-align: center; }
+  .hero__left .logo { align-items: center; }
+  .hero__left .logo__first { padding-left: 0.3em; }
+  .hero__left .tagline { text-align: center; }
 }
 
 /* Logo */
@@ -2918,8 +2960,7 @@ body.lightbox-open {
   width: 80px;
   height: auto;
   opacity: 0;
-  transform: translateY(-30px) scale(0.6) rotate(-12deg);
-  transition: opacity 0.9s ease, transform 0.9s ease;
+  transition: opacity 0.9s ease;
   z-index: 0;
   display: block;
 }
@@ -2929,32 +2970,47 @@ body.lightbox-open {
 
 .doodle--in {
   opacity: 1;
-  transform: translateY(0) scale(1) rotate(0);
 }
 
-[data-theme="dark"] .doodle--in.doodle--beige { opacity: 0.35; }
+[data-theme="dark"] .doodle--in.doodle--neutral { opacity: 0.5; }
+[data-theme="dark"] .doodle--in.doodle--asset { opacity: 0.55; }
 [data-theme="dark"] .doodle--in.doodle--raspberry { opacity: 0.65; }
+
+[data-theme="dark"] .doodle--neutral path[stroke="black"],
+[data-theme="dark"] .doodle--neutral circle[stroke="black"],
+[data-theme="dark"] .doodle--neutral rect[stroke="black"] { stroke: white; }
+
+[data-theme="dark"] .doodle--neutral path[fill="white"],
+[data-theme="dark"] .doodle--neutral circle[fill="white"],
+[data-theme="dark"] .doodle--neutral rect[fill="white"] { fill: var(--color-deep-black); }
+
+[data-theme="dark"] .doodle--asset { filter: invert(1) hue-rotate(180deg); }
 
 @media (max-width: 1024px) {
   .doodle { display: none; }
 }
 
-/* Hero gift */
-.hero-gift-wrap {
+/* Hero envelope */
+.hero-envelope-wrap {
   position: relative;
   display: inline-block;
-  margin-top: 2.5rem;
 }
 
-.hero-gift {
-  width: 200px;
-  height: 200px;
+.hero-envelope {
+  width: 240px;
+  height: 210px;
   display: block;
   pointer-events: none;
+  overflow: visible;
 }
 
+[data-theme="dark"] .hero-envelope rect[stroke="black"],
+[data-theme="dark"] .hero-envelope path[stroke="black"] { stroke: white; }
+[data-theme="dark"] .hero-envelope rect[fill="white"],
+[data-theme="dark"] .hero-envelope path[fill="white"] { fill: var(--color-deep-black); }
+
 @media (max-width: 600px) {
-  .hero-gift { width: 160px; height: 160px; }
+  .hero-envelope { width: 200px; height: 175px; }
 }
 
 /* Egg hunt raspberries */
@@ -2979,7 +3035,8 @@ body.lightbox-open {
   outline-offset: 4px;
   border-radius: 50%;
 }
-.egg-raspberry svg { width: 100%; height: 100%; display: block; }
+.egg-raspberry svg,
+.egg-raspberry img { width: 100%; height: 100%; display: block; pointer-events: none; }
 
 .egg-raspberry.is-found {
   opacity: 1;
