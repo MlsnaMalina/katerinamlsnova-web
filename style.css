@@ -262,6 +262,7 @@ body {
   align-items: center;
   justify-content: center;
   padding: 2rem;
+  position: relative;
 }
 
 /* Hero story (terminal → heading → mascot) */
@@ -287,8 +288,10 @@ body {
 .hero-col--left .logo { align-items: flex-start; gap: 0.4rem; }
 .hero-col--left .logo__first {
   padding-left: 0;
-  font-size: clamp(0.85rem, 1vw, 1.1rem);
-  letter-spacing: 0.35em;
+  font-size: clamp(1.1rem, 1.6vw, 1.5rem);
+  letter-spacing: 0.4em;
+  color: #999;
+  font-weight: 500;
 }
 .hero-col--left .logo__last {
   font-size: clamp(2.8rem, 8.5vw, 7.5rem);
@@ -305,8 +308,12 @@ body {
   font-size: 1.05rem;
 }
 
-/* Pravý sloupec — kompaktní doplněk */
-.hero-col--right { gap: 0.9rem; }
+/* Pravý sloupec — kompaktní doplněk; obsah u spodu (kde dřív byl maskot) */
+.hero-col--right {
+  gap: 0.9rem;
+  justify-content: flex-end;
+  align-self: stretch;
+}
 
 .hero-col--right .win-terminal {
   margin: 0;
@@ -333,36 +340,43 @@ body {
   max-width: 100%;
 }
 
-/* Subtext pod celým gridem */
+/* Subtext pod pitch v pravém sloupci */
 #hero-subtext {
   font-family: var(--font-body);
   font-size: 0.85rem;
   color: var(--text-muted);
   opacity: 0;
-  margin: 2rem auto 0;
-  text-align: center;
-  width: 100%;
+  margin: 0;
+  text-align: left;
   transition: opacity 0.8s ease-out, visibility 0.8s ease-out;
 }
-#hero-subtext.visible-element { opacity: 0.6; }
+#hero-subtext.visible-element { opacity: 0.55; }
 
-/* Maskot v pravém sloupci — malý */
-.hero-col--right #hero-mascot-container {
-  width: 64px;
-  height: 70px;
-  margin-top: 0.5rem;
+/* Maskot — absolutně uprostřed hero, na výšce pitch textu */
+.hero #hero-mascot-container {
+  position: absolute;
+  left: 50%;
+  top: 60%;
+  transform: translate(-50%, -50%) translateY(20px) scale(0.9);
+  width: 65px;
+  height: 72px;
+  margin: 0;
+  z-index: 2;
 }
-.hero-col--right .doodle-mascot { width: 64px; }
-.hero-col--right #mascot-eyes-container {
+.hero #hero-mascot-container.visible-element {
+  transform: translate(-50%, -50%) translateY(0) scale(1);
+}
+.hero .doodle-mascot { width: 65px; }
+.hero #mascot-eyes-container {
   top: 28px;
   gap: 7px;
 }
-.hero-col--right .eye {
+.hero .eye {
   width: 11px;
   height: 11px;
   border-width: 1.5px;
 }
-.hero-col--right .pupil {
+.hero .pupil {
   width: 5px;
   height: 5px;
 }
@@ -380,8 +394,23 @@ body {
   .hero-col--left .logo { align-items: center; }
   .hero-col--left .logo__first { padding-left: 0.3em; }
   .hero-col--left .tagline { text-align: center; }
-  .hero-col--right { max-width: 480px; width: 100%; margin: 0 auto; }
-  #hero-pitch { text-align: center; }
+  .hero-col--right {
+    max-width: 480px;
+    width: 100%;
+    margin: 0 auto;
+    justify-content: flex-start;
+    align-items: center;
+  }
+  #hero-pitch,
+  #hero-subtext { text-align: center; }
+  .hero #hero-mascot-container {
+    position: static;
+    transform: translateY(20px) scale(0.9);
+    margin: 1.5rem auto 0;
+  }
+  .hero #hero-mascot-container.visible-element {
+    transform: translateY(0) scale(1);
+  }
 }
 
 /* Windows-style terminál */
