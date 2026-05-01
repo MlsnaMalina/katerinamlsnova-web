@@ -263,47 +263,172 @@ body {
   padding: 2rem;
 }
 
-.hero__inner {
+/* Hero story (terminal → heading → mascot) */
+.hero-story-container {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   align-items: center;
-  justify-content: flex-start;
-  max-width: 80rem;
+  text-align: center;
   width: 100%;
+  max-width: 60rem;
+  justify-content: center;
+  position: relative;
+}
+
+.terminal-text {
+  font-family: var(--font-mono);
+  color: var(--accent);
+  font-size: 1.15rem;
+  margin-bottom: 2rem;
+  min-height: 2rem;
+  word-break: break-word;
   text-align: left;
+  width: 100%;
+  max-width: 36rem;
 }
 
-.hero__left {
-  flex: 0 1 auto;
-  text-align: left;
-}
-
-.hero__left .logo {
-  align-items: flex-start;
-}
-
-.hero__left .logo__first {
-  padding-left: 0;
-}
-
-.hero__left .tagline {
-  text-align: left;
-}
-
-.logo__name {
+.blinking-cursor {
   display: inline-block;
+  margin-left: 2px;
+  animation: hero-blink 1s step-end infinite;
 }
 
-@media (max-width: 900px) {
-  .hero__inner {
-    flex-direction: column;
-    gap: 2.5rem;
-    text-align: center;
+@keyframes hero-blink { 50% { opacity: 0; } }
+
+.hidden-element {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.8s ease-out, visibility 0.8s ease-out;
+}
+
+.visible-element {
+  opacity: 1;
+  visibility: visible;
+}
+
+#hero-main-heading {
+  margin: 0 auto;
+}
+
+#hero-main-heading h1 {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(1.9rem, 4.6vw, 3.4rem);
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  color: var(--text);
+  margin: 0 0 1rem;
+}
+
+#hero-main-heading p {
+  font-family: var(--font-body);
+  font-size: 1.15rem;
+  color: var(--text);
+  opacity: 0.85;
+  margin: 0;
+}
+
+.mascot-pop {
+  transform: translateY(20px) scale(0.9);
+  transition: opacity 0.6s ease-out, transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.mascot-pop.visible-element {
+  transform: translateY(0) scale(1);
+}
+
+#hero-mascot-container {
+  position: relative;
+  margin-top: 2.5rem;
+  cursor: pointer;
+  width: 120px;
+  height: 132px;
+  outline: none;
+}
+
+#hero-mascot-container:focus-visible {
+  filter: drop-shadow(0 0 0 3px var(--accent));
+}
+
+.doodle-mascot {
+  width: 120px;
+  height: auto;
+  display: block;
+  pointer-events: none;
+}
+
+#mascot-eyes-container {
+  position: absolute;
+  top: 52px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 12px;
+  pointer-events: none;
+}
+
+.eye {
+  width: 18px;
+  height: 18px;
+  background: white;
+  border-radius: 50%;
+  border: 2px solid #1a1a1a;
+  position: relative;
+}
+
+.pupil {
+  width: 7px;
+  height: 7px;
+  background: #1a1a1a;
+  border-radius: 50%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+@media (max-width: 600px) {
+  .terminal-text {
+    font-size: 0.95rem;
   }
-  .hero__left { text-align: center; }
-  .hero__left .logo { align-items: center; }
-  .hero__left .logo__first { padding-left: 0.3em; }
-  .hero__left .tagline { text-align: center; }
+  #hero-mascot-container {
+    width: 96px;
+    height: 106px;
+  }
+  .doodle-mascot { width: 96px; }
+  #mascot-eyes-container {
+    top: 42px;
+    gap: 9px;
+  }
+  .eye { width: 14px; height: 14px; border-width: 2px; }
+  .pupil { width: 6px; height: 6px; }
+}
+
+/* Egg hunt — počítadlo / toast */
+.egg-counter-toast {
+  position: fixed;
+  left: 50%;
+  bottom: 2rem;
+  transform: translateX(-50%) translateY(20px);
+  background: var(--accent);
+  color: #fff;
+  padding: 0.85rem 1.4rem;
+  border-radius: 999px;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 1rem;
+  box-shadow: 0 8px 24px rgba(163, 31, 79, 0.35);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  z-index: 9999;
+  max-width: calc(100% - 2rem);
+  text-align: center;
+}
+
+.egg-counter-toast.is-visible {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
 }
 
 /* Logo */

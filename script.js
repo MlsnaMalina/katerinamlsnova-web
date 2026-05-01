@@ -1,34 +1,88 @@
-// Hero intro: KATEŘINA + blikající kurzor → typing efekt MLSNOVÁ → tagline fade in
-(function () {
-  const nameEl = document.querySelector(".logo__name");
-  const cursor = document.querySelector(".logo__cursor");
-  const tagline = document.querySelector(".tagline");
-  if (!nameEl || !cursor || !tagline) return;
+// Hero intro: terminal → heading → maskot Malina (klik spustí egg hunt)
+document.addEventListener('DOMContentLoaded', () => {
+  const textToType1 = "> katerina --vyrob jednostrankovy_web --bez_sablon";
+  const textToType2 = "> system --spust_maskota";
+  const typewriterEl = document.getElementById('terminal-typewriter');
+  const headingEl = document.getElementById('hero-main-heading');
+  const mascotEl = document.getElementById('hero-mascot-container');
 
-  const TEXT = "MLSNOVÁ";
-  const TYPE_DELAY = 90;
-  const START_DELAY = 1500;
-  const TAGLINE_DELAY = 500;
+  if (!typewriterEl || !headingEl || !mascotEl) return;
 
-  setTimeout(() => {
-    cursor.classList.remove("is-blinking");
-    cursor.classList.add("is-paused");
-
-    let i = 0;
-    const interval = setInterval(() => {
+  let i = 0;
+  function typeWriter1() {
+    if (i < textToType1.length) {
+      typewriterEl.innerHTML += textToType1.charAt(i);
       i++;
-      nameEl.textContent = TEXT.slice(0, i);
-      if (i >= TEXT.length) {
-        clearInterval(interval);
-        cursor.classList.remove("is-paused");
-        cursor.classList.add("is-blinking");
+      setTimeout(typeWriter1, 50);
+    } else {
+      setTimeout(() => {
+        headingEl.classList.add('visible-element');
+
         setTimeout(() => {
-          tagline.classList.add("is-visible");
-        }, TAGLINE_DELAY);
-      }
-    }, TYPE_DELAY);
-  }, START_DELAY);
-})();
+          typewriterEl.innerHTML = "";
+          let j = 0;
+          function typeWriter2() {
+            if (j < textToType2.length) {
+              typewriterEl.innerHTML += textToType2.charAt(j);
+              j++;
+              setTimeout(typeWriter2, 50);
+            } else {
+              setTimeout(() => {
+                mascotEl.classList.add('visible-element');
+                initEyes();
+              }, 500);
+            }
+          }
+          typeWriter2();
+        }, 1500);
+
+      }, 800);
+    }
+  }
+
+  setTimeout(typeWriter1, 800);
+
+  function initEyes() {
+    const pupils = document.querySelectorAll('.pupil');
+    document.addEventListener('mousemove', (e) => {
+      pupils.forEach(pupil => {
+        const rect = pupil.getBoundingClientRect();
+        const x = rect.left + rect.width / 2;
+        const y = rect.top + rect.height / 2;
+
+        const rad = Math.atan2(e.clientX - x, e.clientY - y);
+        const distance = Math.min(4, Math.hypot(e.clientX - x, e.clientY - y) / 10);
+
+        const moveX = Math.sin(rad) * distance;
+        const moveY = Math.cos(rad) * distance;
+
+        pupil.style.transform = `translate(calc(-50% + ${moveX}px), calc(-50% + ${moveY}px))`;
+      });
+    });
+  }
+
+  function triggerHunt() {
+    if (mascotEl.dataset.taken === "1") return;
+    mascotEl.dataset.taken = "1";
+
+    mascotEl.style.opacity = '0';
+    setTimeout(() => {
+      mascotEl.style.display = 'none';
+    }, 600);
+
+    if (typeof window.startEggHunt === "function") {
+      window.startEggHunt();
+    }
+  }
+
+  mascotEl.addEventListener('click', triggerHunt);
+  mascotEl.addEventListener('keydown', (e) => {
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      triggerHunt();
+    }
+  });
+});
 
 // Nav scroll behavior — pozadí navigace se objeví po scrollu > 80 px
 (function () {
@@ -536,10 +590,11 @@
   });
 })();
 
-// Egg hunt — 4 schované maliny (po odstranění obálky/hero maliny)
+// Egg hunt — 5 schovaných malin (1× hero maskot + 4× v sekcích)
 (function initEggHunt() {
   const STORAGE_KEY = "km-eggs-found";
-  const TOTAL = 4;
+  const TOTAL = 5;
+  const HERO_ID = "hero";
   const DISCOUNT_CODE = "MAM_VSECH_5_POHROMADE";
 
   function loadFound() {
@@ -580,6 +635,44 @@
     modal.setAttribute("aria-hidden", "true");
   }
 
+  // Toast/počítadlo — společný UI prvek
+  let toastEl = null;
+  function showCounter(message) {
+    if (!toastEl) {
+      toastEl = document.createElement("div");
+      toastEl.className = "egg-counter-toast";
+      document.body.appendChild(toastEl);
+    }
+    toastEl.textContent = message;
+    toastEl.classList.add("is-visible");
+    clearTimeout(showCounter._t);
+    showCounter._t = setTimeout(() => {
+      toastEl.classList.remove("is-visible");
+    }, 3500);
+  }
+
+  function registerFound(id) {
+    if (found.has(id)) return false;
+    found.add(id);
+    saveFound(found);
+    showCounter(`Našla jsi malinu ${found.size}/${TOTAL}!`);
+    if (found.size >= TOTAL) {
+      setTimeout(openModal, 1200);
+    }
+    return true;
+  }
+
+  // Veřejné API pro hero maskota
+  window.startEggHunt = function () {
+    if (!found.has(HERO_ID)) {
+      registerFound(HERO_ID);
+      // První malina — krátké úvodní upozornění navíc
+      setTimeout(() => {
+        showCounter("Jejda, rozsypaly se mi maliny! Najdi všech 5 pro slevu.");
+      }, 50);
+    }
+  };
+
   eggs.forEach((egg) => {
     const id = egg.dataset.egg;
     if (!id) return;
@@ -588,12 +681,8 @@
       e.preventDefault();
       e.stopPropagation();
       if (found.has(id)) return;
-      found.add(id);
-      saveFound(found);
       egg.classList.add("is-found");
-      if (found.size >= TOTAL) {
-        setTimeout(openModal, 800);
-      }
+      registerFound(id);
     });
   });
 
