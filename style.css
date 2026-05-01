@@ -267,8 +267,7 @@ body {
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: center;
-  gap: 4rem;
+  justify-content: flex-start;
   max-width: 80rem;
   width: 100%;
   text-align: left;
@@ -277,13 +276,6 @@ body {
 .hero__left {
   flex: 0 1 auto;
   text-align: left;
-}
-
-.hero__right {
-  flex: 0 0 auto;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
 .hero__left .logo {
@@ -296,6 +288,10 @@ body {
 
 .hero__left .tagline {
   text-align: left;
+}
+
+.logo__name {
+  display: inline-block;
 }
 
 @media (max-width: 900px) {
@@ -2987,42 +2983,6 @@ body.lightbox-open {
   .doodle { display: none; }
 }
 
-/* Hero envelope */
-.hero-envelope-wrap {
-  position: relative;
-  display: inline-block;
-  transform: rotate(-8deg);
-  transform-origin: center;
-}
-
-.hero-envelope {
-  width: 240px;
-  height: 210px;
-  display: block;
-  pointer-events: none;
-  overflow: visible;
-}
-
-.hero-envelope__seal {
-  position: absolute;
-  width: 56px;
-  height: 56px;
-  top: 60px;
-  left: calc(50% - 28px);
-  pointer-events: none;
-  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.25));
-}
-
-[data-theme="dark"] .hero-envelope rect[stroke="black"],
-[data-theme="dark"] .hero-envelope path[stroke="black"] { stroke: white; }
-[data-theme="dark"] .hero-envelope rect[fill="white"],
-[data-theme="dark"] .hero-envelope path[fill="white"] { fill: var(--color-deep-black); }
-
-@media (max-width: 600px) {
-  .hero-envelope { width: 200px; height: 175px; }
-  .hero-envelope__seal { width: 46px; height: 46px; top: 50px; left: calc(50% - 23px); }
-}
-
 /* Egg hunt raspberries */
 .egg-raspberry {
   position: absolute;
@@ -3061,7 +3021,6 @@ body.lightbox-open {
 }
 
 /* Specific egg positions */
-.egg-raspberry--hero { top: 4px; right: -8px; }
 .egg-raspberry--cta { top: 10px; right: 10px; }
 .egg-raspberry--book {
   top: 12px;

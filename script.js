@@ -1,24 +1,33 @@
-// Hero intro sekvence: kurzor bliká 2s → pauza → tagline fade in → kurzor znovu bliká
+// Hero intro: KATEŘINA + blikající kurzor → typing efekt MLSNOVÁ → tagline fade in
 (function () {
+  const nameEl = document.querySelector(".logo__name");
   const cursor = document.querySelector(".logo__cursor");
   const tagline = document.querySelector(".tagline");
-  if (!cursor || !tagline) return;
+  if (!nameEl || !cursor || !tagline) return;
 
-  // 1) Kurzor bliká 2 s (init class už nastavena v HTML)
+  const TEXT = "MLSNOVÁ";
+  const TYPE_DELAY = 90;
+  const START_DELAY = 1500;
+  const TAGLINE_DELAY = 500;
+
   setTimeout(() => {
-    // 2) Stop blikání
     cursor.classList.remove("is-blinking");
     cursor.classList.add("is-paused");
 
-    // 3) Tagline fade in (0.6 s)
-    tagline.classList.add("is-visible");
-
-    // 4) Po dokončení fade in kurzor znovu rozblikat
-    setTimeout(() => {
-      cursor.classList.remove("is-paused");
-      cursor.classList.add("is-blinking");
-    }, 600);
-  }, 2000);
+    let i = 0;
+    const interval = setInterval(() => {
+      i++;
+      nameEl.textContent = TEXT.slice(0, i);
+      if (i >= TEXT.length) {
+        clearInterval(interval);
+        cursor.classList.remove("is-paused");
+        cursor.classList.add("is-blinking");
+        setTimeout(() => {
+          tagline.classList.add("is-visible");
+        }, TAGLINE_DELAY);
+      }
+    }, TYPE_DELAY);
+  }, START_DELAY);
 })();
 
 // Nav scroll behavior — pozadí navigace se objeví po scrollu > 80 px
@@ -499,10 +508,12 @@
   });
 })();
 
-// Hero obálka rip + doodle vysypání (jeden GSAP scrub timeline)
-(function initEnvelopeBurst() {
+// Doodle reveal — fade-in když sekce vstoupí do viewportu
+(function initDoodleReveal() {
   if (typeof window.gsap === "undefined" || typeof window.ScrollTrigger === "undefined") {
-    document.querySelectorAll(".doodle").forEach((el) => el.classList.add("doodle--in"));
+    document.querySelectorAll(".doodle").forEach((el) => {
+      el.style.setProperty("--doodle-progress", "1");
+    });
     return;
   }
 
@@ -510,126 +521,25 @@
   const ScrollTrigger = window.ScrollTrigger;
   gsap.registerPlugin(ScrollTrigger);
 
-  const envelope = document.querySelector(".hero-envelope-wrap");
-  if (!envelope) return;
-
-  const doodles = gsap.utils.toArray(".doodle").filter((el) => {
-    // Skip skryté na malých viewportech (display: none → offsetParent null)
-    return el.offsetParent !== null;
-  });
-
-  // Funkce-hodnoty: spočítáme delta od přirozené pozice doodle k centru obálky
-  // Vrací se v transform space → posun, který umístí doodle vizuálně na obálku.
-  function envelopeCenter() {
-    const r = envelope.getBoundingClientRect();
-    return {
-      x: r.left + r.width / 2 + window.scrollX,
-      y: r.top + r.height / 2 + window.scrollY,
-    };
-  }
-
-  function doodleCenter(el) {
-    // Dočasně vyresetujeme transform, abychom dostali "přirozenou" pozici
-    const prev = el.style.transform;
-    el.style.transform = "none";
-    const r = el.getBoundingClientRect();
-    el.style.transform = prev;
-    return {
-      x: r.left + r.width / 2 + window.scrollX,
-      y: r.top + r.height / 2 + window.scrollY,
-    };
-  }
-
-  // Per-doodle deterministické "šum" hodnoty
-  const seedData = doodles.map((_, i) => {
-    const s = (i * 9301 + 49297) % 233280;
-    return {
-      rot: ((s % 1000) / 1000 - 0.5) * 240,
-      scale: 0.33 + (((s * 7) % 100) / 100) * 0.17, // 0.33–0.50
-    };
-  });
-
-  const tl = gsap.timeline({
-    scrollTrigger: {
-      trigger: ".hero",
-      start: "top top",
-      end: "+=420",
-      scrub: 0.8,
-      invalidateOnRefresh: true,
-    },
-  });
-
-  // === Fáze 1: obálka se trhá (progress 0 → 0.4) ===
-  tl.to(".hero-envelope__seal", {
-    scale: 0,
-    rotation: 90,
-    autoAlpha: 0,
-    ease: "power2.in",
-    duration: 0.18,
-  }, 0)
-    .to(".hero-envelope__flap", {
-      rotation: -160,
-      transformOrigin: "120px 62px",
-      ease: "power2.inOut",
-      duration: 0.32,
-    }, 0.04)
-    .to(".hero-envelope__side--left", {
-      rotation: -28,
-      x: -55,
-      transformOrigin: "22px 126px",
-      ease: "power2.out",
-      duration: 0.28,
-    }, 0.18)
-    .to(".hero-envelope__side--right", {
-      rotation: 28,
-      x: 55,
-      transformOrigin: "218px 126px",
-      ease: "power2.out",
-      duration: 0.28,
-    }, 0.18)
-    .to(".hero-envelope__body", {
-      scale: 0.78,
-      transformOrigin: "50% 50%",
-      duration: 0.22,
-    }, 0.32)
-    .to(".hero-envelope, .hero-envelope__seal", {
-      autoAlpha: 0,
-      duration: 0.18,
-    }, 0.5);
-
-  // === Fáze 2: doodly vyletí z obálky a přistanou na své pozice (0.3 → 1.0) ===
-  doodles.forEach((el, i) => {
-    const { rot, scale } = seedData[i];
-
-    function fromX() {
-      const ec = envelopeCenter();
-      const dc = doodleCenter(el);
-      return ec.x - dc.x;
-    }
-    function fromY() {
-      const ec = envelopeCenter();
-      const dc = doodleCenter(el);
-      return ec.y - dc.y;
-    }
-
-    // FromTo s immediateRender: fromVars aplikované hned → doodle je schovaný
-    // v obálce. Pak fade-in v 0.3, let v 0.35–1.0.
-    tl.fromTo(el,
-      { x: fromX, y: fromY, scale: scale, rotation: rot, "--doodle-progress": 0 },
-      { "--doodle-progress": 1, duration: 0.06, ease: "none" },
-      0.3
-    );
-    tl.to(el,
-      { x: 0, y: 0, scale: 1, rotation: 0, ease: "power2.out", duration: 0.65 },
-      0.35
-    );
+  gsap.utils.toArray(".doodle").forEach((el) => {
+    const section = el.closest("section");
+    if (!section) return;
+    ScrollTrigger.create({
+      trigger: section,
+      start: "top 80%",
+      end: "bottom 20%",
+      onEnter: () => gsap.to(el, { "--doodle-progress": 1, duration: 0.8 }),
+      onEnterBack: () => gsap.to(el, { "--doodle-progress": 1, duration: 0.8 }),
+      onLeave: () => gsap.to(el, { "--doodle-progress": 0, duration: 0.5 }),
+      onLeaveBack: () => gsap.to(el, { "--doodle-progress": 0, duration: 0.5 }),
+    });
   });
 })();
 
-// Egg hunt — 5 schovaných malin
+// Egg hunt — 4 schované maliny (po odstranění obálky/hero maliny)
 (function initEggHunt() {
   const STORAGE_KEY = "km-eggs-found";
-  const TOTAL = 5;
+  const TOTAL = 4;
   const DISCOUNT_CODE = "MAM_VSECH_5_POHROMADE";
 
   function loadFound() {
