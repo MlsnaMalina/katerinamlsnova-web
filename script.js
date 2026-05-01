@@ -498,3 +498,153 @@
     }
   });
 })();
+
+// Doodle reveal + hero gift unwrap (GSAP ScrollTrigger)
+(function initDoodleAnimations() {
+  if (typeof window.gsap === "undefined" || typeof window.ScrollTrigger === "undefined") {
+    // Fallback: zobrazit doodly bez animace
+    document.querySelectorAll(".doodle").forEach((el) => el.classList.add("doodle--in"));
+    return;
+  }
+
+  const gsap = window.gsap;
+  const ScrollTrigger = window.ScrollTrigger;
+  gsap.registerPlugin(ScrollTrigger);
+
+  // Hero gift — scrub: mašle se rozváže, krabička zmizí
+  const giftEl = document.querySelector(".hero-gift");
+  if (giftEl) {
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: ".hero",
+        start: "top top",
+        end: "bottom top",
+        scrub: 1,
+      },
+    });
+    tl.to(".hero-gift__bow", {
+      y: -160,
+      rotation: -25,
+      autoAlpha: 0,
+      ease: "power2.in",
+      duration: 0.5,
+    }, 0)
+      .to(".hero-gift__box", {
+        scale: 0.3,
+        autoAlpha: 0,
+        transformOrigin: "50% 100%",
+        ease: "power2.in",
+        duration: 0.5,
+      }, 0.3)
+      .to(".hero-gift", { autoAlpha: 0, duration: 0.2 }, 0.7);
+  }
+
+  // Section doodles — fly in když sekce vstoupí do viewportu
+  document.querySelectorAll(".doodle").forEach((el) => {
+    const section = el.closest("section");
+    if (!section) return;
+    ScrollTrigger.create({
+      trigger: section,
+      start: "top 80%",
+      end: "bottom 20%",
+      onEnter: () => el.classList.add("doodle--in"),
+      onEnterBack: () => el.classList.add("doodle--in"),
+      onLeave: () => el.classList.remove("doodle--in"),
+      onLeaveBack: () => el.classList.remove("doodle--in"),
+    });
+  });
+})();
+
+// Egg hunt — 5 schovaných malin
+(function initEggHunt() {
+  const STORAGE_KEY = "km-eggs-found";
+  const TOTAL = 5;
+  const DISCOUNT_CODE = "MAM_VSECH_5_POHROMADE";
+
+  function loadFound() {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (!raw) return new Set();
+      const arr = JSON.parse(raw);
+      return new Set(Array.isArray(arr) ? arr.map(String) : []);
+    } catch (e) {
+      return new Set();
+    }
+  }
+
+  function saveFound(set) {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify([...set]));
+    } catch (e) {
+      // noop
+    }
+  }
+
+  const found = loadFound();
+  const eggs = document.querySelectorAll(".egg-raspberry");
+  const modal = document.getElementById("egg-modal");
+  const closeBtn = document.getElementById("egg-modal-close");
+  const copyBtn = document.getElementById("egg-modal-copy");
+
+  function openModal() {
+    if (!modal) return;
+    modal.classList.add("is-open");
+    modal.setAttribute("aria-hidden", "false");
+    setTimeout(() => closeBtn?.focus(), 50);
+  }
+
+  function closeModal() {
+    if (!modal) return;
+    modal.classList.remove("is-open");
+    modal.setAttribute("aria-hidden", "true");
+  }
+
+  eggs.forEach((egg) => {
+    const id = egg.dataset.egg;
+    if (!id) return;
+    if (found.has(id)) egg.classList.add("is-found");
+    egg.addEventListener("click", (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      if (found.has(id)) return;
+      found.add(id);
+      saveFound(found);
+      egg.classList.add("is-found");
+      if (found.size >= TOTAL) {
+        setTimeout(openModal, 800);
+      }
+    });
+  });
+
+  closeBtn?.addEventListener("click", closeModal);
+
+  copyBtn?.addEventListener("click", async () => {
+    const original = copyBtn.textContent;
+    try {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        await navigator.clipboard.writeText(DISCOUNT_CODE);
+      } else {
+        const ta = document.createElement("textarea");
+        ta.value = DISCOUNT_CODE;
+        ta.style.position = "fixed";
+        ta.style.opacity = "0";
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand("copy");
+        document.body.removeChild(ta);
+      }
+      copyBtn.textContent = "Zkopírováno!";
+    } catch (err) {
+      copyBtn.textContent = "Nelze zkopírovat";
+    }
+    setTimeout(() => { copyBtn.textContent = original; }, 1800);
+  });
+
+  modal?.addEventListener("click", (e) => {
+    if (e.target === modal) closeModal();
+  });
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && modal?.classList.contains("is-open")) closeModal();
+  });
+})();

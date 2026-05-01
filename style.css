@@ -2896,3 +2896,208 @@ body.lightbox-open {
     font-size: 1.2rem;
   }
 }
+
+/* ============================================
+   Doodle layer + hero gift + egg hunt
+   ============================================ */
+
+.hero, .skills, .works, .about, .pricing, .process, .game-section, .contact {
+  position: relative;
+  overflow: hidden;
+}
+
+.hero__inner, .skills__inner, .works__inner, .about__inner,
+.pricing__inner, .process__inner, .game-section__inner, .contact__inner {
+  position: relative;
+  z-index: 1;
+}
+
+.doodle {
+  position: absolute;
+  pointer-events: none;
+  width: 80px;
+  height: auto;
+  opacity: 0;
+  transform: translateY(-30px) scale(0.6) rotate(-12deg);
+  transition: opacity 0.9s ease, transform 0.9s ease;
+  z-index: 0;
+  display: block;
+}
+
+.doodle--lg { width: 110px; }
+.doodle--sm { width: 60px; }
+
+.doodle--in {
+  opacity: 1;
+  transform: translateY(0) scale(1) rotate(0);
+}
+
+[data-theme="dark"] .doodle--in.doodle--beige { opacity: 0.35; }
+[data-theme="dark"] .doodle--in.doodle--raspberry { opacity: 0.65; }
+
+@media (max-width: 1024px) {
+  .doodle { display: none; }
+}
+
+/* Hero gift */
+.hero-gift-wrap {
+  position: relative;
+  display: inline-block;
+  margin-top: 2.5rem;
+}
+
+.hero-gift {
+  width: 200px;
+  height: 200px;
+  display: block;
+  pointer-events: none;
+}
+
+@media (max-width: 600px) {
+  .hero-gift { width: 160px; height: 160px; }
+}
+
+/* Egg hunt raspberries */
+.egg-raspberry {
+  position: absolute;
+  width: 36px;
+  height: 36px;
+  opacity: 0.25;
+  cursor: pointer;
+  background: none;
+  border: 0;
+  padding: 0;
+  z-index: 5;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  line-height: 0;
+}
+
+.egg-raspberry:hover { opacity: 0.55; }
+.egg-raspberry:focus-visible {
+  opacity: 0.7;
+  outline: 2px dashed var(--accent);
+  outline-offset: 4px;
+  border-radius: 50%;
+}
+.egg-raspberry svg { width: 100%; height: 100%; display: block; }
+
+.egg-raspberry.is-found {
+  opacity: 1;
+  animation: egg-pulse 0.7s ease;
+}
+
+@keyframes egg-pulse {
+  0% { transform: scale(1) rotate(0); }
+  35% { transform: scale(1.7) rotate(18deg); }
+  65% { transform: scale(0.95) rotate(-6deg); }
+  100% { transform: scale(1) rotate(0); }
+}
+
+/* Specific egg positions */
+.egg-raspberry--hero { top: 4px; right: -8px; }
+.egg-raspberry--cta { top: 10px; right: 10px; }
+.egg-raspberry--book { top: 8px; left: 8px; }
+.egg-raspberry--pssst { display: inline-block; position: relative; opacity: 0.45; vertical-align: middle; margin-left: 0.4rem; top: 0; }
+.egg-raspberry--submit { position: absolute; bottom: -22px; left: 50%; transform: translateX(-50%); }
+.egg-raspberry--submit.is-found { transform: translateX(-50%) scale(1); animation: egg-pulse-translated 0.7s ease; }
+
+@keyframes egg-pulse-translated {
+  0% { transform: translateX(-50%) scale(1) rotate(0); }
+  35% { transform: translateX(-50%) scale(1.7) rotate(18deg); }
+  65% { transform: translateX(-50%) scale(0.95) rotate(-6deg); }
+  100% { transform: translateX(-50%) scale(1) rotate(0); }
+}
+
+.contact__form { position: relative; }
+
+/* Pssst easter egg text */
+.pricing__easter-egg {
+  font-family: var(--font-body);
+  font-style: italic;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-top: 32px;
+  text-align: center;
+}
+
+/* Egg modal */
+.egg-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  padding: 1rem;
+}
+
+.egg-modal.is-open { display: flex; }
+
+.egg-modal__panel {
+  background: var(--bg);
+  color: var(--text);
+  border-radius: 14px;
+  padding: 2.5rem 2rem 2rem;
+  max-width: 28rem;
+  width: 100%;
+  text-align: center;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+  border: 2px solid var(--accent);
+}
+
+.egg-modal__title {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  margin-bottom: 0.75rem;
+  color: var(--accent);
+  line-height: 1.2;
+}
+
+.egg-modal__text {
+  margin-bottom: 1rem;
+  color: var(--text);
+}
+
+.egg-modal__code {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-weight: 600;
+  font-size: 1.05rem;
+  background: var(--bg-elevated);
+  padding: 0.6rem 1rem;
+  border-radius: 8px;
+  margin-bottom: 0.5rem;
+  letter-spacing: 0.04em;
+  color: var(--accent);
+}
+
+.egg-modal__discount {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  margin-bottom: 1.5rem;
+}
+
+.egg-modal__actions {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.egg-modal__btn {
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  padding: 0.6rem 1.4rem;
+  border-radius: 999px;
+  cursor: pointer;
+  border: 2px solid var(--accent);
+  background: transparent;
+  color: var(--accent);
+  font-weight: 500;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.egg-modal__btn:hover { background: var(--accent); color: var(--bg); }
+.egg-modal__btn--primary { background: var(--accent); color: var(--bg); }
+.egg-modal__btn--primary:hover { background: var(--accent-hover); }
