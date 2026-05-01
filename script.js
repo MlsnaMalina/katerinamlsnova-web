@@ -665,9 +665,15 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   const found = loadFound();
-  const eggs = document.querySelectorAll(".egg-raspberry");
   const modal = document.getElementById("egg-modal");
   const closeBtn = document.getElementById("egg-modal-close");
+
+  function markFoundEggs() {
+    document.querySelectorAll(".egg-raspberry").forEach((egg) => {
+      const id = egg.dataset.egg;
+      if (id && found.has(id)) egg.classList.add("is-found");
+    });
+  }
 
   function openModal() {
     if (!modal) return;
@@ -721,18 +727,20 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   };
 
-  eggs.forEach((egg) => {
+  markFoundEggs();
+
+  // Event delegation — odolnější vůči pořadí načítání a překryvům
+  document.addEventListener("click", (e) => {
+    const egg = e.target.closest && e.target.closest(".egg-raspberry");
+    if (!egg) return;
     const id = egg.dataset.egg;
     if (!id) return;
-    if (found.has(id)) egg.classList.add("is-found");
-    egg.addEventListener("click", (e) => {
-      e.preventDefault();
-      e.stopPropagation();
-      if (found.has(id)) return;
-      egg.classList.add("is-found");
-      registerFound(id);
-    });
-  });
+    e.preventDefault();
+    e.stopPropagation();
+    if (found.has(id)) return;
+    egg.classList.add("is-found");
+    registerFound(id);
+  }, true);
 
   closeBtn?.addEventListener("click", closeModal);
 
