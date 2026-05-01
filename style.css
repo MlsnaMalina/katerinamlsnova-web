@@ -275,34 +275,84 @@ body {
   position: relative;
 }
 
-/* macOS-style terminál */
-.mac-terminal {
-  background-color: #1e1e1e;
-  border-radius: 8px;
+/* Hero top row: logo vlevo, terminál vpravo */
+.hero-top-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 2.5rem;
+  width: 100%;
+  flex-wrap: wrap;
+}
+
+.hero-top-row .logo {
+  flex: 0 0 auto;
+}
+
+.hero-top-row .win-terminal {
+  flex: 1 1 360px;
+  max-width: 600px;
+  margin: 0;
+}
+
+@media (max-width: 760px) {
+  .hero-top-row {
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  .hero-top-row .win-terminal {
+    flex: 1 1 auto;
+    width: 100%;
+  }
+}
+
+/* Windows-style terminál */
+.win-terminal {
+  background-color: #0c0c0c;
+  border: 1px solid #444;
+  border-radius: 4px;
   width: 100%;
   max-width: 600px;
   margin: 2rem auto;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
   overflow: hidden;
   text-align: left;
 }
-.mac-terminal-header {
-  background-color: #333;
-  padding: 10px 15px;
+.win-terminal-header {
+  background-color: #1f1f1f;
+  padding: 8px 12px;
   display: flex;
-  gap: 8px;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #333;
 }
-.mac-terminal-header .dot {
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
+.win-terminal-title {
+  color: #ccc;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
 }
-.dot.red { background-color: #ff5f56; }
-.dot.yellow { background-color: #ffbd2e; }
-.dot.green { background-color: #27c93f; }
-.mac-terminal-body {
+.win-terminal-buttons {
+  display: flex;
+  gap: 4px;
+}
+.win-btn {
+  color: #aaa;
+  font-size: 0.75rem;
+  padding: 0 6px;
+  cursor: default;
+}
+.win-btn:hover { color: #fff; }
+.win-btn-close:hover {
+  background-color: #e81123;
+  color: #fff;
+  border-radius: 2px;
+}
+.win-terminal-body {
   padding: 20px;
-  min-height: 60px;
+  min-height: 80px;
+  display: flex;
+  align-items: center;
 }
 
 .terminal-text {
@@ -316,7 +366,12 @@ body {
   font-size: 1.1rem;
   font-family: var(--font-mono);
   margin: 0;
-  min-height: 1.6rem;
+}
+
+@media (max-width: 600px) {
+  #hero-terminal { font-size: 0.9rem; }
+  .win-terminal-body { padding: 16px; min-height: 70px; }
+  .win-terminal-title { font-size: 0.7rem; }
 }
 
 .blinking-cursor {
@@ -339,18 +394,18 @@ body {
 }
 
 #hero-main-heading {
+  max-width: 800px;
   margin: 0 auto;
 }
 
 #hero-main-heading h1 {
   font-family: var(--font-display);
   font-weight: 800;
-  font-size: clamp(1.8rem, 4vw, 3rem);
+  font-size: clamp(2rem, 4vw, 3.5rem);
   line-height: 1.2;
   letter-spacing: -0.01em;
   color: var(--text);
-  max-width: 800px;
-  margin: 0 auto 1rem;
+  margin: 0 0 1rem;
 }
 
 #hero-main-heading p {
