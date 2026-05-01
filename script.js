@@ -743,11 +743,4 @@ document.addEventListener('DOMContentLoaded', () => {
   document.addEventListener("keydown", (e) => {
     if (e.key === "Escape" && modal?.classList.contains("is-open")) closeModal();
   });
-
-  // Fallback: pokud uživatel už má všechny maliny v localStorage z předchozí
-  // session (a modal se nestihl zobrazit), ukaž ho jednou při dalším načtení.
-  if (found.size >= TOTAL && !sessionStorage.getItem("km-eggs-modal-shown")) {
-    sessionStorage.setItem("km-eggs-modal-shown", "1");
-    setTimeout(openModal, 800);
-  }
 })();
