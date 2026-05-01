@@ -1459,7 +1459,7 @@ body.lightbox-open {
   display: grid;
   grid-template-columns: 64px 1fr auto;
   gap: 1.5rem;
-  align-items: center;
+  align-items: flex-start;
   padding: 1.5rem 0.5rem;
   border-bottom: 1px solid var(--border);
   transition: background-color 0.3s ease;
@@ -1594,7 +1594,7 @@ body.lightbox-open {
 
 .pricing-row__price {
   font-family: var(--font-mono);
-  font-weight: 600;
+  font-weight: 400;
   font-size: 1.25rem;
   color: var(--accent);
   white-space: nowrap;
@@ -1602,26 +1602,21 @@ body.lightbox-open {
 
 .pricing-row__cta-btn {
   display: inline-block;
-  margin-top: 1rem;
-  padding: 10px 22px;
-  font-family: var(--font-body);
-  font-size: 14px;
-  font-weight: 500;
-  color: #fff;
   background-color: #a31f4f;
-  border-radius: 6px;
+  color: #f5f0e8;
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: bold;
+  padding: 12px 24px;
+  margin-top: 15px;
+  border: none;
+  cursor: pointer;
   text-decoration: none;
-  transition: background-color 0.2s ease, transform 0.1s ease;
+  border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;
+  transition: transform 0.2s ease, background-color 0.2s ease;
 }
-
-.pricing-row__cta-btn:hover,
-.pricing-row__cta-btn:focus-visible {
+.pricing-row__cta-btn:hover {
+  transform: scale(1.02) rotate(-1deg);
   background-color: #8a1942;
-  outline: none;
-}
-
-.pricing-row__cta-btn:active {
-  transform: translateY(1px);
 }
 
 .pricing-row__cta {
