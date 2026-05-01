@@ -751,4 +751,14 @@ document.addEventListener('DOMContentLoaded', () => {
   document.addEventListener("keydown", (e) => {
     if (e.key === "Escape" && modal?.classList.contains("is-open")) closeModal();
   });
+
+  // Skrytá reset funkce pro testování — spustit v konzoli: resetEggHunt()
+  window.resetEggHunt = function () {
+    try {
+      localStorage.removeItem(STORAGE_KEY);
+      sessionStorage.removeItem("km-eggs-modal-shown");
+    } catch (e) {}
+    console.log("Egg hunt resetován. Reloaduju stránku…");
+    location.reload();
+  };
 })();
