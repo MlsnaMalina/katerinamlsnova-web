@@ -668,12 +668,12 @@ document.addEventListener('DOMContentLoaded', () => {
   const eggs = document.querySelectorAll(".egg-raspberry");
   const modal = document.getElementById("egg-modal");
   const closeBtn = document.getElementById("egg-modal-close");
-  const copyBtn = document.getElementById("egg-modal-copy");
 
   function openModal() {
     if (!modal) return;
     modal.classList.add("is-open");
     modal.setAttribute("aria-hidden", "false");
+    try { sessionStorage.setItem("km-eggs-modal-shown", "1"); } catch (e) {}
     setTimeout(() => closeBtn?.focus(), 50);
   }
 
@@ -736,28 +736,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
   closeBtn?.addEventListener("click", closeModal);
 
-  copyBtn?.addEventListener("click", async () => {
-    const original = copyBtn.textContent;
-    try {
-      if (navigator.clipboard && navigator.clipboard.writeText) {
-        await navigator.clipboard.writeText(DISCOUNT_CODE);
-      } else {
-        const ta = document.createElement("textarea");
-        ta.value = DISCOUNT_CODE;
-        ta.style.position = "fixed";
-        ta.style.opacity = "0";
-        document.body.appendChild(ta);
-        ta.select();
-        document.execCommand("copy");
-        document.body.removeChild(ta);
-      }
-      copyBtn.textContent = "Zkopírováno!";
-    } catch (err) {
-      copyBtn.textContent = "Nelze zkopírovat";
-    }
-    setTimeout(() => { copyBtn.textContent = original; }, 1800);
-  });
-
   modal?.addEventListener("click", (e) => {
     if (e.target === modal) closeModal();
   });
@@ -765,4 +743,11 @@ document.addEventListener('DOMContentLoaded', () => {
   document.addEventListener("keydown", (e) => {
     if (e.key === "Escape" && modal?.classList.contains("is-open")) closeModal();
   });
+
+  // Fallback: pokud uživatel už má všechny maliny v localStorage z předchozí
+  // session (a modal se nestihl zobrazit), ukaž ho jednou při dalším načtení.
+  if (found.size >= TOTAL && !sessionStorage.getItem("km-eggs-modal-shown")) {
+    sessionStorage.setItem("km-eggs-modal-shown", "1");
+    setTimeout(openModal, 800);
+  }
 })();
