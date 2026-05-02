@@ -3319,10 +3319,15 @@ body.lightbox-open {
 /* Specific egg positions */
 .egg-raspberry--cta { top: 10px; right: 10px; }
 .egg-raspberry--book {
-  top: 12px;
-  right: 16px;
-  left: auto;
+  top: 50%;
+  left: 50%;
+  right: auto;
+  transform: translate(-50%, -50%);
   z-index: 10;
+}
+.egg-raspberry--book:hover { transform: translate(-50%, -50%) scale(1.15); }
+@media (max-width: 800px) {
+  .egg-raspberry--book { top: calc(50% - 18px); }
 }
 .egg-raspberry--pssst { display: inline-block; position: relative; opacity: 1; vertical-align: middle; margin-left: 0.4rem; top: 0; }
 .egg-raspberry--pssst.is-found { opacity: 0.15; }
@@ -3663,6 +3668,7 @@ body.lightbox-open {
 
 /* Live showcase — interaktivní slider prezentace v sekci Ukázky */
 .showcase-grid-2col {
+  position: relative;
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 2rem;
