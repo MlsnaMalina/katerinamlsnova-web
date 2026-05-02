@@ -3662,6 +3662,26 @@ body.lightbox-open {
 }
 
 /* Live showcase — interaktivní slider prezentace v sekci Ukázky */
+.showcase-grid-2col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  max-width: 1100px;
+  margin: 0 auto 4rem auto;
+  align-items: start;
+}
+
+.showcase-grid-2col .live-showcase-item {
+  margin: 0;
+  max-width: none;
+}
+
+@media (max-width: 800px) {
+  .showcase-grid-2col {
+    grid-template-columns: 1fr;
+  }
+}
+
 .live-showcase-item {
   margin: 48px auto;
   max-width: 64rem;

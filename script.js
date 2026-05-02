@@ -242,44 +242,50 @@ document.addEventListener('DOMContentLoaded', () => {
   observer.observe(media);
 })();
 
-// Slider prezentace (Online prezentace v sekci Ukázky)
-(function initPresentationSlider() {
+// Slidery v sekci Ukázky — univerzální obsluha více nezávislých slideru
+(function initShowcaseSliders() {
   function init() {
-    const slides = document.querySelectorAll('#witch-presentation .slide');
-    const prevBtn = document.getElementById('prev-slide');
-    const nextBtn = document.getElementById('next-slide');
-    const counterText = document.getElementById('slide-counter');
-    const sliderRegion = document.getElementById('witch-presentation');
+    const sliders = document.querySelectorAll('.presentation-slider-container');
 
-    if (!slides.length || !prevBtn || !nextBtn || !counterText) return;
+    sliders.forEach((slider) => {
+      const slides = slider.querySelectorAll('.slide');
+      const prevBtn = slider.querySelector('.prev-slide');
+      const nextBtn = slider.querySelector('.next-slide');
+      const counterText = slider.querySelector('.slide-counter-text');
+      const region = slider.querySelector('.slider-images');
 
-    let currentSlide = 0;
-    const totalSlides = slides.length;
+      if (!slides.length || !prevBtn || !nextBtn || !counterText) return;
 
-    function updateSlider() {
-      slides.forEach((slide, index) => {
-        slide.classList.toggle('active', index === currentSlide);
-      });
-      counterText.textContent = `${currentSlide + 1} / ${totalSlides}`;
-    }
+      let currentSlide = 0;
+      const totalSlides = slides.length;
 
-    function goNext() {
-      currentSlide = (currentSlide + 1) % totalSlides;
-      updateSlider();
-    }
+      function updateSlider() {
+        slides.forEach((slide, index) => {
+          slide.classList.toggle('active', index === currentSlide);
+        });
+        counterText.textContent = `${currentSlide + 1} / ${totalSlides}`;
+      }
 
-    function goPrev() {
-      currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
-      updateSlider();
-    }
+      function goNext() {
+        currentSlide = (currentSlide + 1) % totalSlides;
+        updateSlider();
+      }
 
-    nextBtn.addEventListener('click', goNext);
-    prevBtn.addEventListener('click', goPrev);
+      function goPrev() {
+        currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+        updateSlider();
+      }
 
-    sliderRegion.setAttribute('tabindex', '0');
-    sliderRegion.addEventListener('keydown', (e) => {
-      if (e.key === 'ArrowRight') { e.preventDefault(); goNext(); }
-      if (e.key === 'ArrowLeft')  { e.preventDefault(); goPrev(); }
+      nextBtn.addEventListener('click', goNext);
+      prevBtn.addEventListener('click', goPrev);
+
+      if (region) {
+        region.setAttribute('tabindex', '0');
+        region.addEventListener('keydown', (e) => {
+          if (e.key === 'ArrowRight') { e.preventDefault(); goNext(); }
+          if (e.key === 'ArrowLeft')  { e.preventDefault(); goPrev(); }
+        });
+      }
     });
   }
 
