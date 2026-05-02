@@ -242,6 +242,28 @@ document.addEventListener('DOMContentLoaded', () => {
   observer.observe(media);
 })();
 
+// Featured game embed — loading placeholder + 8s timeout fallback
+(function () {
+  const wrap = document.querySelector(".featured-game__embed");
+  if (!wrap) return;
+  const iframe = wrap.querySelector(".featured-game__iframe");
+  const placeholder = wrap.querySelector(".featured-game__placeholder");
+  if (!iframe || !placeholder) return;
+
+  let loaded = false;
+  iframe.addEventListener("load", () => {
+    loaded = true;
+    placeholder.dataset.state = "ready";
+  });
+
+  setTimeout(() => {
+    if (loaded) return;
+    placeholder.dataset.state = "error";
+    placeholder.innerHTML =
+      'Hra se nepodařila načíst. <a href="https://kouzelny-srdickovy-lektvar.vercel.app/" target="_blank" rel="noopener noreferrer">Otevřít v novém okně ↗</a>';
+  }, 8000);
+})();
+
 // Ukázky — 3D coverflow carousel + lightbox po kliknutí na střední kartu
 (function () {
   const carousel = document.querySelector(".works__carousel");
