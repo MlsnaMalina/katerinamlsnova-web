@@ -242,6 +242,54 @@ document.addEventListener('DOMContentLoaded', () => {
   observer.observe(media);
 })();
 
+// Slider prezentace (Online prezentace v sekci Ukázky)
+(function initPresentationSlider() {
+  function init() {
+    const slides = document.querySelectorAll('#witch-presentation .slide');
+    const prevBtn = document.getElementById('prev-slide');
+    const nextBtn = document.getElementById('next-slide');
+    const counterText = document.getElementById('slide-counter');
+    const sliderRegion = document.getElementById('witch-presentation');
+
+    if (!slides.length || !prevBtn || !nextBtn || !counterText) return;
+
+    let currentSlide = 0;
+    const totalSlides = slides.length;
+
+    function updateSlider() {
+      slides.forEach((slide, index) => {
+        slide.classList.toggle('active', index === currentSlide);
+      });
+      counterText.textContent = `${currentSlide + 1} / ${totalSlides}`;
+    }
+
+    function goNext() {
+      currentSlide = (currentSlide + 1) % totalSlides;
+      updateSlider();
+    }
+
+    function goPrev() {
+      currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+      updateSlider();
+    }
+
+    nextBtn.addEventListener('click', goNext);
+    prevBtn.addEventListener('click', goPrev);
+
+    sliderRegion.setAttribute('tabindex', '0');
+    sliderRegion.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight') { e.preventDefault(); goNext(); }
+      if (e.key === 'ArrowLeft')  { e.preventDefault(); goPrev(); }
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();
+
 // Featured game embed — loading placeholder + 8s timeout fallback
 (function () {
   const wrap = document.querySelector(".featured-game__embed");
