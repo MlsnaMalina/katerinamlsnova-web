@@ -1387,6 +1387,29 @@ body.lightbox-open {
 
 .pricing {
   padding: 6rem 1.5rem 8rem;
+  position: relative;
+}
+
+.pricing__calc-arrow {
+  position: absolute;
+  top: 22rem;
+  left: 0;
+  right: 0;
+  height: 60rem;
+  pointer-events: none;
+  color: var(--accent);
+  overflow: visible;
+  z-index: 0;
+}
+.pricing__calc-arrow path {
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  opacity: 0.85;
+}
+@media (max-width: 720px) {
+  .pricing__calc-arrow { display: none; }
 }
 
 .pricing__inner {
@@ -1514,15 +1537,6 @@ body.lightbox-open {
 .pricing-row__calc-cta-text {
   display: block;
   white-space: nowrap;
-}
-.pricing-row__calc-cta-arrow {
-  width: 70px;
-  height: 170px;
-  overflow: visible;
-  pointer-events: none;
-}
-@media (max-width: 720px) {
-  .pricing-row__calc-cta-arrow { height: 110px; width: 60px; }
 }
 
 .doodle-underline {
