@@ -1,138 +1,109 @@
 # FILES_AND_MATERIALS.md
 
-## Kořenová struktura (`C:\Users\merit\OneDrive\Desktop\AI\Ostatní\katerinamlsnova-web\`)
+## Kořenová cesta projektu
+`C:\Users\merit\OneDrive\Desktop\AI\Ostatní\katerinamlsnova-web\`
 
-### Hlavní zdrojové soubory (do těchto SE pracuje)
-| Soubor | Účel | Velikost | Důležitost |
-|---|---|---|---|
-| `index.html` | Kompletní DOM, sekce, modal, SVG defs | 1035 ř. | **HLAVNÍ** |
-| `style.css` | Všechny styly, paleta, dark/light tokens, animace | 3535 ř. | **HLAVNÍ** |
-| `script.js` | Animace, nav, theme toggle, egg hunt, cookie consent | 760 ř. | **HLAVNÍ** |
-| `game.js` | Hra Skákající malina (canvas) | 599 ř. | Hlavní (samostatný feature) |
-| `zasady-ochrany-osobnich-udaju.html` | GDPR stránka (samostatná) | — | Hlavní |
-
-### Pomocné soubory (kontext, dokumentace)
-| Soubor | Účel | Pozn. |
+## Hlavní zdrojové soubory (DO TĚCHTO se zasahuje při úpravách)
+| Soubor | Účel | Vstoupit pokud |
 |---|---|---|
-| `README.md` | Veřejné readme repa | Aktuální? Ověřit obsah. |
-| `PLAN.md` | Původní plán a roadmap projektu | Historický kontext |
-| `CONTEXT.md` | Starší kontextový dokument | **POZOR — zastaralé barvy** |
-| `SESSION_NOTES.md` | Starší session notes z dřívější práce | Untracked, neudržováno aktivně |
-| `LICENSE` | Licence | — |
-| `zasady-ochrany-osobnich-udaju-draft.md` | Draft GDPR textu (markdown verze) | Zdrojový text pro HTML stránku |
+| `index.html` | Kompletní DOM webu | Měníš obsah, strukturu sekcí, texty, přidáváš/měníš HTML elementy |
+| `style.css` | Všechny styly + CSS proměnné + dark/light tokeny | Měníš barvy, layout, animace, responsive breakpointy |
+| `script.js` | Animace, navigace, theme toggle, slidery, egg hunt, cookie consent, Formspree handlery | Měníš JS logiku (kromě hry) |
+| `game.js` | Hra Skákající malina (canvas, fyzika) | Měníš pravidla / vizuál hry |
+| `zasady-ochrany-osobnich-udaju.html` | Statická GDPR stránka | Editace právního textu |
 
-### Untracked soubory v rootu (NENÍ v gitu)
-| Soubor | Pravděpodobný obsah |
-|---|---|
-| `files.zip` | Neznámý archiv. **Nutno ověřit, co obsahuje, nebo vyloučit z .gitignore.** |
-| `hodnoceni-od-antigravity-kveten.txt` | Feedback / hodnocení od jiného AI (Antigravity) |
-| `hodnoceni-od-claude-design-kveten.txt` | Feedback od Claude (designové review) |
-| `.claude/` | Claude Code lokální nastavení |
-
-### Generovaná / build / output
-- **Žádné** — projekt nemá build systém. Soubory v rootu = produkční soubory.
-
----
-
-## Složka `assets/`
-
-Obsahuje obrázky, ikony a SVG. Všechny se odkazují přímo z `index.html` nebo `script.js`/`game.js`.
-
-| Soubor | Použití |
-|---|---|
-| `katerina-portrait-transparent.png` | Sekce "O mně" — portrét |
-| `malina.svg` | Egg hunt — schované maliny v sekcích |
-| `malina-game.svg` | Hra Skákající malina — hráč |
-| `brouk-game.svg` | Hra — překážka brouk |
-| `mravenec-game.svg` | Hra — překážka mravenec |
-| `wind-game.svg` | Hra — vizuální prvek vítr |
-| `omalovanka-doodle-hledej.png` | Sekce Ukázky — preview omalovánky "Hledej" |
-| `omalovanka-podle-cisel.png` | Sekce Ukázky — preview omalovánky "Podle čísel" (modifikováno, viz `git status`) |
-| `kniha-beltaine-02.png` | Sekce Ukázky — preview knihy Beltaine |
-| `hra-kouzelny-srdickovy-lektvar.png` | Sekce Ukázky — preview hry |
-| `hra-nakrm-mlsne-zviratko.png` | Sekce Ukázky — preview hry |
-| `hry-napady-10.png` | Sekce Ukázky — preview "10 nápadů" |
-
-### `assets/ukazky/`
-Podsložka s detailními screenshoty pro lightbox v sekci "Ukázky". Konkrétní soubory neauditovány — nutno projít při zásahu do sekce Ukázky.
-
----
-
-## Složka `docs/handoff/` (tato handoff dokumentace)
-
-| Soubor | Účel |
-|---|---|
-| `PROJECT_CONTEXT.md` | Hlavní orientační dokument o projektu |
-| `SESSION_SUMMARY.md` | Shrnutí poslední session (2026-05-02) |
-| `CURRENT_STATE.md` | Aktuální stav projektu |
-| `NEXT_STEPS.md` | Plán pokračování |
-| `FILES_AND_MATERIALS.md` | **Tento dokument** |
-| `PROMPT_FOR_NEXT_MODEL.md` | Hotový prompt pro další AI |
-| `DO_NOT_CHANGE.md` | Co se nesmí svévolně měnit |
-
----
-
-## Externí materiály a zdroje
-
-### Live web
-- **Produkce**: https://katerinamlsnova-web.vercel.app
-
-### Repository
-- **GitHub**: https://github.com/MlsnaMalina/katerinamlsnova-web
-- **Větev pro deploy**: `main` (auto-deploy na Vercel)
-
-### Externí služby
-| Služba | Účel | Místo v kódu |
+## Pomocné / dokumentační soubory v rootu
+| Soubor | Stav | Co s ním |
 |---|---|---|
-| **Vercel** | Hosting + auto-deploy | Není v kódu — konfigurace na Vercel dashboardu |
-| **GitHub** | Repository | — |
-| **Formspree** | Backend pro formuláře (kontakt + ceník) | Endpoint v `index.html` u `<form action>` |
-| **Google Fonts** | Fonty Syne / Space Grotesk / IBM Plex Mono | `<link>` v `<head>` `index.html` |
-| **GSAP CDN** | Animace + ScrollTrigger | `<script src="https://cdnjs.cloudflare.com/...">` v `index.html` |
-| **Google Analytics 4** | (placeholder) | `G-XXXXXXXXXX` — čeká na reálné ID |
+| `README.md` | Tracked | Veřejný popis projektu (může vyžadovat aktualizaci po této session) |
+| `PLAN.md` | Tracked | Starší roadmap / nápady (částečně neaktuální) |
+| `CONTEXT.md` | Tracked | Starší kontextový dokument — **má neaktuální barvy** (`#a31f4f`, `#6b3fa0`). Ignoruj v případě konfliktu, použij `docs/handoff/PROJECT_CONTEXT.md`. |
+| `LICENSE` | Tracked | Licence projektu |
+| `zasady-ochrany-osobnich-udaju-draft.md` | Tracked | Markdown draft GDPR textu |
 
-### Loga / značka
-- **Logo Kit** (zdrojové soubory) — **umístění mimo repo, nutno ověřit s Kateřinou.** Pravděpodobně lokálně u ní v jiné složce. Barvy jsou už extrahované do CSS proměnných.
+## Untracked soubory v rootu (mimo verzi)
+| Soubor | Co je to | Akce |
+|---|---|---|
+| `SESSION_NOTES.md` | Starší zápisky z minulé session | Lze ignorovat, není závazné |
+| `files.zip` | Neznámý archiv | Lze ignorovat |
+| `cookies.json` | Export cookies (debug) | **Nezahrnovat do produkce** |
+| `hodnoceni-od-antigravity-kveten.txt` | Feedback od Antigravity AI | Reference, needitovat |
+| `hodnoceni-od-claude-design-kveten.txt` | Feedback od Claude design AI | Reference, needitovat |
+| `.claude/` | Lokální Claude Code konfigurace | Neřešit |
 
----
+## Asset složky
 
-## Doporučení pro práci
+### `assets/` (root)
+| Soubor | Účel | Použití v kódu |
+|---|---|---|
+| `katerina-portrait-transparent.png` | Portrét Kateřiny | Sekce "O mně" |
+| `malina.svg` | SVG malina (300×300, ručně kreslená, fill `#a31f4f`) | Egg hunt všechny maliny + hero maskot |
+| `malina-game.svg` | SVG postavička pro hru | `game.js` |
+| `brouk-game.svg` | SVG brouk pro hru | `game.js` |
+| `mravenec-game.svg` | SVG mravenec pro hru | `game.js` |
+| `wind-game.svg` | SVG vítr pro hru | `game.js` |
+| `omalovanka-doodle-hledej.png` | Náhled hledací omalovánky | Carousel ukázky |
+| `omalovanka-podle-cisel.png` | Náhled omalovánky podle čísel | Carousel ukázky |
+| `kniha-beltaine-02.png` | Náhled knížky pro carousel (legacy) | **Aktuálně NEPOUŽITÉ** (knížka teď má slider v `assets/kniha/`) |
+| `hra-kouzelny-srdickovy-lektvar.png` | Náhled hry pro carousel (legacy) | **Aktuálně NEPOUŽITÉ** (hra teď má iframe v featured bloku) |
+| `hra-nakrm-mlsne-zviratko.png` | Náhled hry | Carousel ukázky |
 
-### Kde se má pracovat (zelené)
-- `index.html`, `style.css`, `script.js`, `game.js` — primární zdrojové soubory.
-- `docs/handoff/` — pro aktualizaci handoff dokumentace.
-- `assets/` — pro přidání nových obrázků/ikon (vždy dodat optimalizované, ideálně < 200 KB).
-- `zasady-ochrany-osobnich-udaju.html` + `-draft.md` — pro úpravy GDPR.
+### `assets/prezentace/` (NOVÉ — vytvořeno v této session)
+- 18 souborů: `hra-pro-deti-01.png` až `hra-pro-deti-18.png`
+- Slidy ukázkové prezentace "Online prezentace" pro Slider 1 v `.showcase-grid-2col`
+- **Nepřejmenovávat** — JS i HTML cesty na ně závisí
 
-### Kde se má pracovat opatrně (žlutá)
-- `CONTEXT.md`, `PLAN.md`, `README.md` — historické dokumenty, při úpravě hrozí ztráta kontextu (pokud nejde o cílenou aktualizaci).
-- `SESSION_NOTES.md` — neudržováno, riziko zmatku se starými informacemi.
+### `assets/kniha/` (NOVÉ — vytvořeno v této session)
+- 10 souborů: `kniha-beltaine-01.png` až `kniha-beltaine-10.png`
+- Strany ukázky knížky pro Slider 2 v `.showcase-grid-2col`
+- **Nepřejmenovávat** — JS i HTML cesty na ně závisí
 
-### Kam NESAHAT (červené)
-- Konfigurační soubory na Vercelu (mimo repo) — řeší jen Kateřina nebo s explicitním souhlasem.
-- `LICENSE` — ne bez instrukce.
-- `.claude/` — lokální nastavení Claude Code.
-- `files.zip` a `.txt` hodnocení — neznámý/citlivý obsah.
+### `assets/ukazky/` (existující z minulých session)
+- Starší screenshoty pro carousel (možná částečně unused). Před smazáním ověřit Grepem.
 
----
+## Externí zdroje (mimo repo)
+| Zdroj | URL / lokace | Účel |
+|---|---|---|
+| **Live web** | https://katerinamlsnova-web.vercel.app | Produkce |
+| **GitHub repo** | https://github.com/MlsnaMalina/katerinamlsnova-web | Source control |
+| **Vercel projekt** | (Kateřinin Vercel dashboard) | Deploy logs, env vars |
+| **Iframe hra Lektvar** | https://kouzelny-srdickovy-lektvar.vercel.app/ | Embed v featured bloku |
+| **Formspree endpoint** | `https://formspree.io/f/mzdopbaq` | Kontakt formulář |
+| **GSAP CDN** | jsdelivr.net | Animace |
+| **Google Fonts CDN** | fonts.googleapis.com | Typografie |
 
-## Názvy souborů, které je nutné zachovat (kvůli odkazům z kódu)
-- Všechny soubory v `assets/` (odkazují se přesnými jmény z HTML/JS).
-- `zasady-ochrany-osobnich-udaju.html` — odkazováno z footeru/cookie consentu.
-- `index.html`, `style.css`, `script.js`, `game.js` — fixní jména pro Vercel.
+## Handoff dokumenty (`docs/handoff/`)
+| Soubor | Účel | Read first |
+|---|---|---|
+| `QUICK_START.md` | Rychlý onboarding pro nový model | ⭐ ANO, jako první |
+| `PROJECT_CONTEXT.md` | Kompletní kontext projektu, preference, stack | ⭐ ANO |
+| `CURRENT_STATE.md` | Aktuální stav, struktura, vazby | ⭐ ANO |
+| `DO_NOT_CHANGE.md` | Co nesmí být měněno | ⭐ ANO |
+| `SESSION_SUMMARY.md` | Co se dělalo v této session | Pro pochopení proč věci jsou jak jsou |
+| `NEXT_STEPS.md` | Doporučené další kroky | Pro plánování |
+| `FILES_AND_MATERIALS.md` | Tento dokument | Reference |
+| `PROMPT_FOR_NEXT_MODEL.md` | Hotový prompt pro novou AI session | Použít při startu nové conversation |
 
----
+## Doporučení — kam se zasahuje a kam ne
 
-## Chybějící informace
+**Bez váhání editovat**:
+- `index.html` (kromě DO_NOT_CHANGE prvků)
+- `style.css` (kromě DO_NOT_CHANGE pravidel)
+- `script.js` (kromě egg hunt logiky a slider IIFE pokud nejde o úpravu chování)
 
-### Co potřebuji od Kateřiny
-1. **Reálné GA4 measurement ID** (až bude k dispozici).
-2. **OG image grafika** (1200×630 px) pro sociální náhledy.
-3. **Favicon design** (může vycházet z `assets/malina.svg`).
-4. **Obsah `files.zip`** — co to je, zda patří do repa, nebo do `.gitignore`.
-5. **Přístup k Vercel dashboardu / projekt settings** — pokud je třeba upravit deploy konfiguraci.
-6. **Logo Kit zdrojové soubory** — pro případ, že by bylo potřeba derivovat ikony.
+**Editovat opatrně, nejlépe se zeptat**:
+- `game.js` (hra je samostatný modul, snadno se rozbije fyzika)
+- `index.html` SVG `<defs>` a inline SVG doodly (ručně kreslené, citlivé na změnu)
+- CSS proměnné v `:root` a `[data-theme="dark"]` (mění celý site)
 
-### Co je nejasné
-- Zda jsou hodnocení v `.txt` souborech relevantní pro další práci, nebo jen archiv.
-- Zda starší `CONTEXT.md` a `SESSION_NOTES.md` mají být sloučeny / smazány po migraci na `docs/handoff/`.
+**Nikdy needitovat bez výslovného pokynu**:
+- `assets/malina.svg` (ikonický element značky)
+- `katerina-portrait-transparent.png` (portrét)
+- `LICENSE`
+- Soubory v `assets/prezentace/` a `assets/kniha/` (zákaznice je dodala)
+
+## Chybějící informace (zatím nedoplněné)
+- Reálné GA4 measurement ID
+- Open Graph image (1200×630 px)
+- Favicon (možná chybí — třeba ověřit)
+- ALT texty pro slidery (`assets/prezentace/*` a `assets/kniha/*` mají generické "Slajd X z prezentace" / "Strana X" — Kateřina je doplní)

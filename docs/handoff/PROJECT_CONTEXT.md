@@ -4,7 +4,7 @@
 **Osobní web Kateřiny Mlsnové** — `katerinamlsnova-web`
 
 ## Stručný popis
-Jednostránkové (one-page) osobní portfolio Kateřiny Mlsnové, knižní redaktorky a začínající "vibe coderky". Web prezentuje její služby (jednoduché weby, hry, prezentace, kontrolu AI textů), portfolio realizací, ceník, kontakt a obsahuje skryté herní prvky (egg hunt, mini hra Skákající malina).
+Jednostránkové (one-page) osobní portfolio Kateřiny Mlsnové, knižní redaktorky a začínající "vibe coderky". Web prezentuje její služby (jednoduché weby, hry, prezentace, kontrola AI textů), portfolio realizací včetně interaktivních embedů, ceník, kontaktní formulář a obsahuje skryté herní prvky (egg hunt, mini hra Skákající malina).
 
 ## Cíl projektu
 - Získávat zakázky od malých klientů (lektoři, OSVČ, učitelé, malé projekty).
@@ -27,7 +27,7 @@ Jednostránkové (one-page) osobní portfolio Kateřiny Mlsnové, knižní redak
 - **GSAP + ScrollTrigger** přes CDN (animace).
 - **Google Fonts**: Syne 800 (nadpisy), Space Grotesk 400/500 (tělo), IBM Plex Mono 600 (terminál/kód).
 - **Hosting**: Git → GitHub → Vercel (auto-deploy z `main` větve).
-- **Formuláře**: Formspree (kontakt).
+- **Formuláře**: Formspree (kontakt — endpoint `mzdopbaq`).
 - **Analytika**: GA4 placeholder `G-XXXXXXXXXX` (čeká na reálné ID).
 
 ## Důležité preference uživatele (Kateřiny)
@@ -39,23 +39,25 @@ Jednostránkové (one-page) osobní portfolio Kateřiny Mlsnové, knižní redak
 - Chce **commit + push na main** po každé schválené změně (ne PR review proces — je solo developerka).
 - E-mail pro git commity: `k.schmiedtova@seznam.cz` (povinné — Vercel jinak odmítne).
 - Commity v imperativu, vždy s `Co-Authored-By: Claude Opus 4.7 (1M context) <noreply@anthropic.com>`.
+- **Pracuje stylem "jeden úkol = jeden prompt = jeden commit"** — nečekat, nepokoušet se domyslet další kroky.
+- Často pošle screenshot s problémem — kontroluj vizuálně, ne jen code-logic.
 
 ## Styl, tón, vizuální požadavky
-### Barvy (Logo Kit)
+### Barvy (Logo Kit) — **jediná platná paleta**
 - Tmavá malina `#7A1840` (akcent v light mode)
 - Světlá malina `#B83066` (akcent v dark mode)
 - Inkoust `#1A1714`
 - Hluboká čerň `#0F0E0C`
 - Krém `#F7F4EE`
 - Bílá `#FFFFFF`
-- **Pozn.**: starší `CONTEXT.md` zmiňuje fialovou `#6b3fa0` a malinovou `#a31f4f` — to jsou starší/nepřesné hodnoty. **Reálná paleta v CSS je výše.**
+- **Pozn.**: hex `#a31f4f` (a podobně `#7a1438`) se historicky vyskytuje v inline SVG doodlech a v assets/malina.svg — je to legacy varianta, neřeš (zachovat).
 - Light mode: pozadí čistě bílé, akcent tmavá malina.
 - Dark mode: akcent světlá malina.
 
-### Typografie
-- **Syne 800** — nadpisy, hero KATEŘINA / MLSNOVÁ.
-- **Space Grotesk 400/500** — tělo textu.
-- **IBM Plex Mono 600** — terminálový kurzor v hero, kódové prvky.
+### Typografie (přes CSS tokeny — vždy preferovat tokeny před hardcoded názvy)
+- `var(--font-display)` → Syne 800 — nadpisy.
+- `var(--font-body)` → Space Grotesk 400/500 — tělo textu.
+- `var(--font-mono)` → IBM Plex Mono 600 — terminál, kódové prvky, service tagy.
 
 ### Tón textů
 - Neformální, ale ne familiérní.
@@ -64,16 +66,16 @@ Jednostránkové (one-page) osobní portfolio Kateřiny Mlsnové, knižní redak
 
 ### UX prvky
 - **Dark / light mode** auto (`prefers-color-scheme`) + manuální toggle (🌙/☀️ ikona v navu, perzistence v `localStorage` pod klíčem `km-theme`).
-- **IntersectionObserver** pro fade-in animace sekcí (vzor v `script.js`).
+- **IntersectionObserver** pro fade-in animace sekcí.
 - **Mobile-first**: hamburger menu pod 768 px.
 - **Hover efekty** jen na desktopu (`@media (hover: hover)`); na touch zařízeních alternativní chování (např. ceny vždy viditelné).
 
 ## Co je pro projekt zásadní zachovat
-1. **Hand-drawn estetika** — žádné box-shadow, žádné gradient lazy efekty, vše přes SVG `#rough` filtr.
-2. **Logo Kit barvy** (viz výše).
-3. **Formspree formuláře** — endpoint nesmí být změněn bez souhlasu.
-4. **Egg hunt logika** — 5 schovaných malin, slevový kód `MAM_VSECH_5_POHROMADE`.
-5. **`localStorage` klíče**: `km-theme`, `km-eggs-found`, `km-cookies-consent` (a sessionStorage `km-eggs-modal-shown`).
+1. **Hand-drawn estetika** — žádné box-shadow, žádné gradient lazy efekty, vše přes SVG `#rough` filtr (výjimka: ofset stín u `.presentation-slider-container` je schválený "doodle" stín).
+2. **Logo Kit barvy** přes `var(--accent)`, `var(--bg)`, `var(--text)` atd.
+3. **Formspree formulář** — endpoint `mzdopbaq` nesmí být změněn bez souhlasu.
+4. **Egg hunt logika** — 5 malin (hero + 4 s `data-egg`), slevový kód `MAM_VSECH_5_POHROMADE`.
+5. **`localStorage` klíče**: `km-theme`, `km-eggs-found`, `km-cookies-consent` (a `sessionStorage` `km-eggs-modal-shown`).
 6. **Skryté API**: `window.resetEggHunt()`, `window.startEggHunt()`.
 7. **Git workflow**: Vercel email `k.schmiedtova@seznam.cz`, push na `main`, vždy s `Co-Authored-By: Claude Opus 4.7 (1M context)`.
 
@@ -83,19 +85,19 @@ Jednostránkové (one-page) osobní portfolio Kateřiny Mlsnové, knižní redak
 - **Žádný TypeScript** (vanilla JS).
 - **Žádné stock fotky** ani generické ikony.
 - **Žádný framework CSS** (Tailwind, Bootstrap...). Custom CSS s proměnnými.
-- **Animace "vysypávání malin z obálky"** — opuštěna jako příliš složitá.
-- **"Doodle bloom" layout sekce O mně** (8 doodlů + 3 chapter karty) — opuštěno, vrátilo se zpět na dvousloupcový layout s rámečkem.
-- **Auto-trigger egg hunt modalu při page load** — opraveno commitem `1acf671`, nesmí se vrátit.
+- **`position: fixed` maliny v <body>** — bylo zkoušeno (commit `2da35f5`), revertováno (`b9bb6be`). Špatné UX, malina je odtržená od kontextu sekce.
 - **Hláška "Jejda, rozsypaly se mi maliny"** — odstraněna v `3470e20`, nepřidávat zpět.
+- **Auto-trigger egg hunt modalu při page load** — opraveno commitem `1acf671`, nesmí se vrátit.
 - **Genderově specifické texty** ("Našla jsi" → musí být neutrální).
 
 ## Limity, omezení a rizika
 - **Bez build systému** — všechny soubory musí běžet přímo v prohlížeči. Žádné importy modulů (kromě `<script src="...">`).
 - **Vercel deploy je automatický** — každý push na `main` jde okamžitě do produkce. **Před pushnutím vždy zvážit, zda změna je hotová.**
 - **GA4 placeholder** — pokud bude reálné ID, musí se nahradit ve všech místech (`index.html` cookie consent + Google tag).
-- **Velikost CSS** (3535 řádků) a `index.html` (1035 řádků) — opatrné při edit, hledat přes Grep.
+- **Velikost souborů**: `style.css` ~3700 řádků, `index.html` ~1080 řádků — opatrné při edit, hledat přes Grep.
 - **Žádný linter, žádné testy** — kontrola kvality probíhá vizuálně v prohlížeči.
-- **Egg hunt CSS** — výchozí opacita malin je nyní `1` (pro viditelnost při testování). Pokud Kateřina někdy bude chtít vrátit "schovaný" efekt, je třeba opatrně řešit kontrast s `is-found` stavem.
+- **Egg hunt vizuál**: aktuálně mají maliny `#2`, `#3`, `#5` (CSS modifiers `--cta`, `--book`, `--submit`) `opacity: 1 !important; animation: none !important` — **vědomě porušená logika `.is-found`**, malina po sebrání nemizí. Důvod: vizuální požadavek zákaznice. Funkčně počítadlo a modal stále fungují. Detail v `DO_NOT_CHANGE.md`.
+- **Duplicitní `data-egg="4"`**: pssst malina existuje 2× (pricing + contact). Sdílí JS slot. Detail v `CURRENT_STATE.md`.
 
 ## Externí odkazy
 - **Live web**: https://katerinamlsnova-web.vercel.app
