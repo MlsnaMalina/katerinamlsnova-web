@@ -3344,6 +3344,21 @@ body.lightbox-open {
 .egg-raspberry--submit:hover { transform: translateX(-50%) scale(1.15); opacity: 1; }
 .egg-raspberry--submit.is-found { transform: translateX(-50%) scale(1); animation: egg-pulse-translated 0.7s ease; }
 
+/* Dark mode — světlejší drop-shadow pro kontrast na tmavém pozadí */
+[data-theme="dark"] .egg-raspberry--cta,
+[data-theme="dark"] .egg-raspberry--submit {
+  filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.4)) drop-shadow(0 1px 3px rgba(0, 0, 0, 0.6));
+  opacity: 0.5;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .egg-raspberry--cta,
+  :root:not([data-theme="light"]) .egg-raspberry--submit {
+    filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.4)) drop-shadow(0 1px 3px rgba(0, 0, 0, 0.6));
+    opacity: 0.5;
+  }
+}
+
 @keyframes egg-pulse-translated {
   0% { transform: translateX(-50%) scale(1) rotate(0); }
   35% { transform: translateX(-50%) scale(1.7) rotate(18deg); }
