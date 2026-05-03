@@ -3868,16 +3868,56 @@ body.lightbox-open {
    Cenová kalkulačka — sekce Ceny
    ============================================ */
 .calculator-wrapper {
+  position: relative;
   background-color: var(--bg);
   color: var(--text);
-  padding: 2rem;
+  padding: 2.5rem 2.25rem;
   margin: 4rem auto 0;
   max-width: 1000px;
   font-family: var(--font-body);
 }
+.calculator-wrapper > *:not(.calculator-wrapper__frame):not(.calculator-wrapper__deco) {
+  position: relative;
+  z-index: 1;
+}
+.calculator-wrapper__frame {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: visible;
+  z-index: 0;
+}
+.calculator-wrapper__frame rect {
+  fill: none;
+  stroke: var(--accent);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.calculator-wrapper__frame-outer { stroke-width: 3.6; }
+.calculator-wrapper__frame-inner { stroke-width: 1.4; opacity: 0.6; }
+
+.calculator-wrapper__deco {
+  position: absolute;
+  z-index: 2;
+  color: var(--accent);
+  font-size: 1.5rem;
+  line-height: 1;
+  pointer-events: none;
+  filter: url(#rough);
+}
+.calculator-wrapper__deco--tl { top: -14px; left: -14px; }
+.calculator-wrapper__deco--tr { top: -14px; right: -14px; }
+.calculator-wrapper__deco--bl { bottom: -14px; left: -14px; }
+.calculator-wrapper__deco--br { bottom: -14px; right: -14px; }
+
 .calc-header { margin-bottom: 2rem; }
 .calc-header h2 {
-  font-family: var(--font-display);
+  font-family: "Caveat", cursive;
+  font-weight: 700;
+  font-size: 2.2rem;
+  line-height: 1.15;
   color: var(--text);
   margin: 0 0 0.75rem;
 }
@@ -3929,6 +3969,7 @@ body.lightbox-open {
   padding-left: 36px;
   line-height: 1.4;
   flex: 1;
+  font-family: var(--font-body);
 }
 .calc-option span::before {
   content: "";
@@ -3942,9 +3983,7 @@ body.lightbox-open {
   filter: url(#rough);
   transition: background 0.15s ease;
   box-sizing: border-box;
-}
-.calc-option input[type="radio"] + span::before {
-  border-radius: 50%;
+  border-radius: 2px;
 }
 .calc-option input:checked + span::before {
   background: var(--accent);
@@ -3995,8 +4034,7 @@ body.lightbox-open {
   stroke-linecap: round;
   stroke-linejoin: round;
 }
-.calc-receipt__frame-outer { stroke-width: 3.4; }
-.calc-receipt__frame-inner { stroke-width: 1.4; opacity: 0.7; }
+.calc-receipt__frame-outer { stroke-width: 2.4; opacity: 0.85; }
 
 .calc-receipt__corner {
   position: absolute;
