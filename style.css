@@ -3317,7 +3317,13 @@ body.lightbox-open {
 }
 
 /* Specific egg positions */
-.egg-raspberry--cta { top: 10px; right: 10px; }
+.egg-raspberry--cta {
+  top: 10px;
+  right: 10px;
+  opacity: 0.35;
+  filter: drop-shadow(0 1px 4px rgba(0, 0, 0, 0.5));
+}
+.egg-raspberry--cta:hover { opacity: 1; }
 .egg-raspberry--book {
   top: 50%;
   left: 50%;
@@ -3332,9 +3338,10 @@ body.lightbox-open {
 @media (max-width: 800px) {
   .egg-raspberry--book { top: calc(50% - 18px); }
 }
-.egg-raspberry--pssst { display: inline-block; position: relative; opacity: 1; vertical-align: middle; margin-left: 0.4rem; top: 0; }
+.egg-raspberry--pssst { display: inline-block; position: relative; opacity: 1; vertical-align: middle; margin-left: 0.4rem; top: 0; filter: drop-shadow(0 1px 4px rgba(0, 0, 0, 0.5)); }
 .egg-raspberry--pssst.is-found { opacity: 0.15; }
-.egg-raspberry--submit { position: absolute; bottom: -22px; left: 50%; transform: translateX(-50%); }
+.egg-raspberry--submit { position: absolute; bottom: -22px; left: 50%; transform: translateX(-50%); opacity: 0.35; filter: drop-shadow(0 1px 4px rgba(0, 0, 0, 0.5)); }
+.egg-raspberry--submit:hover { transform: translateX(-50%) scale(1.15); opacity: 1; }
 .egg-raspberry--submit.is-found { transform: translateX(-50%) scale(1); animation: egg-pulse-translated 0.7s ease; }
 
 @keyframes egg-pulse-translated {
