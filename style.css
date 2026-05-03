@@ -1401,16 +1401,6 @@ body.lightbox-open {
   padding-bottom: 4px;
 }
 
-.pricing__price-alt {
-  font-family: 'Caveat', cursive;
-  color: var(--accent);
-  font-weight: 700;
-  font-size: 1.4rem;
-  background: none;
-  padding: 0;
-  white-space: nowrap;
-}
-
 .pricing__inner {
   max-width: 72rem;
   margin: 0 auto;
@@ -1643,6 +1633,16 @@ body.lightbox-open {
   font-weight: 400;
   font-size: 1.25rem;
   color: var(--accent);
+  white-space: nowrap;
+}
+
+.pricing__price-alt {
+  font-family: 'Caveat', cursive;
+  color: var(--accent);
+  font-weight: 700;
+  font-size: 1.4rem;
+  background: none;
+  padding: 0;
   white-space: nowrap;
 }
 
