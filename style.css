@@ -3317,28 +3317,57 @@ body.lightbox-open {
 }
 
 /* Specific egg positions */
+.egg-slot--ukazky {
+  position: relative;
+  height: 0;
+  margin: 0;
+}
+.egg-raspberry--cta {
+  top: -18px;
+  right: 16px;
+  left: auto;
+  bottom: auto;
+  z-index: 10;
+  opacity: 0.35;
+  filter: drop-shadow(0 1px 4px rgba(0, 0, 0, 0.5));
+}
+.egg-raspberry--cta:hover { opacity: 1; }
+.egg-raspberry--book {
+  top: 50%;
+  left: 50%;
+  right: auto;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+  opacity: 0.35;
+  filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.4));
+}
+.egg-raspberry--book:hover { transform: translate(-50%, -50%) scale(1.15); opacity: 1; }
+.egg-raspberry--book.is-found { opacity: 0.15; }
+@media (max-width: 800px) {
+  .egg-raspberry--book { top: calc(50% - 18px); }
+}
 .egg-raspberry--pssst { display: inline-block; position: relative; opacity: 1; vertical-align: middle; margin-left: 0.4rem; top: 0; filter: drop-shadow(0 1px 4px rgba(0, 0, 0, 0.5)); }
 .egg-raspberry--pssst.is-found { opacity: 0.15; }
-
-/* Plovoucí maliny — fixed pozicování vůči viewportu, imunní vůči overflow:hidden parentů */
-.egg-raspberry--fixed {
-  position: fixed !important;
-  width: auto;
-  height: auto;
-  font-size: 24px;
-  line-height: 1;
-  z-index: 50;
-  pointer-events: auto !important;
+.egg-raspberry--submit {
+  position: absolute;
+  top: 50%;
+  left: 4%;
+  right: auto;
+  bottom: auto;
+  transform: translateY(-50%);
+  z-index: 10;
   opacity: 0.35;
-  filter: drop-shadow(0 1px 4px rgba(0, 0, 0, 0.3));
-  transition: opacity 0.3s ease, transform 0.3s ease;
+  filter: drop-shadow(0 1px 4px rgba(0, 0, 0, 0.5));
 }
-.egg-raspberry--fixed:hover { opacity: 0.7; transform: scale(1.15); }
+.egg-raspberry--submit:hover { transform: translateY(-50%) scale(1.15); opacity: 1; }
+.egg-raspberry--submit.is-found { transform: translateY(-50%) scale(1); animation: egg-pulse-translated-y 0.7s ease; }
 
-.egg-raspberry--skills  { right: 2%;  top: 45%; }
-.egg-raspberry--works   { left: 1%;   top: 62%; }
-.egg-raspberry--contact { left: 50%;  top: 82%; transform: translateX(-50%); }
-.egg-raspberry--contact:hover { transform: translateX(-50%) scale(1.15); }
+@keyframes egg-pulse-translated-y {
+  0%   { transform: translateY(-50%) scale(1) rotate(0); opacity: 1; }
+  35%  { transform: translateY(-50%) scale(1.7) rotate(18deg); opacity: 1; }
+  65%  { transform: translateY(-50%) scale(0.95) rotate(-6deg); opacity: 0.6; }
+  100% { transform: translateY(-50%) scale(1) rotate(0); opacity: 0.15; }
+}
 
 /* Dark mode — univerzální halo pro všechny maliny (kromě --pssst, ta je inline v textu) */
 [data-theme="dark"] .egg-raspberry:not(.is-found):not(.egg-raspberry--pssst) {
