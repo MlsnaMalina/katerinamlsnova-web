@@ -3317,11 +3317,16 @@ body.lightbox-open {
 }
 
 /* Specific egg positions */
+.egg-slot--ukazky {
+  position: relative;
+  height: 0;
+  margin: 0;
+}
 .egg-raspberry--cta {
-  top: auto;
-  right: 1.5rem;
-  bottom: -18px;
+  top: -18px;
+  right: 16px;
   left: auto;
+  bottom: auto;
   z-index: 10;
   opacity: 0.35;
   filter: drop-shadow(0 1px 4px rgba(0, 0, 0, 0.5));
@@ -3364,18 +3369,16 @@ body.lightbox-open {
   100% { transform: translateY(-50%) scale(1) rotate(0); opacity: 0.15; }
 }
 
-/* Dark mode — světlejší drop-shadow pro kontrast na tmavém pozadí */
-[data-theme="dark"] .egg-raspberry--cta,
-[data-theme="dark"] .egg-raspberry--submit {
-  filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.4)) drop-shadow(0 1px 3px rgba(0, 0, 0, 0.6));
+/* Dark mode — univerzální halo pro všechny maliny (kromě --pssst, ta je inline v textu) */
+[data-theme="dark"] .egg-raspberry:not(.is-found):not(.egg-raspberry--pssst) {
   opacity: 0.5;
+  filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.5)) drop-shadow(0 0 2px rgba(255, 255, 255, 0.3));
 }
 
 @media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) .egg-raspberry--cta,
-  :root:not([data-theme="light"]) .egg-raspberry--submit {
-    filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.4)) drop-shadow(0 1px 3px rgba(0, 0, 0, 0.6));
+  :root:not([data-theme="light"]) .egg-raspberry:not(.is-found):not(.egg-raspberry--pssst) {
     opacity: 0.5;
+    filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.5)) drop-shadow(0 0 2px rgba(255, 255, 255, 0.3));
   }
 }
 
