@@ -1387,28 +1387,21 @@ body.lightbox-open {
 
 .pricing {
   padding: 6rem 1.5rem 8rem;
-  position: relative;
 }
 
 .pricing__calc-arrow {
   position: absolute;
-  top: 22rem;
-  left: 0;
-  right: 0;
-  height: 60rem;
+  top: 21rem;
+  right: 1rem;
+  width: 160px;
+  height: 52rem;
   pointer-events: none;
   color: var(--accent);
+  opacity: 0.75;
   overflow: visible;
-  z-index: 0;
+  z-index: 2;
 }
-.pricing__calc-arrow path {
-  stroke: currentColor;
-  stroke-width: 2;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-  opacity: 0.85;
-}
-@media (max-width: 720px) {
+@media (max-width: 960px) {
   .pricing__calc-arrow { display: none; }
 }
 
