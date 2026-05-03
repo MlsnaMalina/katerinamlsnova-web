@@ -929,6 +929,9 @@ body {
   width: 2.4rem;
   height: 2.1rem;
   flex-shrink: 0;
+  flex-basis: 100%;
+  justify-content: center;
+  margin: 0 auto;
 }
 
 .works__subtitle-heart svg {
@@ -3763,6 +3766,10 @@ body.lightbox-open {
   font-family: var(--font-display);
   margin: 8px 0;
   color: var(--text);
+}
+
+.featured-game .showcase-header h3 {
+  text-align: center;
 }
 
 .showcase-header p {
