@@ -3863,3 +3863,121 @@ body.lightbox-open {
     padding: 4px 12px;
   }
 }
+
+/* ============================================
+   Cenová kalkulačka — sekce Ceny
+   ============================================ */
+.calculator-wrapper {
+  background-color: var(--bg-elevated);
+  color: var(--text);
+  padding: 2rem;
+  margin: 4rem auto 0;
+  max-width: 1000px;
+}
+.calc-header { margin-bottom: 2rem; }
+.calc-header h2 {
+  font-family: var(--font-display);
+  color: var(--text);
+  margin: 0 0 0.75rem;
+}
+.calc-note {
+  font-size: 0.9rem;
+  font-style: italic;
+  color: var(--text-muted);
+  margin: 0;
+}
+.calc-grid {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  gap: 3rem;
+}
+@media (max-width: 768px) {
+  .calc-grid { grid-template-columns: 1fr; gap: 2rem; }
+}
+.calc-section { margin-bottom: 2rem; }
+.calc-section h3 {
+  margin: 0 0 1rem;
+  color: var(--accent);
+  font-size: 1.2rem;
+  font-family: var(--font-display);
+}
+.calc-option {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+  cursor: pointer;
+  color: var(--text);
+}
+.calc-option input {
+  margin-top: 5px;
+  margin-right: 15px;
+  accent-color: var(--accent);
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
+.calc-option span { line-height: 1.4; }
+.calc-option small {
+  display: block;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+.calc-receipt {
+  background-color: var(--bg);
+  color: var(--text);
+  padding: 2rem;
+  border: 2px dashed var(--accent);
+  border-radius: 5px;
+  height: fit-content;
+  position: sticky;
+  top: 20px;
+  font-family: var(--font-mono);
+}
+.calc-receipt h3 {
+  margin: 0 0 1rem;
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  text-align: center;
+  color: var(--text);
+}
+.receipt-total {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: var(--accent);
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+.receipt-empty {
+  color: var(--text-muted);
+  text-align: center;
+  font-size: 0.95rem;
+}
+.receipt-empty p { margin: 0 0 0.6rem; }
+.receipt-items ul { list-style: none; padding: 0; margin-top: 10px; }
+.receipt-items li {
+  margin-bottom: 8px;
+  position: relative;
+  padding-left: 20px;
+  font-size: 0.9rem;
+}
+.receipt-items li::before {
+  content: "✓";
+  color: var(--accent);
+  position: absolute;
+  left: 0;
+  font-weight: bold;
+}
+.calc-cta {
+  display: block;
+  text-align: center;
+  margin-top: 20px;
+}
+.calc-footer {
+  margin-top: 3rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--border);
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+.calc-footer p { margin: 0 0 0.75rem; }
+.calc-footer p:last-child { margin-bottom: 0; }

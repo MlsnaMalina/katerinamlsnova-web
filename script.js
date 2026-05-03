@@ -834,3 +834,44 @@ document.addEventListener('DOMContentLoaded', () => {
     location.reload();
   };
 })();
+
+(function initPriceCalculator() {
+  const calcInputs = document.querySelectorAll(".calculator-wrapper input");
+  if (!calcInputs.length) return;
+
+  const priceDisplay = document.getElementById("calc-price");
+  const emptyState = document.getElementById("calc-empty-state");
+  const itemsState = document.getElementById("calc-items-state");
+  const selectedList = document.getElementById("calc-selected-list");
+  if (!priceDisplay || !emptyState || !itemsState || !selectedList) return;
+
+  function updateCalculator() {
+    let total = 0;
+    selectedList.innerHTML = "";
+    let hasSelection = false;
+
+    calcInputs.forEach((input) => {
+      if (input.checked) {
+        hasSelection = true;
+        total += parseInt(input.value, 10) || 0;
+        const li = document.createElement("li");
+        li.textContent = input.getAttribute("data-label");
+        selectedList.appendChild(li);
+      }
+    });
+
+    priceDisplay.textContent = total.toLocaleString("cs-CZ");
+
+    if (hasSelection) {
+      emptyState.style.display = "none";
+      itemsState.style.display = "block";
+    } else {
+      emptyState.style.display = "block";
+      itemsState.style.display = "none";
+    }
+  }
+
+  calcInputs.forEach((input) => {
+    input.addEventListener("change", updateCalculator);
+  });
+})();
