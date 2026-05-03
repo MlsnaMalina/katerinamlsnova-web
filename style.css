@@ -3324,8 +3324,11 @@ body.lightbox-open {
   right: auto;
   transform: translate(-50%, -50%);
   z-index: 10;
+  opacity: 0.35;
+  filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.4));
 }
-.egg-raspberry--book:hover { transform: translate(-50%, -50%) scale(1.15); }
+.egg-raspberry--book:hover { transform: translate(-50%, -50%) scale(1.15); opacity: 1; }
+.egg-raspberry--book.is-found { opacity: 0.15; }
 @media (max-width: 800px) {
   .egg-raspberry--book { top: calc(50% - 18px); }
 }
