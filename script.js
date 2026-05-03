@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (i < textToType1.length) {
       typewriterEl.innerHTML += textToType1.charAt(i);
       i++;
-      setTimeout(typeWriter1, 50);
+      setTimeout(typeWriter1, 28);
     } else {
       setTimeout(() => {
         pitchEl?.classList.add('visible-element');
@@ -27,22 +27,22 @@ document.addEventListener('DOMContentLoaded', () => {
               if (j < textToType2.length) {
                 typewriterEl.innerHTML += textToType2.charAt(j);
                 j++;
-                setTimeout(typeWriter2, 50);
+                setTimeout(typeWriter2, 28);
               } else {
                 setTimeout(() => {
                   mascotEl.classList.add('visible-element');
                   initEyes();
-                }, 400);
+                }, 200);
               }
             }
             typeWriter2();
-          }, 1200);
-        }, 700);
-      }, 700);
+          }, 400);
+        }, 300);
+      }, 200);
     }
   }
 
-  setTimeout(typeWriter1, 800);
+  setTimeout(typeWriter1, 200);
 
   function initEyes() {
     const pupils = document.querySelectorAll('.pupil');
