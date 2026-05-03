@@ -3748,7 +3748,8 @@ body.lightbox-open {
   margin-bottom: 20px;
 }
 
-.showcase-header .service-tag {
+.showcase-header .service-tag,
+.featured-game__tag {
   display: inline-block;
   font-family: var(--font-mono);
   font-size: 0.85rem;
