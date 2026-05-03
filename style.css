@@ -1532,6 +1532,13 @@ body.lightbox-open {
   display: block;
   white-space: nowrap;
 }
+.pricing-row__calc-cta-arrow {
+  width: 70px;
+  height: 60px;
+  pointer-events: none;
+  color: var(--accent);
+  overflow: visible;
+}
 
 .doodle-underline {
   position: relative;
