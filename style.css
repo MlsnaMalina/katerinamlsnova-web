@@ -1387,21 +1387,22 @@ body.lightbox-open {
 
 .pricing {
   padding: 6rem 1.5rem 8rem;
+  position: relative;
 }
 
 .pricing__calc-arrow {
   position: absolute;
-  top: 21rem;
-  right: 1rem;
-  width: 160px;
-  height: 52rem;
+  top: 24rem;
+  right: 1.5rem;
+  width: 130px;
+  height: 50rem;
   pointer-events: none;
   color: var(--accent);
-  opacity: 0.75;
+  opacity: 0.8;
   overflow: visible;
   z-index: 2;
 }
-@media (max-width: 960px) {
+@media (max-width: 1279px) {
   .pricing__calc-arrow { display: none; }
 }
 
