@@ -4316,3 +4316,92 @@ body.lightbox-open {
     display: none;
   }
 }
+
+/* --- 404 ERROR PAGE --- */
+.error-page-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: var(--bg);
+  padding: 2rem;
+}
+
+.error-content {
+  background-color: var(--bg-elevated);
+  max-width: 600px;
+  width: 100%;
+  text-align: center;
+  padding: 4rem 2rem;
+  border: 3px solid var(--text);
+  border-radius: 2px 255px 3px 225px / 255px 5px 225px 3px;
+  box-shadow: 8px 8px 0px color-mix(in srgb, var(--accent) 30%, transparent);
+}
+
+.error-berry {
+  margin-bottom: 1.5rem;
+  animation: rollBerry 4s infinite ease-in-out;
+  display: inline-block;
+}
+
+.error-berry img {
+  display: block;
+  width: 140px;
+  height: auto;
+}
+
+.error-title {
+  font-family: var(--font-mono, 'IBM Plex Mono', monospace);
+  font-size: 5rem;
+  color: var(--accent);
+  margin: 0;
+  line-height: 1;
+}
+
+.error-subtitle {
+  font-family: var(--font-display, 'Syne', sans-serif);
+  font-size: 1.8rem;
+  color: var(--text);
+  margin: 1rem 0 1.5rem 0;
+}
+
+.error-text {
+  font-family: var(--font-body, 'Space Grotesk', sans-serif);
+  font-size: 1.1rem;
+  color: var(--text);
+  opacity: 0.85;
+  margin-bottom: 2.5rem;
+  line-height: 1.6;
+}
+
+.error-actions {
+  display: flex;
+  justify-content: center;
+}
+
+.doodle-btn-small {
+  display: inline-block;
+  padding: 0.75rem 1.5rem;
+  font-family: var(--font-body, 'Space Grotesk', sans-serif);
+  font-weight: 500;
+  font-size: 1rem;
+  color: var(--text);
+  background-color: var(--bg-elevated);
+  border: 2px solid var(--text);
+  border-radius: 2px 20px 2px 20px / 20px 2px 20px 2px;
+  text-decoration: none;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease, color 0.15s ease;
+}
+
+.doodle-btn-small:hover {
+  background-color: var(--accent);
+  color: var(--bg);
+  transform: translate(-2px, -2px);
+  box-shadow: 4px 4px 0px var(--text);
+}
+
+@keyframes rollBerry {
+  0% { transform: rotate(-10deg); }
+  50% { transform: rotate(10deg); }
+  100% { transform: rotate(-10deg); }
+}
