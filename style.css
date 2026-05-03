@@ -3358,11 +3358,12 @@ body.lightbox-open {
   bottom: auto;
   transform: translateY(-50%);
   z-index: 10;
-  opacity: 0.35;
+  opacity: 1 !important;
+  animation: none !important;
+  pointer-events: auto !important;
   filter: drop-shadow(0 1px 4px rgba(0, 0, 0, 0.5));
 }
 .egg-raspberry--submit:hover { transform: translateY(-50%) scale(1.15); opacity: 1; }
-.egg-raspberry--submit.is-found { transform: translateY(-50%) scale(1); animation: egg-pulse-translated-y 0.7s ease; }
 
 @keyframes egg-pulse-translated-y {
   0%   { transform: translateY(-50%) scale(1) rotate(0); opacity: 1; }
