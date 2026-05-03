@@ -1492,39 +1492,36 @@ body.lightbox-open {
   color: var(--text);
 }
 
-.pricing-row__calc-hint {
-  position: absolute;
-  top: 4.75rem;
-  left: -0.25rem;
-  width: 110px;
+.pricing-row__calc-cta {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.25rem;
+  gap: 0.4rem;
   color: var(--accent);
   text-decoration: none;
   font-family: "Caveat", cursive;
   font-weight: 700;
-  font-size: 1.15rem;
+  font-size: 1.5rem;
   line-height: 1.1;
   text-align: center;
   transition: transform 0.2s ease, color 0.2s ease;
 }
-.pricing-row__calc-hint:hover,
-.pricing-row__calc-hint:focus-visible {
+.pricing-row__calc-cta:hover,
+.pricing-row__calc-cta:focus-visible {
   color: var(--accent-hover);
   transform: translateY(2px);
 }
-.pricing-row__calc-hint-arrow {
-  width: 56px;
-  height: 78px;
+.pricing-row__calc-cta-text {
+  display: block;
+  white-space: nowrap;
+}
+.pricing-row__calc-cta-arrow {
+  width: 70px;
+  height: 170px;
   overflow: visible;
 }
-.pricing-row__calc-hint-text {
-  display: block;
-}
 @media (max-width: 720px) {
-  .pricing-row__calc-hint { display: none; }
+  .pricing-row__calc-cta-arrow { height: 110px; width: 60px; }
 }
 
 .doodle-underline {
