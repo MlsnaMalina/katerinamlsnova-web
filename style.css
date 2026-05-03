@@ -1392,12 +1392,23 @@ body.lightbox-open {
 .price-calc-link {
   font-family: var(--font-body);
   font-size: 1rem;
+  font-weight: bold;
   color: var(--accent);
   text-decoration: none;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100%25' height='4'%3E%3Cpath d='M0 3 Q25 1 50 3 Q75 5 100%25 3' stroke='%237A1840' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");
   background-repeat: repeat-x;
   background-position: bottom;
   padding-bottom: 4px;
+}
+
+.pricing__price-alt {
+  font-family: 'Caveat', cursive;
+  color: var(--accent);
+  font-weight: 700;
+  font-size: 1.4rem;
+  background: none;
+  padding: 0;
+  white-space: nowrap;
 }
 
 .pricing__inner {
