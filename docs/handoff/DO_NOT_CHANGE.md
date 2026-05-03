@@ -79,7 +79,7 @@ Nepřidávat další font bez souhlasu.
 
 ### localStorage / sessionStorage klíče
 - **`km-theme`** — hodnoty `light` / `dark` (theme toggle)
-- **`km-eggs-found`** — JSON pole nalezených ID malin
+- **`km-eggs-found-v2`** — JSON pole nalezených ID malin (v2 po reset 2026-05-03; starý `km-eggs-found` ignorován kvůli stale stavům z dřívějších iterací)
 - **`km-eggs-modal-shown`** (sessionStorage) — flag zobrazení vítězného modalu
 - **`km-cookies-consent`** — `granted` / `denied`
 - High-score klíč hry Skákající malina (`game.js:74`)

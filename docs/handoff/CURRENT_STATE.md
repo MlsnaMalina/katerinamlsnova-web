@@ -1,7 +1,20 @@
 # CURRENT_STATE.md
 
-## Stav k datu: 2026-05-03
-**Poslední commit**: `c9335dc fix(egg-hunt): force visibility maliny --submit v sekci Co umím` (na `main`, pushnuto na GitHub, auto-deploy Vercel).
+## Stav k datu: 2026-05-03 (konec rozšířené session)
+**Poslední commit**: `882fce8 copy(jak-to-probiha): rozšířené texty čtyř kroků procesu` (na `main`, pushnuto na GitHub, auto-deploy Vercel).
+
+**Klíčové změny od předchozího handoffu** (HEAD `c9335dc` → `882fce8`):
+- **Cenová kalkulačka** v `<div id="kalkulator">` přidána pod ceník (#ceny). HTML/CSS/JS — viz SESSION_SUMMARY.
+- **Egg hunt**: malina mezi slidery smazaná, contact malina přepnutá na `data-egg="3"`, `STORAGE_KEY` bumpnutý na `"km-eggs-found-v2"`, pricing pssst sladěná s ostatními (zůstává viditelná po sebrání).
+- **Navigace**: „Co umím" → „S čím vám mohu pomoci", „Ceny" → „Kolik to stojí?", přidán odkaz „Jak to probíhá".
+- **Doodle swap**: srdíčko v #o-mne, brouk v #kontakt (původně naopak).
+- **„klikni sem" v kontaktu**: barvy přes `var(--text)` (adaptuje se light/dark).
+- **#ceny intro rámeček**: smazaná věta o vibe codingu, doodle SVG podtržení místo `<u>`, přeformulovaný závěr.
+- **#ukazky**: subtitle „samy o sobě jsou…", srdíčko na 3. řádku, featured blok má showcase-header s tagem „Interaktivní hra" a vystředěným h3 „Interaktivní hra pro děti", carousel tagy s velkými písmeny.
+- **#co-umim karta „Jednoduchý web"**: rozšířený popis.
+- **#jak-to-probiha**: všechny 4 kroky přepsané delším textem.
+- **Egg modal**: doplněno „15 %".
+- **Hero animace**: zrychlená na ~3,2 s.
 
 ## Co aktuálně funguje (produkce)
 - **Navigace**: desktop + mobile hamburger + dark/light toggle (perzistence `km-theme`).
