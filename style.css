@@ -3900,9 +3900,10 @@ body.lightbox-open {
 .calc-section h3 {
   margin: 0 0 1rem;
   color: var(--accent);
-  font-size: 1.2rem;
-  font-family: var(--font-display);
-  font-weight: 800;
+  font-size: 1.6rem;
+  font-family: "Caveat", cursive;
+  font-weight: 700;
+  letter-spacing: 0.01em;
 }
 .calc-option {
   display: flex;
@@ -3952,11 +3953,16 @@ body.lightbox-open {
   outline: 2px solid var(--accent);
   outline-offset: 3px;
 }
+.calc-option strong {
+  font-family: var(--font-body);
+  font-weight: 700;
+}
 .calc-option small {
   display: block;
   color: var(--text-muted);
   margin-top: 2px;
   font-family: var(--font-body);
+  font-size: 0.85rem;
 }
 .calc-receipt {
   position: relative;
@@ -3986,8 +3992,39 @@ body.lightbox-open {
 .calc-receipt__frame rect {
   fill: none;
   stroke: var(--accent);
-  stroke-width: 2.6;
   stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.calc-receipt__frame-outer { stroke-width: 3.4; }
+.calc-receipt__frame-inner { stroke-width: 1.4; opacity: 0.7; }
+
+.calc-receipt__corner {
+  position: absolute;
+  z-index: 2;
+  color: var(--accent);
+  font-size: 1.1rem;
+  line-height: 1;
+  pointer-events: none;
+  filter: url(#rough);
+}
+.calc-receipt__corner--tl { top: -8px; left: -8px; }
+.calc-receipt__corner--tr { top: -8px; right: -8px; }
+.calc-receipt__corner--bl { bottom: -8px; left: -8px; }
+.calc-receipt__corner--br { bottom: -8px; right: -8px; }
+
+.calc-receipt__sparkle {
+  display: block;
+  width: 38px;
+  height: 38px;
+  margin: 0 auto 0.5rem;
+  color: var(--accent);
+  z-index: 1;
+  position: relative;
+}
+.calc-receipt__sparkle path {
+  fill: var(--accent);
+  stroke: var(--accent);
+  stroke-width: 1;
   stroke-linejoin: round;
 }
 .calc-receipt h3 {

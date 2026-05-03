@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
-    href="https://fonts.googleapis.com/css2?family=Syne:wght@800&family=Space+Grotesk:wght@400;500&family=IBM+Plex+Mono:wght@600&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Syne:wght@800&family=Space+Grotesk:wght@400;500&family=IBM+Plex+Mono:wght@600&family=Caveat:wght@600;700&display=swap"
     rel="stylesheet"
   />
 
@@ -748,7 +748,15 @@
 
           <div class="calc-receipt">
             <svg class="calc-receipt__frame" preserveAspectRatio="none" aria-hidden="true">
-              <rect x="2" y="2" width="calc(100% - 4px)" height="calc(100% - 4px)" rx="14" ry="14" filter="url(#rough)" />
+              <rect class="calc-receipt__frame-outer" x="4" y="4" width="calc(100% - 8px)" height="calc(100% - 8px)" rx="14" ry="14" filter="url(#rough)" />
+              <rect class="calc-receipt__frame-inner" x="11" y="11" width="calc(100% - 22px)" height="calc(100% - 22px)" rx="10" ry="10" filter="url(#rough)" />
+            </svg>
+            <span class="calc-receipt__corner calc-receipt__corner--tl" aria-hidden="true">✦</span>
+            <span class="calc-receipt__corner calc-receipt__corner--tr" aria-hidden="true">✦</span>
+            <span class="calc-receipt__corner calc-receipt__corner--bl" aria-hidden="true">✦</span>
+            <span class="calc-receipt__corner calc-receipt__corner--br" aria-hidden="true">✦</span>
+            <svg class="calc-receipt__sparkle" viewBox="0 0 40 40" aria-hidden="true">
+              <path d="M 20,4 L 23,17 L 36,20 L 23,23 L 20,36 L 17,23 L 4,20 L 17,17 Z" filter="url(#rough)" />
             </svg>
             <h3>Váš orientační odhad</h3>
             <div class="receipt-total"><span id="calc-price">0</span> Kč</div>
