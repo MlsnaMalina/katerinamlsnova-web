@@ -2294,7 +2294,7 @@ body.lightbox-open {
   display: inline-flex;
   align-items: center;
   gap: 0.4rem;
-  color: var(--accent);
+  color: var(--text);
   pointer-events: none;
 }
 
@@ -2302,7 +2302,7 @@ body.lightbox-open {
   font-family: var(--font-mono);
   font-weight: 600;
   font-size: 0.75rem;
-  color: var(--accent);
+  color: var(--text);
   transform: rotate(-5deg);
   white-space: nowrap;
 }
@@ -2316,7 +2316,7 @@ body.lightbox-open {
 
 .contact__email-hint-arrow path {
   fill: none;
-  stroke: var(--accent);
+  stroke: var(--text);
   stroke-width: 2;
   stroke-linecap: round;
   stroke-linejoin: round;
