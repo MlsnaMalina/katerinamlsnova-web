@@ -875,3 +875,31 @@ document.addEventListener('DOMContentLoaded', () => {
     input.addEventListener("change", updateCalculator);
   });
 })();
+
+// FAQ accordion — "Možná vás zajímá"
+(function initFaqAccordion() {
+  const buttons = document.querySelectorAll('.faq__question');
+  if (!buttons.length) return;
+
+  buttons.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const item = btn.closest('.faq__item');
+      const answer = item.querySelector('.faq__answer');
+      const isOpen = item.classList.contains('is-open');
+
+      document.querySelectorAll('.faq__item.is-open').forEach((open) => {
+        open.classList.remove('is-open');
+        const a = open.querySelector('.faq__answer');
+        const q = open.querySelector('.faq__question');
+        if (a) a.hidden = true;
+        if (q) q.setAttribute('aria-expanded', 'false');
+      });
+
+      if (!isOpen) {
+        item.classList.add('is-open');
+        answer.hidden = false;
+        btn.setAttribute('aria-expanded', 'true');
+      }
+    });
+  });
+})();
