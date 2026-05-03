@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="Stránka nebyla nalezena — Kateřina Mlsnová" />
-  <title>404 — Zakutálená malina | Kateřina Mlsnová</title>
+  <title>404 — Stránka se ztratila | Kateřina Mlsnová</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -15,25 +15,79 @@
 
   <link rel="stylesheet" href="style.css" />
 </head>
-<body>
-  <main class="error-page-container">
-    <div class="error-content doodle-border">
-      <div class="error-berry">
-        <img src="assets/malina-game.svg" alt="" width="140" height="154" aria-hidden="true" />
+<body class="page-404">
+  <a href="/" class="page-404__brand" aria-label="Zpět na hlavní stránku">
+    KM<span class="page-404__brand-cursor" aria-hidden="true">▌</span>
+  </a>
+
+  <main class="page-404__main">
+    <div class="win-terminal page-404__terminal" role="region" aria-label="Chybová stránka 404">
+      <div class="win-terminal-header">
+        <span class="win-terminal-title">C:\Users\Kateřina&gt; not_found</span>
+        <div class="win-terminal-buttons" aria-hidden="true">
+          <span class="win-btn">─</span>
+          <span class="win-btn">□</span>
+          <span class="win-btn win-btn-close">✕</span>
+        </div>
       </div>
 
-      <h1 class="error-title">404</h1>
-      <h2 class="error-subtitle">Jejda, zakutálená malina!</h2>
+      <div class="win-terminal-body page-404__body">
+        <p class="page-404__line page-404__line--cmd">
+          <span class="page-404__prompt" aria-hidden="true">&gt;</span>
+          stránka <span class="page-404__hl">--neexistuje</span>
+        </p>
 
-      <p class="error-text">
-        Vypadá to, že stránka, kterou hledáte, spadla někam pod stůl.
-        Nic se ale neděje, pojďme vás vrátit bezpečně zpátky.
-      </p>
+        <h1 class="page-404__code" aria-label="Chyba 404">404</h1>
 
-      <div class="error-actions">
-        <a href="index.html" class="doodle-btn-small">← Zpět na hlavní stranu</a>
+        <p class="page-404__headline">
+          Tahle stránka se ztratila mezi řádky kódu.
+        </p>
+
+        <p class="page-404__sub">
+          Možná se změnil odkaz, možná stránka zmizela — nebo si jen jedna malina odskočila jinam.
+        </p>
+
+        <div class="page-404__actions">
+          <a href="/" class="page-404__btn page-404__btn--primary">
+            Zpět na hlavní stránku
+          </a>
+          <a href="/#ukazky" class="page-404__btn">Ukázky projektů</a>
+          <a href="/#kontakt" class="page-404__btn">Napsat mi</a>
+        </div>
+
+        <p class="page-404__line page-404__line--end">
+          <span class="page-404__prompt" aria-hidden="true">&gt;</span>
+          <span class="page-404__cursor" aria-hidden="true">_</span>
+        </p>
       </div>
     </div>
+
+    <button
+      type="button"
+      class="page-404__berry"
+      aria-label="Schovaná malina"
+      data-berry-msg="Tady je! 🫐"
+    >
+      <img src="assets/malina-game.svg" alt="" aria-hidden="true" />
+      <span class="page-404__berry-msg" aria-hidden="true">Tady je!</span>
+    </button>
   </main>
+
+  <script>
+    (function () {
+      const berry = document.querySelector('.page-404__berry');
+      if (!berry) return;
+      let active = false;
+      berry.addEventListener('click', () => {
+        if (active) return;
+        active = true;
+        berry.classList.add('is-found');
+        setTimeout(() => {
+          berry.classList.remove('is-found');
+          active = false;
+        }, 2200);
+      });
+    })();
+  </script>
 </body>
 </html>
