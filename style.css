@@ -1519,6 +1519,7 @@ body.lightbox-open {
   width: 70px;
   height: 170px;
   overflow: visible;
+  pointer-events: none;
 }
 @media (max-width: 720px) {
   .pricing-row__calc-cta-arrow { height: 110px; width: 60px; }
@@ -3934,6 +3935,7 @@ body.lightbox-open {
   margin: 4rem auto 0;
   max-width: 1000px;
   font-family: var(--font-body);
+  scroll-margin-top: 90px;
 }
 .calculator-wrapper > *:not(.calculator-wrapper__frame):not(.calculator-wrapper__deco) {
   position: relative;
