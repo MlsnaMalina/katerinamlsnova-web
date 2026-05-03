@@ -1145,7 +1145,7 @@ body {
   font-weight: 600;
   font-size: 0.72rem;
   letter-spacing: 0.04em;
-  text-transform: lowercase;
+  text-transform: none;
   color: var(--accent);
   border: 1.4px solid var(--accent);
   border-radius: 999px;
@@ -3748,8 +3748,7 @@ body.lightbox-open {
   margin-bottom: 20px;
 }
 
-.showcase-header .service-tag,
-.featured-game__tag {
+.showcase-header .service-tag {
   display: inline-block;
   font-family: var(--font-mono);
   font-size: 0.85rem;
