@@ -562,11 +562,18 @@
             <rect width="100%" height="100%" rx="14" ry="14" filter="url(#rough)" />
           </svg>
           <span class="pricing__intro-tag">// upřímně o cenách</span>
-          <p class="pricing__intro-text">Proč jsou ceny tak nízké? Buduji portfolio. S tvorbou díky vibe codingu začínám, takže ještě nemám příliš co ukázat. <u>Hledám 10 projektů</u>, na kterých bych mohla ukázat, co umím. Těmto prvním klientům nabízím <u>zaváděcí ceny</u>, které jsou níže – pak se ceny posunou na standardní úroveň.</p>
+          <p class="pricing__intro-text">Proč jsou ceny tak nízké? Buduji portfolio. <span class="doodle-underline">Hledám 10 projektů<svg class="doodle-underline__svg" viewBox="0 0 100 8" preserveAspectRatio="none" aria-hidden="true"><path filter="url(#rough)" d="M 2,5 C 25,2 50,7 75,3 C 88,2 95,6 98,4" /></svg></span>, na kterých bych mohla ukázat, co umím. Těmto prvním klientům nabízím <span class="doodle-underline">zaváděcí ceny<svg class="doodle-underline__svg" viewBox="0 0 100 8" preserveAspectRatio="none" aria-hidden="true"><path filter="url(#rough)" d="M 2,4 C 28,7 55,2 80,5 C 90,6 95,4 98,5" /></svg></span>, které jsou uvedeny níže — pak se ceny posunou na standardní úroveň.</p>
         </div>
 
         <ul class="pricing__list">
-          <li class="pricing-row">
+          <li class="pricing-row pricing-row--with-hint">
+            <a class="pricing-row__calc-hint" href="#kalkulator">
+              <svg class="pricing-row__calc-hint-arrow" viewBox="0 0 80 110" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <path filter="url(#rough)" d="M 28,4 C 22,18 32,32 24,48 C 18,64 26,82 22,98" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
+                <path filter="url(#rough)" d="M 12,86 C 16,90 19,95 22,100 C 26,96 30,92 34,88" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+              <span class="pricing-row__calc-hint-text">Spočítat si cenu ↓</span>
+            </a>
             <div class="pricing-row__doodle" aria-hidden="true">
               <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
                 <path stroke-width="2" d="M 7,11 C 21,9 38,12 57,10 C 58,21 56,33 58,42 C 41,43 24,42 7,43 C 6,32 8,22 7,11 Z" />
@@ -717,7 +724,7 @@
         </p>
       </div>
 
-      <div class="calculator-wrapper doodle-border">
+      <div class="calculator-wrapper doodle-border" id="kalkulator">
         <svg class="calculator-wrapper__frame" preserveAspectRatio="none" aria-hidden="true">
           <rect class="calculator-wrapper__frame-outer" x="4" y="4" width="calc(100% - 8px)" height="calc(100% - 8px)" rx="16" ry="16" filter="url(#rough)" />
           <rect class="calculator-wrapper__frame-inner" x="11" y="11" width="calc(100% - 22px)" height="calc(100% - 22px)" rx="12" ry="12" filter="url(#rough)" />
