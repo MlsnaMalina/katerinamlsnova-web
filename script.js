@@ -716,7 +716,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Egg hunt — 5 schovaných malin (1× hero maskot + 4× v sekcích)
 (function initEggHunt() {
-  const STORAGE_KEY = "km-eggs-found";
+  const STORAGE_KEY = "km-eggs-found-v2";
   const TOTAL = 5;
   const HERO_ID = "hero";
   const DISCOUNT_CODE = "MAM_VSECH_5_POHROMADE";

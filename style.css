@@ -3383,8 +3383,7 @@ body.lightbox-open {
 @media (max-width: 800px) {
   .egg-raspberry--book { top: calc(50% - 18px); }
 }
-.egg-raspberry--pssst { display: inline-block; position: relative; opacity: 1; vertical-align: middle; margin-left: 0.4rem; top: 0; filter: drop-shadow(0 1px 4px rgba(0, 0, 0, 0.5)); }
-.egg-raspberry--pssst.is-found { opacity: 0.15; }
+.egg-raspberry--pssst { display: inline-block; position: relative; opacity: 1 !important; vertical-align: middle; margin-left: 0.4rem; top: 0; filter: drop-shadow(0 1px 4px rgba(0, 0, 0, 0.5)); animation: none !important; pointer-events: auto !important; }
 .egg-raspberry--submit {
   position: absolute;
   top: 50%;
