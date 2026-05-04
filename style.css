@@ -273,7 +273,6 @@ body {
   align-items: start;
   width: 100%;
   max-width: 80rem;
-  position: relative;
 }
 
 .logo-wrap {
@@ -3448,20 +3447,19 @@ body.lightbox-open {
   text-align: center;
 }
 
-/* Hero malina — doodle šipka od terminálu k malině */
+/* Hero malina — doodle šipka ukazující na malinu */
 .malina-arrow {
   position: absolute;
-  right: 30%;
-  top: clamp(10rem, 20vw, 19rem);
-  width: 140px;
-  height: auto;
+  left: 82%;
+  top: 100%;
+  margin-top: 3rem;
+  width: 72px;
+  height: 72px;
   color: #222;
   opacity: 0;
   pointer-events: none;
   z-index: 1;
-  transform: rotate(70deg);
-  transform-origin: 90% 13%;
-  transition: opacity 0.5s ease;
+  transform: rotate(6deg);
 }
 [data-theme="dark"] .malina-arrow {
   color: #fff;
@@ -3472,16 +3470,12 @@ body.lightbox-open {
   }
 }
 .malina-arrow.is-blinking {
-  opacity: 0.55;
+  animation: maliaArrowBlink 3s ease-in-out infinite;
 }
 .malina-arrow.is-hidden {
+  animation: none !important;
   opacity: 0 !important;
   display: none;
-}
-@media (max-width: 900px) {
-  .malina-arrow {
-    display: none !important;
-  }
 }
 @keyframes maliaArrowBlink {
   0%   { opacity: 0; }
