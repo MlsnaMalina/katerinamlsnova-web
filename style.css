@@ -318,7 +318,7 @@ body {
 .hero-col--right {
   gap: 0.9rem;
   align-self: start;
-  margin-top: clamp(5rem, 13vw, 12rem);
+  margin-top: clamp(7rem, 16vw, 15rem);
 }
 
 .hero-col--right .win-terminal {
