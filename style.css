@@ -3459,7 +3459,8 @@ body.lightbox-open {
   opacity: 0;
   pointer-events: none;
   z-index: 1;
-  transform: rotate(6deg);
+  transform: rotate(0deg);
+  transform-origin: 50% 50%;
 }
 [data-theme="dark"] .malina-arrow {
   color: #fff;
@@ -3470,7 +3471,7 @@ body.lightbox-open {
   }
 }
 .malina-arrow.is-blinking {
-  animation: maliaArrowBlink 3s ease-in-out infinite;
+  opacity: 0.55;
 }
 .malina-arrow.is-hidden {
   animation: none !important;
