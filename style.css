@@ -3459,7 +3459,8 @@ body.lightbox-open {
   opacity: 0;
   pointer-events: none;
   z-index: 1;
-  transform: rotate(-3deg);
+  transform: rotate(50deg);
+  transform-origin: 90% 13%;
   transition: opacity 0.5s ease;
 }
 [data-theme="dark"] .malina-arrow {
