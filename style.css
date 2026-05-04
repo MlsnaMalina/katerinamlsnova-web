@@ -4200,6 +4200,30 @@ body.lightbox-open {
 .calc-footer p { margin: 0 0 0.75rem; }
 .calc-footer p:last-child { margin-bottom: 0; }
 
+.calc-reset-btn {
+  display: block;
+  margin: 12px auto 0;
+  background: none;
+  border: none;
+  font-family: 'Caveat', cursive;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text);
+  opacity: 0.6;
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: opacity 0.2s ease, color 0.2s ease;
+  padding: 4px 8px;
+}
+
+.calc-reset-btn:hover,
+.calc-reset-btn:focus-visible {
+  opacity: 1;
+  color: var(--accent);
+  outline: none;
+}
+
 /* ============================================
    FAQ — "Možná vás zajímá"
    ============================================ */

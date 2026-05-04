@@ -874,6 +874,14 @@ document.addEventListener('DOMContentLoaded', () => {
   calcInputs.forEach((input) => {
     input.addEventListener("change", updateCalculator);
   });
+
+  const resetBtn = document.getElementById("calc-reset");
+  resetBtn?.addEventListener("click", () => {
+    calcInputs.forEach((input) => {
+      input.checked = false;
+    });
+    updateCalculator();
+  });
 })();
 
 // FAQ accordion — "Možná vás zajímá"
