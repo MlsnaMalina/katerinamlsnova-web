@@ -4617,3 +4617,49 @@ body.lightbox-open {
     height: 48px;
   }
 }
+
+/* ── Hero CTA ── */
+.hero-cta {
+  margin-top: 1.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  align-items: flex-start;
+}
+
+.hero-cta__btn {
+  display: inline-block;
+  padding: 0.65em 1.4em;
+  border-radius: 6px;
+  font-family: var(--font-body);
+  font-size: 1rem;
+  font-weight: 500;
+  text-decoration: none;
+  cursor: pointer;
+  transition: opacity 0.15s;
+}
+
+.hero-cta__btn:hover {
+  opacity: 0.85;
+}
+
+.hero-cta__btn--primary {
+  background: var(--accent);
+  color: #fff;
+  border: 2px solid var(--accent);
+}
+
+.hero-cta__btn--secondary {
+  background: transparent;
+  color: var(--accent);
+  border: 2px solid var(--accent);
+}
+
+.hero-cta__microcopy {
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  margin: 0.25rem 0 0;
+  max-width: 28ch;
+  line-height: 1.5;
+}
