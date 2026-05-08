@@ -268,8 +268,8 @@
     }
     let msg;
     if (byWind) msg = 'Vítr tě odnesl!';
-    else if (final < 100) msg = 'Ještě to chce trénink.';
-    else if (final <= 500) msg = 'Dobrý začátek! Zkusíte to znovu?';
+    else if (final < 800) msg = 'Ještě to chce trénink.';
+    else if (final <= 1800) msg = 'Dobrý začátek! Zkusíte to znovu?';
     else msg = 'Tak to bylo skvělý!';
     msgEl.textContent = msg;
     scoreEl.textContent = 'Skóre: ' + final;
