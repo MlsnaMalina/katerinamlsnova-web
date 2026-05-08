@@ -4687,3 +4687,14 @@ body.lightbox-open {
   padding-top: 0.9rem;
   border-top: 1px dashed var(--border);
 }
+
+/* ── Calculator note ── */
+.calculator-note {
+  font-family: var(--font-body);
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  margin: 0 auto 1rem;
+  max-width: 680px;
+  text-align: center;
+  line-height: 1.6;
+}
