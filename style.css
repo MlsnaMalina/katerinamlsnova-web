@@ -4800,3 +4800,30 @@ body.lightbox-open {
 .why__text:last-child {
   margin-bottom: 0;
 }
+
+.why__actions {
+  margin-top: 2rem;
+  display: flex;
+  justify-content: center;
+}
+
+.why__cta {
+  display: inline-block;
+  padding: 0.7em 1.6em;
+  border-radius: 6px;
+  font-family: var(--font-body);
+  font-size: 1rem;
+  font-weight: 500;
+  text-decoration: none;
+  background: var(--accent);
+  color: #fff;
+  border: 2px solid var(--accent);
+  transition: opacity 0.15s ease, transform 0.15s ease;
+}
+
+.why__cta:hover,
+.why__cta:focus-visible {
+  opacity: 0.88;
+  transform: translateY(-1px);
+  outline: none;
+}
