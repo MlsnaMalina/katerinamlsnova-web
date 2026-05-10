@@ -310,8 +310,16 @@ body {
 }
 .hero-col--left .tagline {
   text-align: left;
-  margin-top: 1rem;
-  font-size: 1.05rem;
+  margin-top: 0.75rem;
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  line-height: 1.5;
+  color: var(--text-muted);
+  max-width: 56ch;
+}
+
+.hero-cta--empty {
+  min-height: 7rem;
 }
 
 /* Pravý sloupec — terminál + pitch + subtext, posunutý dolů pod MLSNOVÁ */
