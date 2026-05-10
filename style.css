@@ -315,7 +315,7 @@ body {
   font-size: 0.82rem;
   line-height: 1.5;
   color: var(--text-muted);
-  max-width: 30ch;
+  max-width: 40ch;
 }
 
 .hero-cta--empty {
