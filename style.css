@@ -4709,12 +4709,18 @@ body.lightbox-open {
   height: 100%;
   pointer-events: none;
   overflow: visible;
+  z-index: 0;
 }
 
 .fit__frame rect {
-  fill: var(--bg-elevated);
+  fill: transparent;
   stroke: var(--border);
   stroke-width: 2.2;
+}
+
+.fit__col {
+  position: relative;
+  z-index: 1;
 }
 
 @media (max-width: 600px) {
