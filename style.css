@@ -4771,3 +4771,32 @@ body.lightbox-open {
   content: "✗";
   color: var(--text-muted);
 }
+
+/* ── Why section ── */
+.why {
+  padding: 3rem 1.5rem 4rem;
+  position: relative;
+}
+
+.why__inner {
+  max-width: 740px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.why__title {
+  margin-bottom: 2rem;
+}
+
+.why__text {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.65;
+  color: var(--text);
+  margin: 0 auto 1.25rem;
+  max-width: 64ch;
+}
+
+.why__text:last-child {
+  margin-bottom: 0;
+}
