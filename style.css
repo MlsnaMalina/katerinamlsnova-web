@@ -4685,3 +4685,66 @@ body.lightbox-open {
   text-align: center;
   line-height: 1.6;
 }
+
+/* ── Fit section ── */
+.fit {
+  padding: 4rem 1.5rem;
+  position: relative;
+}
+
+.fit__inner {
+  max-width: 860px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2.5rem;
+}
+
+@media (max-width: 600px) {
+  .fit__inner {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+}
+
+.fit__title {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  margin-bottom: 1rem;
+}
+
+.fit__title--yes {
+  color: var(--accent);
+}
+
+.fit__title--no {
+  color: var(--text-muted);
+}
+
+.fit__list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: var(--text);
+}
+
+.fit__list li::before {
+  margin-right: 0.5em;
+}
+
+.fit__list--yes li::before {
+  content: "✓";
+  color: var(--accent);
+  font-weight: 700;
+}
+
+.fit__list--no li::before {
+  content: "✗";
+  color: var(--text-muted);
+}
