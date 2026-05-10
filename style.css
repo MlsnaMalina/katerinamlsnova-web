@@ -1810,6 +1810,7 @@ body.lightbox-open {
   font-size: 1.05rem;
   line-height: 1.65;
   color: var(--text);
+  max-width: 42ch;
 }
 
 .about__text p + p {
