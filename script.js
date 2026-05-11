@@ -941,6 +941,8 @@ __initQueue.push(() => {
         btn.setAttribute('aria-expanded', 'false');
         const answer = btn.nextElementSibling;
         if (answer) answer.hidden = true;
+        const item = btn.closest('.faq__item');
+        if (item) item.classList.remove('is-open');
         btn.focus();
       }
       if (e.key === 'ArrowDown') {
