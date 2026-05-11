@@ -4694,7 +4694,7 @@ body.lightbox-open {
 .calculator-note {
   font-family: var(--font-body);
   font-size: 0.88rem;
-  color: var(--text-muted);
+  color: var(--accent);
   margin: 3rem auto 0.25rem;
   max-width: 680px;
   text-align: center;
