@@ -496,6 +496,17 @@ document.addEventListener('DOMContentLoaded', () => {
   const submitBtn = document.getElementById("contact-submit");
   if (!form || !success) return;
 
+  const submitLabel = submitBtn.querySelector(".contact__submit-label");
+  const submitArrow = submitBtn.querySelector(".contact__submit-arrow");
+  const submitLoading = submitBtn.querySelector(".contact__submit-loading");
+
+  function setLoading(on) {
+    submitBtn.disabled = on;
+    if (submitLabel) submitLabel.hidden = on;
+    if (submitArrow) submitArrow.hidden = on;
+    if (submitLoading) submitLoading.hidden = !on;
+  }
+
   const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
   form.addEventListener("submit", async (e) => {
@@ -513,9 +524,7 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
-    submitBtn.disabled = true;
-    const originalLabel = submitBtn.querySelector(".contact__submit-label").textContent;
-    submitBtn.querySelector(".contact__submit-label").textContent = "Odesílám…";
+    setLoading(true);
 
     try {
       const res = await fetch(form.action, {
@@ -531,8 +540,7 @@ document.addEventListener('DOMContentLoaded', () => {
     } catch (err) {
       errorEl.textContent = "Něco se pokazilo. Zkuste to znovu nebo mi napište přímo na e-mail.";
       errorEl.hidden = false;
-      submitBtn.disabled = false;
-      submitBtn.querySelector(".contact__submit-label").textContent = originalLabel;
+      setLoading(false);
     }
   });
 })();
