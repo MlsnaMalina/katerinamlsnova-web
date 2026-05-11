@@ -1,0 +1,9 @@
+<svg viewBox="0 0 800 420" xmlns="http://www.w3.org/2000/svg">
+  <rect width="800" height="420" fill="#ffffff"/>
+  <rect x="0" y="0" width="6" height="420" fill="#7A1840"/>
+  <text x="80" y="270" font-family="'Arial Black', Arial, sans-serif" font-size="160" font-weight="900" fill="#111111" letter-spacing="-4">KM</text>
+  <rect x="365" y="132" width="14" height="146" fill="#7A1840"/>
+  <g transform="translate(530, 185) scale(5.0)">
+    <path d="M 50,86 C 28,68 10,54 12,32 C 14,16 32,12 50,32 C 68,12 86,16 88,32 C 90,54 72,68 50,86 Z" fill="#7A1840" stroke="#111111" stroke-width="2.6" stroke-linejoin="round"/>
+  </g>
+</svg>
