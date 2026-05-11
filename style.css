@@ -3726,11 +3726,17 @@ body.lightbox-open {
 
 .featured-game__iframe {
   position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
+  top: 0;
+  left: 0;
+  /* iframe se renderuje na 100/0.667 ≈ 150 % rozměrů kontejneru,
+     pak se transformem vizuálně zmenší zpět — hra uvnitř si pak
+     myslí, že má původní (větší) viewport a vykreslí se správně */
+  width: 150%;
+  height: 150%;
   border: 0;
   display: block;
+  transform: scale(0.667);
+  transform-origin: 0 0;
 }
 
 .featured-game__frame {
