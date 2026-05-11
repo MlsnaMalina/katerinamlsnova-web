@@ -1,5 +1,27 @@
+// Cleanup starých localStorage klíčů (legacy verze egg huntu)
+(function() {
+  const oldKeys = ['km-eggs-found'];
+  oldKeys.forEach(key => localStorage.removeItem(key));
+})();
+
+// Konsolidovaný DOM-ready dispatcher — jediný DOMContentLoaded listener
+// v souboru. Každý handler (hero intro, IIFE init, IIFE onReady) si registruje
+// svůj init přes __initQueue.push(fn). Master listener níž je spustí v pořadí.
+const __initQueue = [];
+let __initsRun = false;
+function __runInits() {
+  if (__initsRun) return;
+  __initsRun = true;
+  __initQueue.forEach(fn => fn());
+}
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', __runInits);
+} else {
+  Promise.resolve().then(__runInits);
+}
+
 // Hero intro: terminal seq1 → pitch → subtext → terminal seq2 → maskot Malina
-document.addEventListener('DOMContentLoaded', () => {
+__initQueue.push(() => {
   const textToType1 = "> kateřino, vytvoř mi jednoduchý web";
   const textToType2 = "> system --spust_malinu";
   const typewriterEl = document.getElementById('terminal-typewriter');
@@ -289,11 +311,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', init);
-  } else {
-    init();
-  }
+  __initQueue.push(init);
 })();
 
 // Featured game embed — loading placeholder + 8s timeout fallback
@@ -666,11 +684,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  if (document.readyState === "loading") {
-    window.addEventListener("DOMContentLoaded", onReady);
-  } else {
-    onReady();
-  }
+  __initQueue.push(onReady);
 })();
 
 (function initFooterAddress() {
