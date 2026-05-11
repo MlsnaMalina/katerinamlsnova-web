@@ -932,4 +932,27 @@ __initQueue.push(() => {
       }
     });
   });
+
+  // Keyboard navigation — Escape zavře, šipky přesouvají fokus mezi otázkami
+  const faqQuestions = buttons;
+  faqQuestions.forEach((btn, index) => {
+    btn.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        btn.setAttribute('aria-expanded', 'false');
+        const answer = btn.nextElementSibling;
+        if (answer) answer.hidden = true;
+        btn.focus();
+      }
+      if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        const next = faqQuestions[index + 1];
+        if (next) next.focus();
+      }
+      if (e.key === 'ArrowUp') {
+        e.preventDefault();
+        const prev = faqQuestions[index - 1];
+        if (prev) prev.focus();
+      }
+    });
+  });
 })();

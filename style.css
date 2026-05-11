@@ -4921,3 +4921,23 @@ body.lightbox-open {
   align-items: center;
   justify-content: center;
 }
+
+/* ── Skip link ── */
+.skip-link {
+  position: absolute;
+  top: -100%;
+  left: 1rem;
+  z-index: 9999;
+  padding: 0.6em 1.2em;
+  background: var(--accent);
+  color: #fff;
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  text-decoration: none;
+  border-radius: 6px;
+  transition: top 0.15s;
+}
+
+.skip-link:focus {
+  top: 1rem;
+}
