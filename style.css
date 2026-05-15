@@ -1389,6 +1389,20 @@ body.lightbox-open {
   overflow: hidden;
 }
 
+.lightbox--wide .lightbox__panel {
+  width: min(1200px, 100%);
+}
+
+.lightbox--wide .lightbox__image {
+  max-height: 80vh;
+}
+
+@media (max-width: 600px) {
+  .lightbox--wide .lightbox__image {
+    max-height: 75vh;
+  }
+}
+
 /* ============================================
    Pricing section ("Ceny")
    ============================================ */

@@ -446,7 +446,7 @@ __initQueue.push(() => {
   }
 
   function close() {
-    lightbox.classList.remove("is-open");
+    lightbox.classList.remove("is-open", "lightbox--wide");
     lightbox.setAttribute("aria-hidden", "true");
     document.body.classList.remove("lightbox-open");
     if (total > 1) startTimer();
@@ -468,6 +468,37 @@ __initQueue.push(() => {
       }
     });
   });
+
+  // Lightbox také pro statický checklist obrázek v showcase-grid-2col
+  const checklistImg = document.querySelector('.live-showcase-item img[src*="checklist-dotisku"]');
+  if (checklistImg) {
+    checklistImg.style.cursor = "zoom-in";
+    checklistImg.setAttribute("tabindex", "0");
+    checklistImg.setAttribute("role", "button");
+    checklistImg.setAttribute("aria-label", "Zobrazit checklist ve větším náhledu");
+    const item = checklistImg.closest(".live-showcase-item");
+    const openChecklist = () => {
+      imgEl.src = checklistImg.src;
+      imgEl.alt = checklistImg.alt;
+      tagEl.textContent = item?.querySelector(".service-tag")?.textContent || "";
+      titleEl.textContent = item?.querySelector("h3")?.textContent || "";
+      descEl.textContent = item?.querySelector(".showcase-header p")?.textContent || "";
+      ctaEl.style.display = "none";
+      lastFocused = document.activeElement;
+      lightbox.classList.add("is-open", "lightbox--wide");
+      lightbox.setAttribute("aria-hidden", "false");
+      document.body.classList.add("lightbox-open");
+      stopTimer();
+      setTimeout(() => lightbox.querySelector(".lightbox__close")?.focus(), 50);
+    };
+    checklistImg.addEventListener("click", openChecklist);
+    checklistImg.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        openChecklist();
+      }
+    });
+  }
 
   lightbox.querySelectorAll("[data-lightbox-close]").forEach((el) => {
     el.addEventListener("click", close);
