@@ -525,7 +525,6 @@ __initQueue.push(() => {
   // Lightbox také pro statický checklist obrázek v showcase-grid-2col
   const checklistImg = document.querySelector('.live-showcase-item img[src*="checklist-dotisku"]');
   if (checklistImg) {
-    checklistImg.style.cursor = "zoom-in";
     checklistImg.setAttribute("tabindex", "0");
     checklistImg.setAttribute("role", "button");
     checklistImg.setAttribute("aria-label", "Zobrazit checklist ve větším náhledu");

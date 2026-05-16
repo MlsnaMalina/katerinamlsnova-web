@@ -1390,15 +1390,21 @@ body.lightbox-open {
 }
 
 .checklist-preview {
-  max-height: 480px;
+  aspect-ratio: 16 / 9;
   overflow-y: auto;
-  cursor: zoom-in;
+  overflow-x: hidden;
 }
 
 .checklist-preview__image {
   display: block;
   width: 100%;
   height: auto;
+}
+
+@media (max-width: 600px) {
+  .checklist-preview {
+    aspect-ratio: 4 / 3;
+  }
 }
 
 .lightbox__media {
