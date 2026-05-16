@@ -1389,6 +1389,18 @@ body.lightbox-open {
   overflow: hidden;
 }
 
+.checklist-preview {
+  max-height: 480px;
+  overflow-y: auto;
+  cursor: zoom-in;
+}
+
+.checklist-preview__image {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
 .lightbox__media {
   position: relative;
 }
