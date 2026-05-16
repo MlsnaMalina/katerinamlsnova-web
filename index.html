@@ -597,7 +597,7 @@
             </div>
           </article>
 
-          <article class="work-card" tabindex="0" role="button">
+          <article class="work-card" tabindex="0" role="button" data-slides-prefix="assets/prezentace/hra-pro-deti-" data-slides-ext=".webp" data-slides-count="18" data-slides-pad="2">
             <svg class="work-card__frame" preserveAspectRatio="none" aria-hidden="true">
               <rect width="100%" height="100%" rx="14" ry="14" filter="url(#rough)" />
             </svg>
@@ -1320,6 +1320,9 @@
       <button type="button" class="lightbox__close" aria-label="Zavřít" data-lightbox-close>×</button>
       <div class="lightbox__media">
         <img class="lightbox__image" src="" alt="" />
+        <button type="button" class="lightbox__nav lightbox__nav--prev" aria-label="Předchozí slajd" hidden>←</button>
+        <button type="button" class="lightbox__nav lightbox__nav--next" aria-label="Další slajd" hidden>→</button>
+        <span class="lightbox__counter" aria-live="polite" hidden></span>
       </div>
       <div class="lightbox__body">
         <span class="lightbox__tag"></span>
