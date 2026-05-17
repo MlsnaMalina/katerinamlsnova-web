@@ -712,10 +712,9 @@ __initQueue.push(() => {
 
 (function initCookieConsent() {
   const CONSENT_KEY = "cookie_consent";
-  const GA_ID = "G-XXXXXXXXXX"; // TODO: doplnit reálné GA4 ID
+  const GA_ID = "G-PDXPMWRJB4";
 
   function initGA() {
-    if (GA_ID === "G-XXXXXXXXXX") return;
     const script = document.createElement("script");
     script.src = "https://www.googletagmanager.com/gtag/js?id=" + GA_ID;
     script.async = true;
