@@ -395,6 +395,55 @@ body {
   height: 5px;
 }
 
+/* Hero — pouze mobil: skrýt terminál a šipku, zobrazit doodle "klikni!", jemně animovat malinu */
+.hero-mascot-hint {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .hero .win-terminal,
+  .hero-col--right .win-terminal,
+  #hero-malina-arrow {
+    display: none !important;
+  }
+
+  #hero-mascot-container {
+    position: relative;
+  }
+
+  .hero-mascot-hint {
+    display: inline-block;
+    position: absolute;
+    top: -0.6rem;
+    right: -2.2rem;
+    font-family: var(--font-handwritten, "Caveat", cursive);
+    font-weight: 700;
+    font-size: 1.6rem;
+    color: var(--accent);
+    transform: rotate(-10deg);
+    pointer-events: none;
+    line-height: 1;
+    white-space: nowrap;
+  }
+
+  @keyframes hero-mascot-wobble {
+    0%, 100% { transform: rotate(0deg); }
+    25% { transform: rotate(-4deg); }
+    75% { transform: rotate(4deg); }
+  }
+
+  .hero #hero-mascot-container.visible-element #hero-malina-mascot {
+    animation: hero-mascot-wobble 2.6s ease-in-out infinite;
+    transform-origin: 50% 90%;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero #hero-mascot-container.visible-element #hero-malina-mascot {
+      animation: none;
+    }
+  }
+}
+
 @media (max-width: 900px) {
   .hero-grid {
     grid-template-columns: 1fr;
