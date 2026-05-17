@@ -31,6 +31,16 @@ __initQueue.push(() => {
 
   if (!typewriterEl || !mascotEl) return;
 
+  // Mobil: terminál je skrytý přes CSS, takže nemá smysl spouštět typewriter.
+  // Malinu zobrazíme rovnou, ať uživatel nečeká na nic, co stejně neuvidí.
+  if (window.matchMedia('(max-width: 768px)').matches) {
+    pitchEl?.classList.add('visible-element');
+    subtextEl?.classList.add('visible-element');
+    mascotEl.classList.add('visible-element');
+    initEyes();
+    return;
+  }
+
   let i = 0;
   function typeWriter1() {
     if (i < textToType1.length) {
