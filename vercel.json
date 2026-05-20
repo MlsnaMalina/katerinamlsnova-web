@@ -1,7 +1,14 @@
 {
-  "rewrites": [
+  "redirects": [
     {
       "source": "/krejcirik-bazeny",
+      "destination": "/krejcirik-bazeny/",
+      "permanent": true
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/krejcirik-bazeny/",
       "destination": "https://krejcirik-bazeny.vercel.app/index.html"
     },
     {
