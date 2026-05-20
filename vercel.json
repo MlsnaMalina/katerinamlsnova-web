@@ -1,0 +1,12 @@
+{
+  "rewrites": [
+    {
+      "source": "/krejcirik-bazeny",
+      "destination": "https://krejcirik-bazeny.vercel.app/index.html"
+    },
+    {
+      "source": "/krejcirik-bazeny/:path*",
+      "destination": "https://krejcirik-bazeny.vercel.app/:path*"
+    }
+  ]
+}
