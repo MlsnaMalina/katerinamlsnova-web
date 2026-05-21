@@ -1,0 +1,421 @@
+<!doctype html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<title>Kateřina Mlsnová — Firmy.cz video</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@800&family=Space+Grotesk:wght@400;500;700&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --accent: #a31f4f;
+    --accent-soft: rgba(163, 31, 79, 0.18);
+    --bg: #0a0a0a;
+    --text: #f3f3f3;
+    --muted: #8a8a8a;
+    --dur: 15s;
+  }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    background: #000;
+    height: 100%;
+    overflow: hidden;
+    cursor: none;
+  }
+  body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Space Grotesk', sans-serif;
+  }
+
+  #stage {
+    position: relative;
+    width: 1200px;
+    height: 800px;
+    background: var(--bg);
+    overflow: hidden;
+    color: var(--text);
+    isolation: isolate;
+  }
+
+  /* Subtle dotted grid */
+  #stage::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image:
+      radial-gradient(rgba(255,255,255,0.06) 1.2px, transparent 1.2px);
+    background-size: 28px 28px;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  /* Soft malinová glow blob behind hero */
+  #stage::after {
+    content: "";
+    position: absolute;
+    width: 700px;
+    height: 700px;
+    left: -150px;
+    top: -200px;
+    background: radial-gradient(circle, rgba(163,31,79,0.35) 0%, rgba(163,31,79,0) 65%);
+    filter: blur(10px);
+    z-index: 1;
+    animation: blob-drift var(--dur) ease-in-out infinite;
+  }
+  @keyframes blob-drift {
+    0%, 100% { transform: translate(0, 0); }
+    50% { transform: translate(120px, 60px); }
+  }
+
+  /* Terminal header */
+  .term {
+    position: absolute;
+    top: 36px;
+    left: 48px;
+    z-index: 3;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 16px;
+    letter-spacing: 0.04em;
+    color: var(--muted);
+  }
+  .term .accent { color: var(--accent); }
+  .term .typed {
+    display: inline-block;
+    overflow: hidden;
+    white-space: nowrap;
+    vertical-align: bottom;
+    animation: term-type var(--dur) linear infinite;
+    width: 0;
+  }
+  @keyframes term-type {
+    0%, 100% { width: 0; }
+    1%       { width: 0; }
+    10%      { width: 22ch; }
+    93%      { width: 22ch; }
+    98%      { width: 0; }
+  }
+  .term .cursor {
+    display: inline-block;
+    width: 9px;
+    height: 16px;
+    background: var(--accent);
+    vertical-align: bottom;
+    margin-left: 2px;
+    animation: blink 0.7s steps(1) infinite;
+  }
+  @keyframes blink {
+    50% { opacity: 0; }
+  }
+
+  /* HERO text */
+  .hero {
+    position: absolute;
+    top: 110px;
+    left: 48px;
+    width: 1110px;
+    z-index: 3;
+  }
+  .hero h1 {
+    margin: 0;
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 138px;
+    line-height: 0.94;
+    letter-spacing: -0.04em;
+    color: var(--text);
+    text-transform: uppercase;
+  }
+  .hero h1 .line {
+    display: block;
+    overflow: hidden;
+    position: relative;
+    height: 1em;
+  }
+  .hero h1 .line span {
+    display: inline-block;
+    clip-path: inset(0 100% 0 0);
+    animation: reveal var(--dur) linear infinite;
+  }
+  .hero h1 .line.l1 span { animation-name: reveal-l1; }
+  .hero h1 .line.l2 span { animation-name: reveal-l2; }
+
+  @keyframes reveal-l1 {
+    0%, 8%   { clip-path: inset(0 100% 0 0); }
+    16%      { clip-path: inset(0 0 0 0); }
+    90%      { clip-path: inset(0 0 0 0); }
+    97%, 100% { clip-path: inset(0 100% 0 0); }
+  }
+  @keyframes reveal-l2 {
+    0%, 18%  { clip-path: inset(0 100% 0 0); }
+    27%      { clip-path: inset(0 0 0 0); }
+    90%      { clip-path: inset(0 0 0 0); }
+    97%, 100% { clip-path: inset(0 100% 0 0); }
+  }
+
+  .hero .hero-cursor {
+    display: inline-block;
+    width: 16px;
+    height: 0.85em;
+    background: var(--accent);
+    vertical-align: -0.07em;
+    margin-left: 6px;
+    animation:
+      hero-cursor-show var(--dur) linear infinite,
+      blink 0.7s steps(1) infinite;
+  }
+  @keyframes hero-cursor-show {
+    0%, 26% { opacity: 0; }
+    28%     { opacity: 1; }
+    90%     { opacity: 1; }
+    93%, 100% { opacity: 0; }
+  }
+
+  /* Tagline */
+  .tagline {
+    position: absolute;
+    left: 48px;
+    top: 422px;
+    width: 720px;
+    font-size: 22px;
+    line-height: 1.45;
+    color: #d8d8d8;
+    z-index: 3;
+    opacity: 0;
+    animation: tagline-fade var(--dur) ease-out infinite;
+  }
+  .tagline b { color: var(--text); font-weight: 700; }
+  @keyframes tagline-fade {
+    0%, 28% { opacity: 0; transform: translateY(10px); }
+    35%, 90% { opacity: 1; transform: translateY(0); }
+    95%, 100% { opacity: 0; transform: translateY(0); }
+  }
+
+  /* Project tiles (top right column) */
+  .tiles {
+    position: absolute;
+    top: 110px;
+    right: 48px;
+    width: 360px;
+    height: 540px;
+    z-index: 3;
+  }
+  .tile {
+    position: absolute;
+    left: 0;
+    width: 360px;
+    height: 220px;
+    border-radius: 14px;
+    overflow: hidden;
+    border: 2px solid rgba(255,255,255,0.08);
+    background: #1a1a1a;
+    box-shadow: 0 14px 40px rgba(0,0,0,0.6);
+    opacity: 0;
+    transform: translateY(18px) scale(0.96);
+  }
+  .tile img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .tile .tag {
+    position: absolute;
+    left: 12px;
+    bottom: 10px;
+    padding: 4px 10px;
+    background: rgba(10,10,10,0.78);
+    color: var(--text);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.04em;
+    border-radius: 999px;
+    backdrop-filter: blur(4px);
+  }
+  .tile.t1 { top: 0; }
+  .tile.t2 { top: 170px; }
+  .tile.t3 { top: 340px; }
+
+  .tile {
+    animation: tile-in var(--dur) ease-out infinite;
+  }
+  .tile.t1 { animation-name: tile-1; }
+  .tile.t2 { animation-name: tile-2; }
+  .tile.t3 { animation-name: tile-3; }
+
+  /* Each tile: appear, highlight pulse, settle, fade at end */
+  @keyframes tile-1 {
+    0%, 33%   { opacity: 0; transform: translateY(18px) scale(0.96); border-color: rgba(255,255,255,0.08); }
+    40%       { opacity: 1; transform: translateY(0) scale(1); }
+    45%       { transform: translateY(0) scale(1.04); border-color: var(--accent); box-shadow: 0 14px 40px rgba(163,31,79,0.55); }
+    55%       { transform: translateY(0) scale(1); border-color: rgba(255,255,255,0.08); box-shadow: 0 14px 40px rgba(0,0,0,0.6); }
+    90%       { opacity: 1; }
+    96%, 100% { opacity: 0; }
+  }
+  @keyframes tile-2 {
+    0%, 38%   { opacity: 0; transform: translateY(18px) scale(0.96); border-color: rgba(255,255,255,0.08); }
+    45%       { opacity: 1; transform: translateY(0) scale(1); }
+    58%       { transform: translateY(0) scale(1.04); border-color: var(--accent); box-shadow: 0 14px 40px rgba(163,31,79,0.55); }
+    68%       { transform: translateY(0) scale(1); border-color: rgba(255,255,255,0.08); box-shadow: 0 14px 40px rgba(0,0,0,0.6); }
+    90%       { opacity: 1; }
+    96%, 100% { opacity: 0; }
+  }
+  @keyframes tile-3 {
+    0%, 43%   { opacity: 0; transform: translateY(18px) scale(0.96); border-color: rgba(255,255,255,0.08); }
+    50%       { opacity: 1; transform: translateY(0) scale(1); }
+    72%       { transform: translateY(0) scale(1.04); border-color: var(--accent); box-shadow: 0 14px 40px rgba(163,31,79,0.55); }
+    82%       { transform: translateY(0) scale(1); border-color: rgba(255,255,255,0.08); box-shadow: 0 14px 40px rgba(0,0,0,0.6); }
+    90%       { opacity: 1; }
+    96%, 100% { opacity: 0; }
+  }
+
+  /* Animated doodle cursor that flies between tiles */
+  .doodle-cursor {
+    position: absolute;
+    z-index: 4;
+    width: 36px;
+    height: 36px;
+    pointer-events: none;
+    color: var(--accent);
+    filter: drop-shadow(0 2px 6px rgba(0,0,0,0.6));
+    opacity: 0;
+    animation: cursor-path var(--dur) cubic-bezier(0.45, 0, 0.2, 1) infinite;
+  }
+  @keyframes cursor-path {
+    0%, 36%   { opacity: 0; left: 900px; top: 600px; }
+    40%       { opacity: 1; left: 1040px; top: 110px; }   /* arrives on tile 1 */
+    46%       { left: 1040px; top: 110px; transform: scale(0.85); }
+    50%       { transform: scale(1); }
+    55%       { left: 1040px; top: 285px; }                /* tile 2 */
+    62%       { transform: scale(0.85); }
+    65%       { transform: scale(1); }
+    70%       { left: 1040px; top: 460px; }                /* tile 3 */
+    77%       { transform: scale(0.85); }
+    80%       { transform: scale(1); }
+    90%       { opacity: 1; }
+    96%, 100% { opacity: 0; left: 1040px; top: 460px; }
+  }
+
+  /* Footer URL strip */
+  .footer {
+    position: absolute;
+    left: 48px;
+    bottom: 38px;
+    z-index: 3;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    opacity: 0;
+    animation: footer-in var(--dur) linear infinite;
+  }
+  .footer .url {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 22px;
+    font-weight: 500;
+    color: var(--accent);
+    letter-spacing: 0.02em;
+  }
+  .footer .dot { width: 6px; height: 6px; border-radius: 999px; background: var(--muted); }
+  .footer .tag-line {
+    font-size: 14px;
+    color: var(--muted);
+    font-family: 'IBM Plex Mono', monospace;
+    letter-spacing: 0.06em;
+    text-transform: lowercase;
+  }
+  @keyframes footer-in {
+    0%, 32% { opacity: 0; }
+    40%     { opacity: 1; }
+    93%     { opacity: 1; }
+    97%, 100% { opacity: 0; }
+  }
+
+  /* Bottom-right ready indicator */
+  .ready {
+    position: absolute;
+    right: 48px;
+    bottom: 38px;
+    z-index: 3;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px;
+    color: var(--muted);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    opacity: 0;
+    animation: ready-in var(--dur) linear infinite;
+  }
+  .ready .dot {
+    display: inline-block;
+    width: 7px; height: 7px;
+    border-radius: 999px;
+    background: #2ecc71;
+    margin-right: 8px;
+    vertical-align: 1px;
+    box-shadow: 0 0 8px #2ecc71;
+    animation: ready-pulse 1.4s ease-in-out infinite;
+  }
+  @keyframes ready-in {
+    0%, 36% { opacity: 0; }
+    44%     { opacity: 1; }
+    93%     { opacity: 1; }
+    97%, 100% { opacity: 0; }
+  }
+  @keyframes ready-pulse {
+    50% { box-shadow: 0 0 20px #2ecc71; transform: scale(1.18); }
+  }
+</style>
+</head>
+<body>
+<div id="stage" aria-hidden="true">
+
+  <div class="term">
+    <span class="accent">~</span>
+    <span class="typed">$ kateřina --portfolio</span><span class="cursor"></span>
+  </div>
+
+  <div class="hero">
+    <h1>
+      <span class="line l1"><span>KATEŘINA</span></span>
+      <span class="line l2"><span>MLSNOVÁ</span><span class="hero-cursor"></span></span>
+    </h1>
+  </div>
+
+  <p class="tagline">
+    Weby, interaktivní hry, kalkulačky a digitální materiály <b>na míru</b>.<br>
+    Pro živnostníky, lektory a malé projekty.
+  </p>
+
+  <div class="tiles">
+    <div class="tile t1">
+      <img src="../../../assets/hra-nakrm-mlsne-zviratko.png" alt="">
+      <span class="tag">hra · děti</span>
+    </div>
+    <div class="tile t2">
+      <img src="../../../assets/hra-kouzelny-srdickovy-lektvar.png" alt="">
+      <span class="tag">hra · paměť</span>
+    </div>
+    <div class="tile t3">
+      <img src="../../../assets/checklist-dotisku.png" alt="">
+      <span class="tag">checklist · process</span>
+    </div>
+  </div>
+
+  <svg class="doodle-cursor" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M3 3 L 11 21 L 13 13 L 21 11 Z" fill="currentColor"/>
+  </svg>
+
+  <div class="footer">
+    <span class="url">katerinamlsnova.cz</span>
+    <span class="dot"></span>
+    <span class="tag-line">weby · hry · kalkulačky · materiály</span>
+  </div>
+
+  <div class="ready">
+    <span class="dot"></span>READY
+  </div>
+</div>
+</body>
+</html>
