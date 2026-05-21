@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<title>Cover · export</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  html, body { margin: 0; padding: 0; background: #0a0a0a; }
+  /* Render at native 1200×800 — no scaling, no chrome. */
+  #export-root { width: 1200px; height: 800px; }
+  @keyframes km-blink {
+    0%, 50% { opacity: 1; }
+    50.01%, 100% { opacity: 0; }
+  }
+</style>
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+<script src="image-slot.js"></script>
+</head>
+<body>
+<div id="export-root"></div>
+
+<!-- We reuse the variants.jsx module but only mount Variant A. The image-slot
+     ids (terminal-shot-1/2/3) are shared with index.html, so the screenshots
+     the user already dropped appear here automatically. -->
+<script type="text/babel" src="variants.jsx"></script>
+<script type="text/babel">
+  // variants.jsx exposes Variant* on window. Wait until they're attached
+  // (babel-standalone transpiles asynchronously, so the previous script
+  // may not have run by the time we evaluate this one).
+  (function mountWhenReady() {
+    if (!window.VariantTerminal) {
+      setTimeout(mountWhenReady, 30);
+      return;
+    }
+    const root = ReactDOM.createRoot(document.getElementById('export-root'));
+    root.render(<VariantTerminal />);
+  })();
+</script>
+<script>
+  // Render the cover at native 1200×800 via html2canvas. The export-root is
+  // already exactly that size, just clipped by the iframe viewport — html2canvas
+  // walks the DOM and rasterizes regardless of what's on screen.
+  window.__renderCover = async function () {
+    // Make sure fonts are loaded before snapshotting — Syne ExtraBold is the
+    // visual hero of this design.
+    if (document.fonts && document.fonts.ready) await document.fonts.ready;
+    const node = document.getElementById('export-root');
+    const canvas = await html2canvas(node, {
+      width: 1200,
+      height: 800,
+      windowWidth: 1200,
+      windowHeight: 800,
+      scale: 2, // 2400×1600 source, downsampled for crispness
+      backgroundColor: '#0a0a0a',
+      useCORS: true,
+      allowTaint: true,
+    });
+    return canvas.toDataURL('image/png');
+  };
+</script>
+</body>
+</html>
