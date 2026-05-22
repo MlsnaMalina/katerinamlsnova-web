@@ -32,9 +32,22 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
+    rel="preload"
+    as="style"
+    href="https://fonts.googleapis.com/css2?family=Syne:wght@800&family=Space+Grotesk:wght@400;500&family=IBM+Plex+Mono:wght@600&family=Caveat:wght@600;700&display=swap"
+  />
+  <link
     href="https://fonts.googleapis.com/css2?family=Syne:wght@800&family=Space+Grotesk:wght@400;500&family=IBM+Plex+Mono:wght@600&family=Caveat:wght@600;700&display=swap"
     rel="stylesheet"
+    media="print"
+    onload="this.media='all'"
   />
+  <noscript>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Syne:wght@800&family=Space+Grotesk:wght@400;500&family=IBM+Plex+Mono:wght@600&family=Caveat:wght@600;700&display=swap"
+      rel="stylesheet"
+    />
+  </noscript>
 
   <link rel="stylesheet" href="style.css" />
 
@@ -127,7 +140,7 @@
     </button>
   </nav>
 
-  <div id="mobile-menu" class="mobile-menu" aria-hidden="true">
+  <div id="mobile-menu" class="mobile-menu" aria-hidden="true" inert>
     <button
       id="mobile-menu-close"
       class="mobile-menu__close"
@@ -163,8 +176,8 @@
               <path d="M 90,50 L 10,50" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
               <path d="M 25,35 L 10,50 L 25,65" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
-            <div id="hero-mascot-container" class="hidden-element mascot-pop" role="button" tabindex="0" aria-label="Kliknutím seber malinu a spusť hru">
-              <img src="assets/malina.svg" id="hero-malina-mascot" alt="Mlsná Malina" class="doodle-mascot">
+            <div id="hero-mascot-container" class="hidden-element mascot-pop" role="button" tabindex="0" aria-label="Klikni a seber malinu, spustí se hra">
+              <img src="assets/malina.svg" id="hero-malina-mascot" alt="Mlsná Malina" class="doodle-mascot" width="65" height="72">
               <div id="mascot-eyes-container">
                 <div class="eye left-eye"><div class="pupil"></div></div>
                 <div class="eye right-eye"><div class="pupil"></div></div>
@@ -532,7 +545,7 @@
             </svg>
           </button>
           <div class="works__carousel">
-          <article class="work-card" tabindex="0" role="button">
+          <article class="work-card" tabindex="0">
             <svg class="work-card__frame" preserveAspectRatio="none" aria-hidden="true">
               <rect width="100%" height="100%" rx="14" ry="14" filter="url(#rough)" />
             </svg>
@@ -549,7 +562,7 @@
             </div>
           </article>
 
-          <article class="work-card" tabindex="0" role="button">
+          <article class="work-card" tabindex="0">
             <svg class="work-card__frame" preserveAspectRatio="none" aria-hidden="true">
               <rect width="100%" height="100%" rx="14" ry="14" filter="url(#rough)" />
             </svg>
@@ -566,7 +579,7 @@
             </div>
           </article>
 
-          <article class="work-card" tabindex="0" role="button">
+          <article class="work-card" tabindex="0">
             <svg class="work-card__frame" preserveAspectRatio="none" aria-hidden="true">
               <rect width="100%" height="100%" rx="14" ry="14" filter="url(#rough)" />
             </svg>
@@ -583,7 +596,7 @@
             </div>
           </article>
 
-          <article class="work-card" tabindex="0" role="button">
+          <article class="work-card" tabindex="0">
             <svg class="work-card__frame" preserveAspectRatio="none" aria-hidden="true">
               <rect width="100%" height="100%" rx="14" ry="14" filter="url(#rough)" />
             </svg>
@@ -600,7 +613,7 @@
             </div>
           </article>
 
-          <article class="work-card" tabindex="0" role="button" data-slides-prefix="assets/prezentace/hra-pro-deti-" data-slides-ext=".webp" data-slides-count="18" data-slides-pad="2">
+          <article class="work-card" tabindex="0" data-slides-prefix="assets/prezentace/hra-pro-deti-" data-slides-ext=".webp" data-slides-count="18" data-slides-pad="2">
             <svg class="work-card__frame" preserveAspectRatio="none" aria-hidden="true">
               <rect width="100%" height="100%" rx="14" ry="14" filter="url(#rough)" />
             </svg>

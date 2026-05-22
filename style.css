@@ -296,7 +296,7 @@ body {
   padding-left: 0;
   font-size: clamp(1.3rem, 3.5vw, 3.1rem);
   letter-spacing: 0.55em;
-  color: #999;
+  color: #6d6d6d;
   font-weight: 500;
 }
 .hero-col--left .logo__last {
@@ -1241,6 +1241,8 @@ body {
   align-self: flex-start;
   align-items: center;
   gap: 0.4rem;
+  min-height: 24px;
+  padding: 0.2rem 0.1rem;
   font-family: var(--font-mono);
   font-weight: 600;
   font-size: 0.95rem;
@@ -2894,8 +2896,7 @@ body.lightbox-open {
   font-family: var(--font-body);
   font-style: italic;
   font-size: 0.8rem;
-  color: var(--text-muted);
-  opacity: 0.8;
+  color: var(--text);
 }
 
 .footer-credit-berry {

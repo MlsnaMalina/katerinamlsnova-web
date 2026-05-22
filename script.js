@@ -191,6 +191,7 @@ __initQueue.push(() => {
   function open() {
     menu.classList.add("is-open");
     menu.setAttribute("aria-hidden", "false");
+    menu.removeAttribute("inert");
     burger.setAttribute("aria-expanded", "true");
     document.body.style.overflow = "hidden";
   }
@@ -198,6 +199,7 @@ __initQueue.push(() => {
   function close() {
     menu.classList.remove("is-open");
     menu.setAttribute("aria-hidden", "true");
+    menu.setAttribute("inert", "");
     burger.setAttribute("aria-expanded", "false");
     document.body.style.overflow = "";
   }
@@ -725,17 +727,30 @@ __initQueue.push(() => {
   const GA_ID = "G-PDXPMWRJB4";
 
   function initGA() {
-    const script = document.createElement("script");
-    script.src = "https://www.googletagmanager.com/gtag/js?id=" + GA_ID;
-    script.async = true;
-    document.head.appendChild(script);
-    window.dataLayer = window.dataLayer || [];
-    function gtag() {
-      window.dataLayer.push(arguments);
-    }
-    window.gtag = gtag;
-    gtag("js", new Date());
-    gtag("config", GA_ID, { anonymize_ip: true });
+    // Defer těžký GTM script až po načtení stránky a do volného hlavního vlákna,
+    // ať neblokuje first paint a TBT.
+    const load = () => {
+      const script = document.createElement("script");
+      script.src = "https://www.googletagmanager.com/gtag/js?id=" + GA_ID;
+      script.async = true;
+      document.head.appendChild(script);
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        window.dataLayer.push(arguments);
+      }
+      window.gtag = gtag;
+      gtag("js", new Date());
+      gtag("config", GA_ID, { anonymize_ip: true });
+    };
+    const schedule = () => {
+      if ("requestIdleCallback" in window) {
+        window.requestIdleCallback(load, { timeout: 4000 });
+      } else {
+        setTimeout(load, 1500);
+      }
+    };
+    if (document.readyState === "complete") schedule();
+    else window.addEventListener("load", schedule, { once: true });
   }
 
   function getBanner() {
