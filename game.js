@@ -47,6 +47,7 @@
       resize();
       if (state !== STATE.RUNNING) {
         player.y = groundY - PLAYER_H;
+        if (rafId == null) renderStatic();
       }
     });
     ro.observe(canvas);
@@ -233,6 +234,25 @@
     overScreen.classList.add('hidden');
     hud.classList.remove('hidden');
     updateHud();
+    startLoop();
+  }
+
+  // rAF only runs while the game is active. In IDLE/OVER we render a single
+  // static frame — otherwise the loop burns ~70ms tasks at 4× CPU throttling
+  // and tanks Lighthouse TBT before the user has even interacted.
+  let rafId = null;
+  function startLoop() {
+    if (rafId == null) {
+      lastTime = 0;
+      rafId = requestAnimationFrame(loop);
+    }
+  }
+
+  function renderStatic() {
+    if (!imagesReady) return;
+    ctx.clearRect(0, 0, cssW, cssH);
+    drawGround();
+    drawPlayer();
   }
 
   function updateHud() {
@@ -407,7 +427,11 @@
   // -------------------- Loop --------------------
   let lastTime = 0;
   function loop(now) {
-    requestAnimationFrame(loop);
+    if (state === STATE.RUNNING || state === STATE.BLOWING) {
+      rafId = requestAnimationFrame(loop);
+    } else {
+      rafId = null;
+    }
     if (!lastTime) lastTime = now;
     const dt = Math.min(50, now - lastTime);
     lastTime = now;
@@ -592,7 +616,7 @@
       wind: arr[8],
     };
     imagesReady = true;
-    requestAnimationFrame(loop);
+    renderStatic();
   }).catch((err) => {
     console.error('Game asset load failed:', err);
   });
