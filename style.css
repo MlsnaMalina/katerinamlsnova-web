@@ -3434,6 +3434,15 @@ body.lightbox-open {
   --doodle-progress: 0;
   --doodle-target: 1;
   opacity: calc(var(--doodle-progress) * var(--doodle-target));
+  transition: opacity 0.7s ease-out;
+}
+
+.doodle.is-visible {
+  --doodle-progress: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .doodle { transition: none; }
 }
 
 .doodle--lg { width: 110px; }
