@@ -1,0 +1,235 @@
+# CLAUDE.md — katerinamlsnova.cz
+
+Kontextový soubor pro Claude Code. Přečti před každou prací na projektu.
+
+---
+
+## Projekt v jedné větě
+
+Osobní web Kateřiny Mlsnové — freelancerky nabízející tvorbu jednoduchých webů, her, aplikací a prezentací. Web je zároveň ukázkou jejích schopností.
+
+---
+
+## Technický stack
+
+- **Vanilla HTML / CSS / JS** — žádný framework, žádný build systém, žádný npm
+- **Soubory v rootu = produkční soubory** (nasazují se přímo, bez kompilace)
+- **Hosting**: Vercel, auto-deploy z větve `main` přes GitHub
+- **Formuláře**: Formspree (endpoint `mzdopbaq`) — neměnit
+- **Analytika**: GA4 s ID `G-PDXPMWRJB4` (za cookie consentem)
+- **Žádný TypeScript, SCSS, Tailwind, React, Vue ani nic podobného**
+
+---
+
+## Klíčové soubory
+
+| Soubor | Obsah | Orientační velikost |
+|---|---|---|
+| `index.html` | Kompletní DOM, všechny sekce, SVG filtry v `<defs>` | ~1 400 ř. |
+| `style.css` | Všechny styly, CSS tokeny, dark/light mode | ~5 000 ř. |
+| `script.js` | Animace, navigace, slidery, egg hunt, kalkulačka, cookie consent | ~1 100 ř. |
+| `game.js` | Canvas hra Skákající mravenec/malina | ~620 ř. |
+| `zasady-ochrany-osobnich-udaju.html` | GDPR stránka |  |
+| `vercel.json` | Rewrites pro subprojekt `/krejcirik-bazeny` | |
+
+**CSS je velký** — při hledání vždy použij Grep, ne ruční prohlížení.
+
+---
+
+## Vizuální identita — NEMĚNIT bez souhlasu
+
+### Barvy (Logo Kit — jediná platná paleta)
+
+| Token | Hex | Použití |
+|---|---|---|
+| `--accent` | `#7A1840` (light) / `#B83066` (dark) | Primary CTA, interactive |
+| `--bg` | `#FFFFFF` (light) / `#0F0E0C` (dark) | Pozadí stránky |
+| `--bg-elevated` | `#F7F4EE` (light) | Karty, elevated plochy |
+| `--text` | `#1A1714` | Hlavní text |
+| `--text-muted` | rgba(26,23,20,0.7) | Sekundární text |
+| `--border` | rgba(26,23,20,0.12) | Jemné linky |
+
+**Vždy piš `var(--accent)`, nikdy hardcoded hex v nových pravidlech.**
+Výjimka: hex `#a31f4f` v inline SVG doodlech a `assets/malina.svg` je legacy — nechej být.
+
+### Typografie
+
+| Token | Font | Váha | Použití |
+|---|---|---|---|
+| `var(--font-display)` | Syne | 800 | Nadpisy sekcí |
+| `var(--font-body)` | Space Grotesk | 400/500 | Tělo textu, nav |
+| `var(--font-mono)` | IBM Plex Mono | 600 | Terminál, tagy, slidery |
+
+Další font nepřidávat.
+
+### Estetika
+
+- **Hand-drawn vzhled** přes SVG filtr `#rough` (`feTurbulence` + `feDisplacementMap`) — definovaný jednou v `index.html <defs>`
+- **Žádné** `box-shadow` (kromě schváleného: `.presentation-slider-container` má ofset stín `box-shadow: -8px 8px 0 rgba(163,31,79,0.2)`)
+- **Žádné** gradients, glassmorphism, stock fotky, ikony z knihoven
+- Doodle ikony = kubické bezier křivky, stroke-width 1.8–2.2
+
+---
+
+## Struktura sekcí (pořadí v `<main>`)
+
+1. **Hero** (`#hero`) — terminálová animace + mascot malina s eye-tracking
+2. **S čím vám můžu pomoci** (`#co-umim`) — 6 karet služeb + malina #5
+3. **O mně** (`#o-mne`) — dvousloupcový grid, portrét + text
+4. **Jak to probíhá** (`#jak-to-probiha`) — 4 kroky s doodle šipkami
+5. **Ukázky** (`#ukazky`) — viz níže
+6. **Kolik co stojí?** (`#ceny`) — ceník + kalkulačka + malina #4
+7. **Kontakt** (`#kontakt`) — Formspree form + malina #4 (kopie)
+8. **Footer**
+
+### Sekce Ukázky — aktuální struktura (po commit 7386601)
+
+1. Featured blok — **VypusTo app** (slider 8 snímků z `assets/Vypus-to/1.png–8.png`)
+2. Grid `.showcase-grid-2col`:
+   - Slider vlevo: **Finance app** (3 snímky z `assets/Finance/`)
+   - Slider vpravo: **Knížka Beltaine** (10 stran z `assets/kniha/`)
+   - Mezi nimi: malina `data-egg="3"` (`.egg-raspberry--book`)
+3. `.egg-slot--ukazky` — malina `data-egg="2"` (`.egg-raspberry--cta`)
+4. Carousel `.works__stage` — 7 karet: Šibenice, Nakrm zvířátko, Interaktivní prezentace, Hledací omalovánka, Omalovánka podle čísel, Memory hra, Prezentace (druhá)
+
+---
+
+## Egg Hunt — NEMĚNIT strukturu ani klíče
+
+| Malina | Selektor | Umístění | `data-egg` |
+|---|---|---|---|
+| #1 (hero) | mascot | Klik spustí `startEggHunt()` | bez atributu |
+| #2 | `.egg-raspberry--cta` | `.egg-slot--ukazky` v `#ukazky` | `2` |
+| #3 | `.egg-raspberry--book` | mezi slidery v `.showcase-grid-2col` | `3` |
+| #4 | `.egg-raspberry--pssst` | inline v textu sekce `#ceny` | `4` |
+| #4 (kopie) | `.egg-raspberry--pssst` | za submit tlačítkem v `#kontakt` | `4` |
+| #5 | `.egg-raspberry--submit` | plovoucí vlevo v `#co-umim` | `5` |
+
+- `TOTAL = 5` v `script.js`
+- Slevový kód po sebrání všech: **`MAM_VSECH_5_POHROMADE`**
+- Storage klíč: `km-eggs-found-v2` (JSON pole)
+- Maliny #2, #5 a kopie #4 mají `opacity: 1 !important` — záměrné, nechej být
+- Toast text: `"Další malina - X/5! 🍓"` — schválená genderově neutrální formulace
+- Debug API: `window.resetEggHunt()`, `window.startEggHunt()`
+
+---
+
+## localStorage / sessionStorage klíče
+
+| Klíč | Úložiště | Hodnoty |
+|---|---|---|
+| `km-theme` | localStorage | `"light"` / `"dark"` |
+| `km-eggs-found-v2` | localStorage | JSON pole ID (např. `["hero","2","3"]`) |
+| `km-cookies-consent` | localStorage | `"granted"` / `"denied"` |
+| `km-eggs-modal-shown` | sessionStorage | boolean flag |
+| `katherine-game-highscore` | localStorage | číslo (skóre) |
+
+**Změna klíčů = reset dat u všech návštěvníků. Neměnit.**
+
+---
+
+## Interaktivní funkce (JavaScript)
+
+- **Terminálová animace** — hero intro, ~28 ms/znak, multi-stage s prodlevami
+- **Eye-tracking mascot** — malina sleduje kurzor (sin/cos fyzika)
+- **Theme toggle** — 🌙/☀️ v navu, auto-detect z `prefers-color-scheme`, manuální override
+- **Slidery** (`initShowcaseSliders`) — universal handler, ← → klávesy, cyklení, counter `X / Y`
+- **Carousel** — coverflow efekt, 7 karet, lightbox po kliknutí
+- **Lightbox** — fullscreen, navigace šipkami + klávesnicí
+- **Kalkulačka** — multi-step form (cíl → podklady → doplňky), live total, reset
+- **FAQ accordion** — toggle `hidden` + `aria-expanded`
+- **Kontaktní formulář** — async Formspree, client validace, loading/success/error stavy
+- **Email reveal** — anti-spam obfuskace (zobrazí se na klik)
+- **Cookie consent** — banner, 3 volby, lazy GA4 load po souhlasu
+- **Canvas hra** — Skákající mravenec (Space/tap = skok, gravity + wind), high-score
+
+---
+
+## Tón textů
+
+- **Neformální, ne familiérní** — jako přátelský profesionál, ne kamarád
+- **Genderově neutrální** — žádné „našla jsi", „udělala jsi"
+- **Česky** — žádné anglicismy kde existuje česká alternativa
+- Sebeironický humor je v pořádku (viz tagline hero)
+
+---
+
+## Co NESMÍ být změněno bez výslovného souhlasu
+
+- Logo Kit barvy a typografická sada
+- Hand-drawn estetika (`#rough` filtry) — žádné box-shadow gradients
+- Tagline: _„Knižní redaktorka, která se naučila vibe kódovat…"_
+- Formspree endpoint (`mzdopbaq`)
+- Slevový kód `MAM_VSECH_5_POHROMADE`
+- Egg hunt klíče, počet malin, `!important` overrides
+- `<iframe>` URL pro jakýkoli embed (vždy se zeptat)
+- Pořadí sekcí v `<main>`
+- Git author email (viz sekce Git níže)
+
+---
+
+## Git workflow
+
+```
+git config user.email "k.schmiedtova@seznam.cz"   # povinné — Vercel jinak odmítne
+```
+
+- **Push vždy na `main`** (ne feature branch, pokud Kateřina neřekne jinak)
+- Ve worktree: po commitu udělej fast-forward merge do `main` a pushni `main`
+- Commit messages: imperativ, concise (česky nebo anglicky)
+- Co-author v každém commitu:
+  ```
+  Co-Authored-By: Claude Sonnet 4.6 <noreply@anthropic.com>
+  ```
+- **Commit + push provádíš rovnou** po dokončení a ověření změny — bez ptaní
+- Každý push = okamžitý deploy na Vercel → zvažuj před pushnutím
+
+---
+
+## Jak Kateřina pracuje
+
+- Komunikuje česky, píše přes Claude Code CLI
+- **Jeden úkol = jeden prompt = jeden commit** — nedomýšlej další kroky
+- Hodnotí výsledek vizuálně, ne kódem — pokud se ptá na problém, reaguj na to, co vidí
+- Chce konkrétní odpovědi bez dlouhých úvodů
+- Není programátorka — nemůže sama opravit kód
+- Screenshoty = preferovaný způsob komunikace problémů
+
+---
+
+## Limity a rizika
+
+- **Žádný linter ani testy** — kontrola výhradně vizuální
+- **CSS je velký** (~5 000 ř.) — hledej přes Grep, riziko duplicitních selektorů
+- **Bez build systému** — žádné ES moduly (`import/export`), vše přes `<script src>`
+- **Duplicitní `data-egg="4"`** (pricing + contact) — sdílí JS slot, záměrné
+- **GA4 placeholder** — `G-PDXPMWRJB4` je reálné ID, cookie consent jej chrání
+
+---
+
+## Rychlá orientace v repo
+
+```
+assets/
+  katerina-portrait-transparent.webp   # portrét hero
+  malina.svg, malina-game.svg          # mascot
+  Vypus-to/1.png–8.png                 # VypusTo slider (featured)
+  Finance/dluhy.png, sporeni.png, pravidelne-platby.png
+  kniha/kniha-beltaine-01–10.webp     # knížka slider
+  prezentace/hra-pro-deti-01–18.webp  # prezentace (carousel)
+  logos/                               # branding assets
+docs/handoff/                          # detailní handoff dokumentace (může být zastaralá)
+  PROJECT_CONTEXT.md                   # hlubší kontext projektu
+  DO_NOT_CHANGE.md                     # detailní seznam zákazů
+  CURRENT_STATE.md                     # stav ke 2026-05-03 (částečně zastaralé)
+vercel.json                            # rewrites pro /krejcirik-bazeny subprojekt
+```
+
+---
+
+## Živý web & repo
+
+- **Produkce**: https://www.katerinamlsnova.cz
+- **Vercel**: https://katerinamlsnova-web.vercel.app
+- **GitHub**: https://github.com/MlsnaMalina/katerinamlsnova-web
+- **IČO**: 22031383 (Průhonice, registrováno u Černošic)
