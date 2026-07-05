@@ -1,20 +1,33 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 240" width="220" height="240">
-  <defs><clipPath id="clip-schovka"><rect x="-10" y="-20" width="230" height="152"/></clipPath></defs>
-  <!-- Mlsná Malina — Schovka (pssst) | odvozeno z assets/malina.svg -->
-  <g transform="translate(10,15)">
-  <g clip-path="url(#clip-schovka)">
-  <path d="M 60 70 A 20 20 0 0 1 90 55 A 20 20 0 0 1 120 55 A 20 20 0 0 1 150 70 A 20 20 0 0 1 160 100 A 20 20 0 0 1 150 130 A 20 20 0 0 1 125 155 A 20 20 0 0 1 100 180 A 20 20 0 0 1 75 155 A 20 20 0 0 1 50 130 A 20 20 0 0 1 40 100 A 20 20 0 0 1 60 70 Z" fill="#a31f4f" stroke="#7a1438" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
-  <circle cx="80" cy="88" r="13" fill="#FFFFFF" stroke="#7a1438" stroke-width="4"/>
-  <circle cx="120" cy="88" r="13" fill="#FFFFFF" stroke="#7a1438" stroke-width="4"/>
-  <circle cx="76" cy="88" r="5.5" fill="#7a1438"/>
-  <circle cx="116" cy="88" r="5.5" fill="#7a1438"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 260 300" width="260" height="300">
+  <!-- Mlsná Malina — Schovka (pssst) | signature póza -->
+  <g transform="translate(-4,10)">
+  <g fill="#7a1438">
+    <path d="M 130 80 C 123 58 123 44 130 32 C 137 44 137 58 130 80 Z" transform="rotate(0 130 80)"/>
+    <path d="M 130 80 C 123 58 123 44 130 32 C 137 44 137 58 130 80 Z" transform="rotate(-42 130 80)"/>
+    <path d="M 130 80 C 123 58 123 44 130 32 C 137 44 137 58 130 80 Z" transform="rotate(42 130 80)"/>
   </g>
-  <path d="M 0 132 L 200 132" fill="none" stroke="#7a1438" stroke-width="6" stroke-linecap="round"/>
-  <path d="M 52 132 Q 57 119 62 132 Z" fill="#a31f4f" stroke="#7a1438" stroke-width="4" stroke-linejoin="round"/>
-  <path d="M 62 132 Q 67 119 72 132 Z" fill="#a31f4f" stroke="#7a1438" stroke-width="4" stroke-linejoin="round"/>
-  <path d="M 72 132 Q 77 119 82 132 Z" fill="#a31f4f" stroke="#7a1438" stroke-width="4" stroke-linejoin="round"/>
-  <path d="M 122 132 Q 127 119 132 132 Z" fill="#a31f4f" stroke="#7a1438" stroke-width="4" stroke-linejoin="round"/>
-  <path d="M 132 132 Q 137 119 142 132 Z" fill="#a31f4f" stroke="#7a1438" stroke-width="4" stroke-linejoin="round"/>
-  <path d="M 142 132 Q 147 119 152 132 Z" fill="#a31f4f" stroke="#7a1438" stroke-width="4" stroke-linejoin="round"/>
+  <path d="M 130 36 Q 127 26 136 22" fill="none" stroke="#7a1438" stroke-width="4" stroke-linecap="round"/>
+  <path d="M 68 152 Q 52 176 58 200" fill="none" stroke="#7a1438" stroke-width="11" stroke-linecap="round"/><circle cx="58" cy="202" r="9" fill="#7a1438"/><path d="M 192 152 Q 208 176 202 200" fill="none" stroke="#7a1438" stroke-width="11" stroke-linecap="round"/><circle cx="202" cy="202" r="9" fill="#7a1438"/>
+  <circle cx="130" cy="246" r="17" fill="#a31f4f" stroke="#7a1438" stroke-width="5"/>
+  <circle cx="110" cy="218" r="22" fill="#a31f4f" stroke="#7a1438" stroke-width="5"/>
+  <circle cx="150" cy="218" r="22" fill="#a31f4f" stroke="#7a1438" stroke-width="5"/>
+  <circle cx="92" cy="180" r="26" fill="#a31f4f" stroke="#7a1438" stroke-width="5"/>
+  <circle cx="168" cy="180" r="26" fill="#a31f4f" stroke="#7a1438" stroke-width="5"/>
+  <circle cx="130" cy="186" r="26" fill="#a31f4f" stroke="#7a1438" stroke-width="5"/>
+  <circle cx="74" cy="144" r="26" fill="#B83066" stroke="#7a1438" stroke-width="5"/>
+  <circle cx="186" cy="144" r="26" fill="#a31f4f" stroke="#7a1438" stroke-width="5"/>
+  <circle cx="112" cy="138" r="26" fill="#a31f4f" stroke="#7a1438" stroke-width="5"/>
+  <circle cx="148" cy="138" r="26" fill="#a31f4f" stroke="#7a1438" stroke-width="5"/>
+  <circle cx="92" cy="102" r="26" fill="#a31f4f" stroke="#7a1438" stroke-width="5"/>
+  <circle cx="168" cy="102" r="26" fill="#B83066" stroke="#7a1438" stroke-width="5"/>
+  <circle cx="130" cy="94" r="26" fill="#a31f4f" stroke="#7a1438" stroke-width="5"/>
+  <ellipse cx="130" cy="142" rx="62" ry="50" fill="#a31f4f"/>
+  <ellipse cx="105" cy="130" rx="13" ry="15" fill="#FFFFFF" stroke="#7a1438" stroke-width="4"/><circle cx="110" cy="132" r="6" fill="#7a1438"/><circle cx="112.2" cy="129.5" r="2.4" fill="#FFFFFF"/><ellipse cx="155" cy="130" rx="13" ry="15" fill="#FFFFFF" stroke="#7a1438" stroke-width="4"/><circle cx="160" cy="132" r="6" fill="#7a1438"/><circle cx="162.2" cy="129.5" r="2.4" fill="#FFFFFF"/>
+  <path d="M 93 110 Q 105 104 117 110" fill="none" stroke="#7a1438" stroke-width="4" stroke-linecap="round"/><path d="M 143 110 Q 155 104 167 110" fill="none" stroke="#7a1438" stroke-width="4" stroke-linecap="round"/>
+  <path d="M 112 162 Q 130 179 148 162" fill="none" stroke="#7a1438" stroke-width="5" stroke-linecap="round"/>
+  <ellipse cx="84" cy="154" rx="10" ry="5.5" fill="#B83066" opacity="0.6"/><ellipse cx="176" cy="154" rx="10" ry="5.5" fill="#B83066" opacity="0.6"/>
   </g>
+  <rect x="-10" y="-10" width="132" height="320" fill="#F7F4EE" stroke="#7a1438" stroke-width="5" rx="14"/>
+  <circle cx="123" cy="192" r="9" fill="#7a1438"/><circle cx="123" cy="216" r="9" fill="#7a1438"/>
+  <text x="158" y="52" font-family="'IBM Plex Mono', monospace" font-size="20" font-weight="700"  fill="#7a1438">Pssst!</text>
 </svg>
