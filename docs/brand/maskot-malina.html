@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<title>Mlsná Malina — charakterový list maskota</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@800&family=Space+Grotesk:wght@400;500&family=IBM+Plex+Mono:wght@600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --accent: #7A1840;
+    --malina-fill: #a31f4f;
+    --malina-line: #7a1438;
+    --bg: #FFFFFF;
+    --bg-elevated: #F7F4EE;
+    --text: #1A1714;
+    --text-muted: rgba(26, 23, 20, 0.7);
+    --border: rgba(26, 23, 20, 0.12);
+    --font-display: 'Syne', sans-serif;
+    --font-body: 'Space Grotesk', sans-serif;
+    --font-mono: 'IBM Plex Mono', monospace;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: var(--font-body);
+    color: var(--text);
+    background: var(--bg);
+    line-height: 1.6;
+    padding: 3rem 1.5rem 5rem;
+  }
+  .sheet { max-width: 960px; margin: 0 auto; }
+
+  .sheet__tag {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--accent);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  h1 {
+    font-family: var(--font-display);
+    font-size: clamp(2.2rem, 6vw, 3.4rem);
+    line-height: 1.1;
+    margin: 0.3rem 0 0.5rem;
+  }
+  .sheet__subtitle { color: var(--text-muted); max-width: 620px; }
+
+  h2 {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    margin: 3rem 0 1rem;
+    border-bottom: 2px solid var(--accent);
+    display: inline-block;
+    padding-bottom: 0.2rem;
+  }
+
+  .hero-row {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    margin-top: 2rem;
+    flex-wrap: wrap;
+  }
+  .hero-row img { width: 180px; height: auto; flex-shrink: 0; }
+
+  .fact-list { list-style: none; }
+  .fact-list li { padding: 0.25rem 0; }
+  .fact-list strong { color: var(--accent); }
+
+  .story {
+    background: var(--bg-elevated);
+    border: 2px solid var(--text);
+    border-radius: 14px;
+    padding: 1.5rem 1.8rem;
+    max-width: 720px;
+  }
+  .story p + p { margin-top: 0.8rem; }
+
+  .traits { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1rem; }
+  .trait {
+    border: 2px solid var(--border);
+    border-radius: 14px;
+    padding: 1rem 1.2rem;
+    background: var(--bg);
+  }
+  .trait h3 { font-family: var(--font-body); font-weight: 500; color: var(--accent); font-size: 1.05rem; }
+  .trait p { font-size: 0.92rem; color: var(--text-muted); }
+
+  .quotes { display: flex; flex-wrap: wrap; gap: 0.6rem; }
+  .quote {
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    background: var(--bg-elevated);
+    border: 1.5px solid var(--text);
+    border-radius: 999px;
+    padding: 0.35rem 0.9rem;
+  }
+
+  .poses { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1.2rem; }
+  .pose {
+    border: 2px solid var(--text);
+    border-radius: 14px;
+    background: var(--bg-elevated);
+    padding: 1rem;
+    text-align: center;
+  }
+  .pose img { width: 130px; height: auto; }
+  .pose h3 { font-family: var(--font-body); font-weight: 500; font-size: 1rem; margin-top: 0.4rem; }
+  .pose p { font-size: 0.82rem; color: var(--text-muted); }
+  .pose code {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--accent);
+    display: block;
+    margin-top: 0.4rem;
+    word-break: break-all;
+  }
+
+  .rules { max-width: 720px; }
+  .rules li { margin: 0.4rem 0 0.4rem 1.2rem; }
+  .rules .no { color: var(--accent); font-weight: 500; }
+
+  .swatches { display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 0.8rem; }
+  .swatch { text-align: center; font-family: var(--font-mono); font-size: 0.75rem; }
+  .swatch span {
+    display: block; width: 84px; height: 48px;
+    border-radius: 10px; border: 2px solid var(--text);
+    margin-bottom: 0.3rem;
+  }
+</style>
+</head>
+<body>
+<div class="sheet">
+
+  <p class="sheet__tag">Brand maskot · charakterový list</p>
+  <h1>Mlsná Malina</h1>
+  <p class="sheet__subtitle">Maskot webu katerinamlsnova.cz — malina, která se odmítla nechat sníst a místo toho se naučila kódovat.</p>
+
+  <div class="hero-row">
+    <img src="maskot/malina-zakladni.svg" alt="Mlsná Malina — základní póza">
+    <ul class="fact-list">
+      <li><strong>Jméno:</strong> Mlsná Malina (zkráceně „Malina")</li>
+      <li><strong>Druh:</strong> malina obecná, výjimečně odolná vůči snědení</li>
+      <li><strong>Bydliště:</strong> katerinamlsnova.cz (přesná adresa se mění — schovává se)</li>
+      <li><strong>Povolání:</strong> dohlížitelka projektů, profesionální schovávačka</li>
+      <li><strong>Motto:</strong> „Pssst!"</li>
+    </ul>
+  </div>
+
+  <h2>Příběh</h2>
+  <div class="story">
+    <p>Malina se objevila jednou v noci v misce vedle rozepsané korektury. Všechny ostatní maliny z misky postupně zmizely — redaktorská práce je náročná na svačiny. Tahle jediná přežila, protože se včas skutálela mezi klávesy.</p>
+    <p>Místo aby čekala, až ji někdo najde, začala koukat, co se děje na obrazovce. Když pak jedné noci omylem šlápla na Enter a odeslala svůj první commit, bylo rozhodnuto: tahle malina se už sníst nenechá.</p>
+    <p>Dnes bydlí na webu, dohlíží na každý nový projekt a hraje s návštěvníky schovávanou — kdo najde všech pět malin, dostane slevu. Pořád je ale mlsná. Na sladké i na dobré nápady.</p>
+  </div>
+
+  <h2>Osobnost</h2>
+  <div class="traits">
+    <div class="trait">
+      <h3>Mlsná</h3>
+      <p>Na maliny v čokoládě i na dobré nápady. Když vidí pěkný projekt, olizuje se.</p>
+    </div>
+    <div class="trait">
+      <h3>Zvědavá</h3>
+      <p>Kutálí se všude, kde se něco děje. Nový commit? Už na něm sedí.</p>
+    </div>
+    <div class="trait">
+      <h3>Hravá</h3>
+      <p>Schovávaná je její vynález. Egg hunt na webu je jejích pět minut slávy.</p>
+    </div>
+    <div class="trait">
+      <h3>Pečlivá</h3>
+      <p>Po mámě redaktorce. Překlep ji dokáže probudit ze spaní.</p>
+    </div>
+    <div class="trait">
+      <h3>Trochu ješitná</h3>
+      <p>Chce být na každé stránce. Většinou se jí to daří.</p>
+    </div>
+  </div>
+
+  <h2>Hlášky</h2>
+  <p style="color: var(--text-muted); max-width: 640px;">Malina mluví krátce — pár slov, nikdy celé odstavce. Vždy genderově neutrálně.</p>
+  <div class="quotes" style="margin-top: 0.8rem;">
+    <span class="quote">Pssst!</span>
+    <span class="quote">Mňam!</span>
+    <span class="quote">Hotovo!</span>
+    <span class="quote">Další malina!</span>
+    <span class="quote">Moment, kontroluju překlepy…</span>
+  </div>
+
+  <h2>Pózy a výrazy</h2>
+  <div class="poses">
+    <div class="pose">
+      <img src="maskot/malina-zakladni.svg" alt="Základní póza">
+      <h3>Základní</h3>
+      <p>Výchozí podoba — profil, patička, vizitka.</p>
+      <code>malina-zakladni.svg</code>
+    </div>
+    <div class="pose">
+      <img src="maskot/malina-mrk.svg" alt="Mrk">
+      <h3>Mrk</h3>
+      <p>Spiklenecké sdělení, tip, sleva, easter egg.</p>
+      <code>malina-mrk.svg</code>
+    </div>
+    <div class="pose">
+      <img src="maskot/malina-nadseni.svg" alt="Nadšení">
+      <h3>Nadšení</h3>
+      <p>Nový projekt, dobrá zpráva, thumbnail „TO VYŠLO".</p>
+      <code>malina-nadseni.svg</code>
+    </div>
+    <div class="pose">
+      <img src="maskot/malina-premysli.svg" alt="Přemýšlí">
+      <h3>Přemýšlí</h3>
+      <p>Otázky, FAQ, „jak na to?", anketa.</p>
+      <code>malina-premysli.svg</code>
+    </div>
+    <div class="pose">
+      <img src="maskot/malina-prekvapeni.svg" alt="Překvapení">
+      <h3>Překvapení</h3>
+      <p>Nečekaný výsledek, zajímavost, „tohle jsem nečekala".</p>
+      <code>malina-prekvapeni.svg</code>
+    </div>
+    <div class="pose">
+      <img src="maskot/malina-koduje.svg" alt="Kóduje">
+      <h3>Kóduje</h3>
+      <p>Posty o vibe codingu, ukázky práce, „právě vzniká".</p>
+      <code>malina-koduje.svg</code>
+    </div>
+    <div class="pose">
+      <img src="maskot/malina-cte.svg" alt="Čte / rediguje">
+      <h3>Čte / rediguje</h3>
+      <p>Redakce, korektury, AI texty, knižní projekty.</p>
+      <code>malina-cte.svg</code>
+    </div>
+    <div class="pose">
+      <img src="maskot/malina-slavi.svg" alt="Slaví">
+      <h3>Slaví</h3>
+      <p>Dokončený projekt, milník, spuštění webu klienta.</p>
+      <code>malina-slavi.svg</code>
+    </div>
+    <div class="pose">
+      <img src="maskot/malina-spi.svg" alt="Spí">
+      <h3>Spí</h3>
+      <p>Údržba, dovolená, „web spí", mimo provoz.</p>
+      <code>malina-spi.svg</code>
+    </div>
+    <div class="pose">
+      <img src="maskot/malina-schovka.svg" alt="Schovka">
+      <h3>Schovka (pssst)</h3>
+      <p>Egg hunt, teaser, „něco se chystá". Signature póza.</p>
+      <code>malina-schovka.svg</code>
+    </div>
+  </div>
+
+  <h2>Pravidla použití</h2>
+  <div class="swatches">
+    <div class="swatch"><span style="background:#a31f4f"></span>#a31f4f<br>výplň těla</div>
+    <div class="swatch"><span style="background:#7a1438"></span>#7a1438<br>linky</div>
+    <div class="swatch"><span style="background:#FFFFFF"></span>#FFFFFF<br>oči</div>
+  </div>
+  <ul class="rules" style="margin-top: 1rem;">
+    <li>Tělo je vždy <strong>#a31f4f</strong> s linkou <strong>#7a1438</strong> — nikdy nepřebarvovat.</li>
+    <li>Linky mají tloušťku 5–6 se zakulacenými konci — při dokreslování držet styl.</li>
+    <li>Funguje na světlém i tmavém pozadí beze změny.</li>
+    <li class="no">Žádné stíny, gradienty ani 3D efekty — Malina je plochá a ručně kreslená.</li>
+    <li class="no">Nezmenšovat pod ~48 px šířky (linky se slijí).</li>
+    <li class="no">Maskot v hero sekci webu (assets/malina.svg + eye-tracking) zůstává beze změny — tento list je pro thumbnaily, posty a prezentace.</li>
+  </ul>
+
+  <h2>Soubory</h2>
+  <p style="max-width: 640px;">Všechny pózy jsou v <code style="font-family: var(--font-mono); font-size: 0.85rem;">docs/brand/maskot/</code> jako samostatná SVG — vektorová, libovolně zvětšitelná, s průhledným pozadím. Dají se vložit do Canvy, prezentací i přímo na web.</p>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 240" width="220" height="240">
+  <!-- Mlsná Malina — Spí | odvozeno z assets/malina.svg -->
+  <g transform="translate(10,15)">
+  <path d="M 60 70 A 20 20 0 0 1 90 55 A 20 20 0 0 1 120 55 A 20 20 0 0 1 150 70 A 20 20 0 0 1 160 100 A 20 20 0 0 1 150 130 A 20 20 0 0 1 125 155 A 20 20 0 0 1 100 180 A 20 20 0 0 1 75 155 A 20 20 0 0 1 50 130 A 20 20 0 0 1 40 100 A 20 20 0 0 1 60 70 Z" fill="#a31f4f" stroke="#7a1438" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+  <g fill="none" stroke="#7a1438" stroke-width="5" stroke-linecap="round">
+    <path d="M 68 88 Q 80 96 92 88"/>
+    <path d="M 108 88 Q 120 96 132 88"/>
+  </g>
+  <path d="M 88 122 Q 100 130 112 122" fill="none" stroke="#7a1438" stroke-width="5" stroke-linecap="round"/>
+  <g fill="none" stroke="#7a1438" stroke-width="5" stroke-linecap="round">
+    <path d="M 52 118 Q 60 130 68 120"/>
+    <path d="M 132 120 Q 140 130 148 118"/>
+    <path d="M 70 148 Q 85 158 100 146"/>
+    <path d="M 100 146 Q 115 158 130 148"/>
+    <path d="M 85 166 Q 100 176 115 166"/>
+  </g>
+  <g fill="none" stroke="#7a1438" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M 146 44 h 15 l -15 13 h 15" stroke-width="4.5"/>
+    <path d="M 168 26 h 11 l -11 10 h 11" stroke-width="3.5"/>
+  </g>
+  </g>
+</svg>

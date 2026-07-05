@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 240" width="220" height="240">
+  <!-- Mlsná Malina — Přemýšlí | odvozeno z assets/malina.svg -->
+  <g transform="translate(10,15)">
+  <path d="M 60 70 A 20 20 0 0 1 90 55 A 20 20 0 0 1 120 55 A 20 20 0 0 1 150 70 A 20 20 0 0 1 160 100 A 20 20 0 0 1 150 130 A 20 20 0 0 1 125 155 A 20 20 0 0 1 100 180 A 20 20 0 0 1 75 155 A 20 20 0 0 1 50 130 A 20 20 0 0 1 40 100 A 20 20 0 0 1 60 70 Z" fill="#a31f4f" stroke="#7a1438" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="80" cy="88" r="13" fill="#FFFFFF" stroke="#7a1438" stroke-width="4"/>
+  <circle cx="120" cy="88" r="13" fill="#FFFFFF" stroke="#7a1438" stroke-width="4"/>
+  <circle cx="77" cy="84" r="5.5" fill="#7a1438"/>
+  <circle cx="117" cy="84" r="5.5" fill="#7a1438"/>
+  <path d="M 86 124 Q 93 119 100 124 Q 107 129 114 124" fill="none" stroke="#7a1438" stroke-width="5" stroke-linecap="round"/>
+  <g fill="none" stroke="#7a1438" stroke-width="5" stroke-linecap="round">
+    <path d="M 52 118 Q 60 130 68 120"/>
+    <path d="M 132 120 Q 140 130 148 118"/>
+    <path d="M 70 148 Q 85 158 100 146"/>
+    <path d="M 100 146 Q 115 158 130 148"/>
+    <path d="M 85 166 Q 100 176 115 166"/>
+  </g>
+  <g fill="none" stroke="#7a1438" stroke-width="5" stroke-linecap="round">
+    <path d="M 152 52 Q 152 38 164 38 Q 176 38 176 49 Q 176 58 166 61 L 165 68"/>
+  </g>
+  <circle cx="165" cy="79" r="3.5" fill="#7a1438"/>
+  </g>
+</svg>
