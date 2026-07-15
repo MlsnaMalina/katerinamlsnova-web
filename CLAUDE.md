@@ -233,7 +233,6 @@ git config user.email "k.schmiedtova@seznam.cz"   # povinné — Vercel jinak od
 - **Žádný linter ani testy** — kontrola výhradně vizuální
 - **CSS je velký** (~5 000 ř.) — hledej přes Grep, riziko duplicitních selektorů
 - **Bez build systému** — žádné ES moduly (`import/export`), vše přes `<script src>`
-- **OG/Twitter description a JSON-LD `jobTitle` v `index.html` stále zmiňují „knižní redaktorku"** — neodpovídá to rámování webu (vibecodérka); úprava čeká na Kateřinin pokyn, sama od sebe ji nedělej
 - **`docs/handoff/` je historický snapshot k 2026-05-03** — popisuje neexistující stav (iframe Lektvar, GSAP, 3 karty carouselu, jiné rozmístění malin). Neber jako aktuální pravdu; rozhoduje kód a tento soubor.
 
 ---
