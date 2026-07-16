@@ -1005,100 +1005,73 @@ body {
   stroke-linejoin: round;
 }
 
-.works__stage {
-  position: relative;
-  width: 100%;
+/* Police (shelf) — kurátorované skupiny ukázek podle služeb */
+
+.shelf {
+  margin-top: 4rem;
+  text-align: left;
 }
 
-.works__carousel {
+.shelf__title {
   position: relative;
-  width: 100%;
-  height: 480px;
-  margin: 0 auto;
+  display: inline-block;
+  font-family: "Caveat", cursive;
+  font-weight: 700;
+  font-size: 2.1rem;
+  line-height: 1.1;
+  color: var(--text);
+  margin: 0;
 }
 
-.works__nav {
+.shelf__underline {
   position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 64px;
-  height: 64px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: transparent;
-  border: none;
-  padding: 0;
-  cursor: pointer;
-  color: var(--accent);
-  z-index: 10;
-  transition: transform 0.2s ease, color 0.2s ease;
-  border-radius: 999px;
+  left: 0;
+  bottom: -8px;
+  width: 100%;
+  height: 12px;
+  overflow: visible;
 }
 
-.works__nav svg {
-  width: 56px;
-  height: 22px;
+.shelf__underline path {
   fill: none;
-  stroke: currentColor;
-  stroke-width: 2.4;
+  stroke: var(--accent);
+  stroke-width: 3;
   stroke-linecap: round;
-  stroke-linejoin: round;
-  filter: url(#rough);
 }
 
-.works__nav--prev {
-  left: 1rem;
+.shelf__note {
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  margin: 0.9rem 0 1.6rem;
+  max-width: 560px;
 }
 
-.works__nav--next {
-  right: 1rem;
+.shelf__extra {
+  margin: 1.4rem 0 0;
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  color: var(--text-muted);
 }
 
-.works__nav:hover,
-.works__nav:focus-visible {
-  transform: translateY(-50%) scale(1.15);
-  color: var(--accent-hover);
-  outline: none;
+.shelf__extra a {
+  color: var(--accent);
 }
 
-@media (max-width: 700px) {
-  .works__stage {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    column-gap: 1.5rem;
-  }
-  .works__carousel {
-    grid-column: 1 / -1;
-    grid-row: 1;
-  }
-  .works__nav {
-    position: static;
-    transform: none;
-    width: 52px;
-    height: 44px;
-    grid-row: 2;
-    margin-top: 0.5rem;
-  }
-  .works__nav--prev {
-    grid-column: 1;
-    justify-self: end;
-  }
-  .works__nav--next {
-    grid-column: 2;
-    justify-self: start;
-  }
-  .works__nav:hover,
-  .works__nav:focus-visible {
-    transform: scale(1.15);
+.shelf-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.8rem;
+}
+
+@media (max-width: 860px) {
+  .shelf-grid {
+    grid-template-columns: 1fr;
   }
 }
 
-.work-card {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 300px;
+.shelf-card {
+  position: relative;
   display: flex;
   flex-direction: column;
   background-color: var(--card-bg);
@@ -1107,54 +1080,51 @@ body {
   color: var(--text);
   cursor: pointer;
   outline: none;
-  opacity: 0;
-  pointer-events: none;
-  transform: translate(-50%, -50%) scale(0.6);
-  transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1),
-              opacity 0.7s cubic-bezier(0.4, 0, 0.2, 1);
-  z-index: 0;
+  transition: transform 0.25s ease;
 }
 
-.work-card.is-center {
-  transform: translate(-50%, -50%) scale(1);
-  opacity: 1;
-  z-index: 5;
-  pointer-events: auto;
+.shelf-card:hover,
+.shelf-card:focus-visible {
+  transform: translateY(-4px);
 }
 
-.work-card.is-left {
-  transform: translate(calc(-50% - 220px), -50%) scale(0.8);
-  opacity: 0.7;
-  z-index: 3;
-}
-
-.work-card.is-right {
-  transform: translate(calc(-50% + 220px), -50%) scale(0.8);
-  opacity: 0.7;
-  z-index: 3;
-}
-
-.work-card.is-far-left {
-  transform: translate(calc(-50% - 400px), -50%) scale(0.62);
-  opacity: 0.4;
-  z-index: 1;
-}
-
-.work-card.is-far-right {
-  transform: translate(calc(-50% + 400px), -50%) scale(0.62);
-  opacity: 0.4;
-  z-index: 1;
-}
-
-.work-card.is-center:hover {
-  transform: translate(-50%, -50%) scale(1.04);
-}
-
-.work-card.is-center:hover .work-card__frame rect,
-.work-card.is-center:focus-visible .work-card__frame rect {
+.shelf-card:hover .work-card__frame rect,
+.shelf-card:focus-visible .work-card__frame rect {
   stroke: var(--accent);
   stroke-width: 2.2;
 }
+
+.shelf-card .work-card__media--cover img {
+  height: 220px;
+  max-height: 220px;
+  object-fit: cover;
+  object-position: top;
+}
+
+.featured-game__actions {
+  margin-top: 1.4rem;
+  text-align: center;
+}
+
+.shelf-demo-btn {
+  display: inline-block;
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: 1rem;
+  color: var(--bg);
+  background-color: var(--accent);
+  border-radius: 999px;
+  padding: 0.7rem 1.6rem;
+  text-decoration: none;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.shelf-demo-btn:hover,
+.shelf-demo-btn:focus-visible {
+  background-color: var(--accent-hover);
+  transform: translateY(-2px);
+}
+
 
 .work-card__frame {
   position: absolute;
@@ -1264,34 +1234,6 @@ body {
   transform: translateX(4px);
 }
 
-@media (max-width: 1100px) {
-  .work-card.is-far-left,
-  .work-card.is-far-right {
-    opacity: 0;
-  }
-}
-
-@media (max-width: 900px) {
-  .work-card.is-left {
-    transform: translate(calc(-50% - 180px), -50%) scale(0.74);
-  }
-  .work-card.is-right {
-    transform: translate(calc(-50% + 180px), -50%) scale(0.74);
-  }
-}
-
-@media (max-width: 600px) {
-  .works__carousel {
-    height: 460px;
-  }
-  .work-card {
-    width: 270px;
-  }
-  .work-card.is-left,
-  .work-card.is-right {
-    opacity: 0;
-  }
-}
 
 /* ============================================
    Lightbox
@@ -1439,25 +1381,6 @@ body {
 body.lightbox-open {
   overflow: hidden;
 }
-
-.checklist-preview {
-  aspect-ratio: 16 / 9;
-  overflow-y: auto;
-  overflow-x: hidden;
-}
-
-.checklist-preview__image {
-  display: block;
-  width: 100%;
-  height: auto;
-}
-
-@media (max-width: 600px) {
-  .checklist-preview {
-    aspect-ratio: 4 / 3;
-  }
-}
-
 .lightbox__media {
   position: relative;
 }
@@ -3778,7 +3701,7 @@ body.lightbox-open {
 .egg-modal__btn--primary { background: #a31f4f; color: #fff; }
 .egg-modal__btn--primary:hover { background: #8a1942; }
 
-/* Featured game embed (sekce Ukázky — interaktivní hra nad carouselem) */
+/* Featured blok (sekce Ukázky — velká ukázka v polici Aplikace) */
 .featured-game {
   position: relative;
   margin: 0 auto 3rem;
@@ -3798,168 +3721,8 @@ body.lightbox-open {
   text-align: center;
 }
 
-.featured-game__note-row {
-  margin: 14px auto 0;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: center;
-  gap: 12px 16px;
-}
-
-.featured-game__note {
-  margin: 0;
-  font-family: var(--font-body);
-  font-size: 0.95rem;
-  font-weight: 400;
-  line-height: 1.55;
-  color: var(--text);
-  text-align: center;
-}
-
-.featured-game__cta {
-  margin: 0 !important;
-  flex-shrink: 0;
-}
-
-.featured-game__open {
-  align-self: center;
-  font-family: var(--font-body);
-  font-size: 0.9rem;
-  color: var(--accent);
-  text-decoration: underline;
-  text-underline-offset: 3px;
-}
-
-.featured-game__open:hover,
-.featured-game__open:focus-visible {
-  color: var(--accent-hover);
-}
-
-.featured-game__rotate {
-  display: none;
-  align-items: center;
-  gap: 0.5rem;
-  margin: 0;
-  padding: 8px 12px;
-  border: 1px solid var(--accent);
-  border-radius: 8px;
-  font-family: var(--font-body);
-  font-size: 0.85rem;
-  color: var(--text);
-  text-align: left;
-}
-
-.featured-game__embed {
-  position: relative;
-  width: 100%;
-  aspect-ratio: 16 / 9;
-  background: var(--bg-elevated);
-  border-radius: 14px;
-  overflow: hidden;
-}
-
-.featured-game__iframe {
-  position: absolute;
-  top: 0;
-  left: 0;
-  /* iframe se renderuje na 100/0.667 ≈ 150 % rozměrů kontejneru,
-     pak se transformem vizuálně zmenší zpět — hra uvnitř si pak
-     myslí, že má původní (větší) viewport a vykreslí se správně */
-  width: 150%;
-  height: 150%;
-  border: 0;
-  display: block;
-  transform: scale(0.667);
-  transform-origin: 0 0;
-}
-
-.featured-game__frame {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  overflow: visible;
-  z-index: 3;
-}
-
-.featured-game__frame rect {
-  fill: none;
-  stroke: #a31f4f;
-  stroke-width: 2.8;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) .featured-game__frame rect { opacity: 0.85; }
-}
-
-[data-theme="dark"] .featured-game__frame rect { opacity: 0.85; }
-
-.featured-game__placeholder {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 1rem;
-  background: var(--bg-elevated);
-  font-family: var(--font-mono);
-  font-size: 1rem;
-  color: var(--accent);
-  text-align: center;
-  z-index: 2;
-  transition: opacity 0.3s ease;
-}
-
-.featured-game__placeholder[data-state="ready"] {
-  opacity: 0;
-  pointer-events: none;
-}
-
-.featured-game__placeholder[data-state="error"] {
-  font-family: var(--font-body);
-  font-size: 0.95rem;
-  color: var(--text);
-}
-
-.featured-game__placeholder[data-state="error"] a {
-  color: var(--accent);
-  text-decoration: underline;
-}
-
 @media (max-width: 768px) {
-  .featured-game__rotate { display: flex; }
   .featured-game { max-width: 100%; }
-}
-
-/* Live showcase — interaktivní slider prezentace v sekci Ukázky */
-.showcase-grid-2col {
-  position: relative;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 2rem;
-  max-width: 1100px;
-  margin: 0 auto 4rem auto;
-  align-items: start;
-}
-
-.showcase-grid-2col .live-showcase-item {
-  margin: 0;
-  max-width: none;
-}
-
-@media (max-width: 800px) {
-  .showcase-grid-2col {
-    grid-template-columns: 1fr;
-  }
-}
-
-.live-showcase-item {
-  margin: 48px auto;
-  max-width: 64rem;
 }
 
 .showcase-header {
@@ -3977,13 +3740,13 @@ body.lightbox-open {
   margin-bottom: 8px;
 }
 
-.showcase-header h3 {
+.showcase-header h4 {
   font-family: var(--font-display);
   margin: 8px 0;
   color: var(--text);
 }
 
-.featured-game .showcase-header h3 {
+.featured-game .showcase-header h4 {
   text-align: center;
 }
 

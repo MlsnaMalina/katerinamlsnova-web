@@ -30,9 +30,9 @@ Web pro vibecoding činnost Kateřiny Mlsnové — nabízí tvorbu jednoduchých
 
 | Soubor | Obsah | Orientační velikost |
 |---|---|---|
-| `index.html` | Kompletní DOM, všechny sekce, SVG filtry v `<defs>`, JSON-LD, OG meta | ~1 420 ř. |
-| `style.css` | Všechny styly, CSS tokeny, dark/light mode | ~5 090 ř. |
-| `script.js` | Init fronta `__initQueue`, animace, navigace, slidery, lightbox, egg hunt, kalkulačka, FAQ, cookie consent, Formspree | ~1 080 ř. |
+| `index.html` | Kompletní DOM, všechny sekce, SVG filtry v `<defs>`, JSON-LD, OG meta | ~1 500 ř. |
+| `style.css` | Všechny styly, CSS tokeny, dark/light mode | ~4 850 ř. |
+| `script.js` | Init fronta `__initQueue`, animace, navigace, slidery, lightbox, egg hunt, kalkulačka, FAQ, cookie consent, Formspree | ~980 ř. |
 | `game.js` | Canvas hra „Skákající malina" (sekce `#hra`) | ~620 ř. |
 | `404.html` | Vlastní 404 stránka | |
 | `zasady-ochrany-osobnich-udaju.html` | GDPR stránka | |
@@ -104,21 +104,22 @@ Další font nepřidávat.
 
 Navigace (desktop i mobilní overlay): S čím vám mohu pomoci · Ukázky · Kolik to stojí? · O mně · Jak to probíhá · FAQ · Kontakt. Theme toggle 🌙/☀️ vpravo, hamburger pod 768 px.
 
-### Sekce Ukázky — aktuální struktura
+### Sekce Ukázky — aktuální struktura („police")
 
-1. Featured blok — **VypusTo** (webová aplikace; slider 8 snímků z `assets/Vypus-to/` — pozor, první slide je `2.png`, pak `1.png` a `3–8.png`)
-2. Grid `.showcase-grid-2col`:
-   - vlevo: **Interaktivní checklist dotisků** (statický obrázek `assets/checklist-dotisku.png`, klik otevře lightbox `lightbox--wide`)
-   - vpravo: **Finance – aplikace** (slider 3 snímky z `assets/Finance/`)
-3. `.egg-slot--ukazky` — malina `data-egg="2"` (`.egg-raspberry--cta`)
-4. Carousel `.works__stage` — 7 karet (coverflow, auto-rotace 4 s, klik = lightbox):
-   1. Neznalost dobrých knih neomlouvá (šibenice, externí odkaz)
-   2. Dětská knížka (10 stran — slider v lightboxu z `assets/kniha/*.webp`, `data-slides-*` atributy)
-   3. Nakrm mlsné zvířátko (externí odkaz)
-   4. Hledací čarodějnická omalovánka (mailto CTA)
-   5. Omalovánka podle čísel (mailto CTA)
-   6. Kouzelný srdíčkový lektvar (externí odkaz)
-   7. Interaktivní prezentace (18 slidů — slider v lightboxu z `assets/prezentace/*.webp`)
+Tři police (`.shelf`, nadpisy Caveat + doodle podtržení), karty `.shelf-card` v gridu 2/1 sloupce. Aplikace odkazují na **živá dema s fiktivními daty** (`?demo` / `/demo` URL — nic z nich se neukládá, dema jsou v repozitářích jednotlivých aplikací).
+
+1. **Police Aplikace** (`#ukazky-aplikace`):
+   - Featured **VypusTo** — slider 8 snímků z `assets/Vypus-to/` (pozor, první slide je `2.png`, pak `1.png` a `3–8.png`) + tlačítko `.shelf-demo-btn` → `vypus-to.vercel.app/?demo`
+   - Karty: **Finance** (→ `finance-ten-topaz.vercel.app/demo`), **Můj deník · to do** (→ `bullet-journal-todo.vercel.app/?demo`), **Výplata** (→ `vyplata.vercel.app/?demo`), **Matýsek** (→ `matysek.vercel.app/demo`; ostrá verze je za heslem)
+2. `.egg-slot--ukazky` — malina `data-egg="2"` (`.egg-raspberry--cta`)
+3. **Police Hry a kvízy** (`#ukazky-hry`): Kouzelný srdíčkový lektvar · Nakrm mlsné zvířátko · Neznalost dobrých knih neomlouvá (šibenice) · Hry do letadla (`hry-do-letadla.vercel.app`) — všechny externí odkazy; pod gridem odkaz na `#hra`
+4. **Police Materiály a digitalizace** (`#ukazky-materialy`):
+   - Interaktivní checklist dotisků — karta s `data-lightbox-wide`, klik otevře širokou variantu lightboxu (jen obrázek, živý odkaz záměrně není)
+   - Prázdninový balíček pro děti — klik listuje knížku v lightboxu (`data-slides-*`, `assets/kniha/*.webp`), CTA → `polevsko-2026.vercel.app`
+   - Interaktivní prezentace (18 slidů v lightboxu z `assets/prezentace/*.webp`)
+   - Matýskův piknik — pozvánka, CTA → `matyskuv-piknik.vercel.app`
+
+Karty s vysokými screenshoty mají `work-card__media--cover` (ořez shora); klik na kartu = lightbox, klik na CTA = odkaz. Samostatné karty omalovánek a knížky nahradil Polevsko balíček (schváleno 2026-07-16).
 
 ---
 
@@ -162,15 +163,13 @@ Navigace (desktop i mobilní overlay): S čím vám mohu pomoci · Ukázky · Ko
 - **Eye-tracking mascot** — malina sleduje kurzor (sin/cos fyzika)
 - **Theme toggle** — 🌙/☀️ v navu, auto-detect z `prefers-color-scheme`, manuální override
 - **Slidery** (`initShowcaseSliders`) — universal handler pro `.presentation-slider-container`, ← → klávesy, cyklení, counter `X / Y`; třídy `.prev-slide`, `.next-slide`, `.slide-counter-text`, `.slide.active` nepřejmenovávat
-- **Carousel** — coverflow, 7 karet, auto-advance 4 s, lightbox po kliknutí
-- **Lightbox** — fullscreen; umí i vícestránkové slidery (karty s `data-slides-prefix/ext/count/pad`) a širokou variantu pro checklist
+- **Police + lightbox** — klik na `.shelf-card` otevře lightbox; karty s `data-slides-prefix/ext/count/pad` mají v lightboxu vícestránkový slider, karty s `data-lightbox-wide` širokou variantu (checklist). Coverflow carousel byl odstraněn 2026-07-16.
 - **Kalkulačka** (`#kalkulator`) — radio „cíl" (2 000–9 000 Kč), radio „podklady" (+0/+3 000/+5 000), checkboxy „doplňky", účtenka s výpisem a součtem, reset; ceny jsou v `value` atributech HTML
 - **FAQ accordion** — jedna otevřená naráz, `hidden` + `aria-expanded`, klávesnice (šipky, Escape)
 - **Kontaktní formulář** — async Formspree, client validace, loading/success/error stavy
 - **Email reveal** (kontakt) a **adresa na klik** (footer) — anti-spam obfuskace
 - **Cookie consent** — banner (přijmout/odmítnout), „Spravovat cookies" ve footeru banner znovu otevře, lazy GA4 load po souhlasu
 - **Canvas hra** — Skákající malina (Space/tap = skok, gravity + vítr), high-score v localStorage
-- Pozn.: IIFE „Featured game embed" v `script.js` je mrtvý kód (iframe blok už na webu není) — neškodí, neaktivuje se
 
 ---
 
@@ -245,14 +244,16 @@ assets/
   malina.svg                           # maskot + egg hunt maliny
   malina-game.svg, mravenec-game.svg, brouk-game.svg, wind-game.svg  # hra
   og-image.png, og-image.svg           # sdílecí náhled
-  checklist-dotisku.png                # Ukázky — grid vlevo
-  hangman-shot.png                     # Ukázky — carousel (šibenice)
+  checklist-dotisku.png                # Ukázky — karta checklistu (wide lightbox)
+  hangman-shot.png                     # Ukázky — karta šibenice
   hra-nakrm-mlsne-zviratko.webp, hra-kouzelny-srdickovy-lektvar.webp
-  omalovanka-doodle-hledej.webp, omalovanka-podle-cisel.webp
+  omalovanka-doodle-hledej.webp, omalovanka-podle-cisel.webp  # už bez karet (v balíčku)
   Vypus-to/1.png–8.png                 # VypusTo slider (featured)
-  Finance/dluhy.png, sporeni.png, pravidelne-platby.png
-  kniha/kniha-beltaine-01–10.webp      # knížka (carousel → lightbox slider)
-  prezentace/hra-pro-deti-01–18.webp   # prezentace (carousel → lightbox slider)
+  Finance/dluhy.png, sporeni.png, pravidelne-platby.png  # dluhy.png = karta Finance
+  kniha/kniha-beltaine-01–10.webp      # knížka (lightbox slider karty balíčku)
+  prezentace/hra-pro-deti-01–18.webp   # prezentace (lightbox slider)
+  ukazky/*.webp                        # screenshoty karet: denik, vyplata, matysek-demo,
+                                       #   travel-arcade, polevsko-balicek, matyskuv-piknik
   logos/                               # branding assety (Firmy.cz apod.)
 docs/
   brand/                               # maskot Mlsná Malina (charakterový list + pózy)

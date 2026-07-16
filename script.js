@@ -326,89 +326,13 @@ __initQueue.push(() => {
   __initQueue.push(init);
 })();
 
-// Featured game embed — loading placeholder + 8s timeout fallback
+// Ukázky — karty v policích + lightbox (umí i vícestránkové slidery)
 (function () {
-  const wrap = document.querySelector(".featured-game__embed");
-  if (!wrap) return;
-  const iframe = wrap.querySelector(".featured-game__iframe");
-  const placeholder = wrap.querySelector(".featured-game__placeholder");
-  if (!iframe || !placeholder) return;
-
-  let loaded = false;
-  iframe.addEventListener("load", () => {
-    loaded = true;
-    placeholder.dataset.state = "ready";
-  });
-
-  setTimeout(() => {
-    if (loaded) return;
-    placeholder.dataset.state = "error";
-    placeholder.innerHTML =
-      'Hra se nepodařila načíst. <a href="https://kouzelny-srdickovy-lektvar.vercel.app/" target="_blank" rel="noopener noreferrer">Otevřít v novém okně ↗</a>';
-  }, 8000);
-})();
-
-// Ukázky — 3D coverflow carousel + lightbox po kliknutí na střední kartu
-(function () {
-  const carousel = document.querySelector(".works__carousel");
   const lightbox = document.getElementById("lightbox");
-  if (!carousel || !lightbox) return;
+  if (!lightbox) return;
 
-  const cards = Array.from(carousel.querySelectorAll(".work-card"));
-  const total = cards.length;
-  let active = 0;
-  let timer = null;
+  const cards = Array.from(document.querySelectorAll(".shelf-card"));
 
-  function updatePositions() {
-    cards.forEach((card, i) => {
-      let offset = i - active;
-      if (offset > total / 2) offset -= total;
-      if (offset < -total / 2) offset += total;
-
-      card.classList.remove("is-center", "is-left", "is-right", "is-far-left", "is-far-right");
-      if (offset === 0) card.classList.add("is-center");
-      else if (offset === -1) card.classList.add("is-left");
-      else if (offset === 1) card.classList.add("is-right");
-      else if (offset === -2) card.classList.add("is-far-left");
-      else if (offset === 2) card.classList.add("is-far-right");
-    });
-  }
-
-  function advance() {
-    active = (active + 1) % total;
-    updatePositions();
-  }
-
-  function regress() {
-    active = (active - 1 + total) % total;
-    updatePositions();
-  }
-
-  function startTimer() {
-    stopTimer();
-    timer = setInterval(advance, 4000);
-  }
-
-  function stopTimer() {
-    if (timer) clearInterval(timer);
-    timer = null;
-  }
-
-  if (total > 1) {
-    updatePositions();
-    startTimer();
-  }
-
-  const prevBtn = document.querySelector(".works__nav--prev");
-  const nextBtn = document.querySelector(".works__nav--next");
-  prevBtn?.addEventListener("click", () => {
-    regress();
-    if (total > 1) startTimer();
-  });
-  nextBtn?.addEventListener("click", () => {
-    advance();
-    if (total > 1) startTimer();
-  });
   const imgEl = lightbox.querySelector(".lightbox__image");
   const tagEl = lightbox.querySelector(".lightbox__tag");
   const titleEl = lightbox.querySelector(".lightbox__title");
@@ -498,10 +422,11 @@ __initQueue.push(() => {
     }
 
     lastFocused = document.activeElement;
+    // Široká varianta lightboxu (např. checklist) přes data-lightbox-wide
+    lightbox.classList.toggle("lightbox--wide", card.hasAttribute("data-lightbox-wide"));
     lightbox.classList.add("is-open");
     lightbox.setAttribute("aria-hidden", "false");
     document.body.classList.add("lightbox-open");
-    stopTimer();
     setTimeout(() => lightbox.querySelector(".lightbox__close")?.focus(), 50);
   }
 
@@ -511,7 +436,6 @@ __initQueue.push(() => {
     document.body.classList.remove("lightbox-open");
     slideState = null;
     setSliderMode(false);
-    if (total > 1) startTimer();
     if (lastFocused && typeof lastFocused.focus === "function") {
       lastFocused.focus();
     }
@@ -533,36 +457,6 @@ __initQueue.push(() => {
       }
     });
   });
-
-  // Lightbox také pro statický checklist obrázek v showcase-grid-2col
-  const checklistImg = document.querySelector('.live-showcase-item img[src*="checklist-dotisku"]');
-  if (checklistImg) {
-    checklistImg.setAttribute("tabindex", "0");
-    checklistImg.setAttribute("role", "button");
-    checklistImg.setAttribute("aria-label", "Zobrazit checklist ve větším náhledu");
-    const item = checklistImg.closest(".live-showcase-item");
-    const openChecklist = () => {
-      imgEl.src = checklistImg.src;
-      imgEl.alt = checklistImg.alt;
-      tagEl.textContent = item?.querySelector(".service-tag")?.textContent || "";
-      titleEl.textContent = item?.querySelector("h3")?.textContent || "";
-      descEl.textContent = item?.querySelector(".showcase-header p")?.textContent || "";
-      ctaEl.style.display = "none";
-      lastFocused = document.activeElement;
-      lightbox.classList.add("is-open", "lightbox--wide");
-      lightbox.setAttribute("aria-hidden", "false");
-      document.body.classList.add("lightbox-open");
-      stopTimer();
-      setTimeout(() => lightbox.querySelector(".lightbox__close")?.focus(), 50);
-    };
-    checklistImg.addEventListener("click", openChecklist);
-    checklistImg.addEventListener("keydown", (e) => {
-      if (e.key === "Enter" || e.key === " ") {
-        e.preventDefault();
-        openChecklist();
-      }
-    });
-  }
 
   lightbox.querySelectorAll("[data-lightbox-close]").forEach((el) => {
     el.addEventListener("click", close);
