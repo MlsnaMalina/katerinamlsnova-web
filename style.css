@@ -1415,6 +1415,11 @@ body.lightbox-open {
 .lightbox__nav--prev { left: 0.5rem; }
 .lightbox__nav--next { right: 0.5rem; }
 
+.lightbox__nav[hidden],
+.lightbox__counter[hidden] {
+  display: none;
+}
+
 .lightbox__counter {
   position: absolute;
   bottom: 0.6rem;
