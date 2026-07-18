@@ -201,6 +201,18 @@
     .work__link { margin-top: auto; padding-top: 0.5rem; font-family: "IBM Plex Mono", monospace; font-weight: 600; font-size: 0.78rem; color: var(--accent); }
     .works-more { margin-top: 1.4rem; font-family: "IBM Plex Mono", monospace; font-weight: 600; font-size: 0.85rem; }
 
+    /* Featured ukázka — vlastní web */
+    .work--featured { margin: 1.8rem 0 1.1rem; }
+    .work__media--tall { height: 300px; }
+    .work__tag { font-family: "IBM Plex Mono", monospace; font-weight: 600; font-size: 0.66rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); }
+    .work--featured .work__name { font-size: 1.35rem; }
+    .work--featured .work__desc { font-size: 0.98rem; }
+    @media (min-width: 720px) {
+      .work--featured { display: grid; grid-template-columns: 1.25fr 1fr; }
+      .work--featured .work__media--tall { height: 100%; min-height: 280px; border-bottom: none; border-right: 1px solid var(--border); }
+      .work--featured .work__body { justify-content: center; padding: 1.6rem 1.6rem; }
+    }
+
     /* Formulář */
     .contact { background: var(--surface); padding: 2rem 1.5rem; }
     .contact__lead { margin: 0.8rem 0 1.6rem; color: var(--muted); max-width: 46ch; }
@@ -336,8 +348,19 @@
         <div class="section__head">
           <p class="eyebrow">Ukázky</p>
           <h2 class="section__title">Nic z toho není šablona</h2>
-          <p class="section__intro">Tohle všechno jsem postavila na míru. Klikněte a vyzkoušejte si to naživo.</p>
+          <p class="section__intro">Nejlepší důkaz je tenhle web — celý jsem ho navrhla a napsala sama. A pár interaktivních věcí navíc:</p>
         </div>
+
+        <a class="work work--featured rough" href="/">
+          <div class="work__media work__media--tall"><img src="assets/ukazky/muj-web.png" alt="Náhled webu katerinamlsnova.cz — hlavní stránka" loading="lazy" decoding="async" /></div>
+          <div class="work__body">
+            <span class="work__tag">Web na míru</span>
+            <span class="work__name">katerinamlsnova.cz</span>
+            <span class="work__desc">Můj vlastní web — celý jsem ho navrhla a od nuly napsala sama. Přesně tohle umím postavit i pro vás.</span>
+            <span class="work__link">Prohlédnout web →</span>
+          </div>
+        </a>
+
         <div class="works">
           <a class="work rough" href="https://bullet-journal-todo.vercel.app/?demo" target="_blank" rel="noopener">
             <div class="work__media"><img src="assets/ukazky/denik.webp" alt="Ukázka aplikace Můj deník a to do" loading="lazy" decoding="async" /></div>
