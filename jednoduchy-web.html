@@ -203,13 +203,15 @@
 
     /* Featured ukázka — vlastní web */
     .work--featured { margin: 1.8rem 0 1.1rem; }
-    .work__media--tall { height: 300px; }
+    /* Celý screenshot se vejde do rámečku (poměr = rozměry obrázku), žádný ořez */
+    .work__media--tall { height: auto; aspect-ratio: 1280 / 860; }
+    .work--featured .work__media img { object-fit: contain; background: var(--surface); }
     .work__tag { font-family: "IBM Plex Mono", monospace; font-weight: 600; font-size: 0.66rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); }
     .work--featured .work__name { font-size: 1.35rem; }
     .work--featured .work__desc { font-size: 0.98rem; }
     @media (min-width: 720px) {
-      .work--featured { display: grid; grid-template-columns: 1.25fr 1fr; }
-      .work--featured .work__media--tall { height: 100%; min-height: 280px; border-bottom: none; border-right: 1px solid var(--border); }
+      .work--featured { display: grid; grid-template-columns: 1.15fr 1fr; }
+      .work--featured .work__media--tall { border-bottom: none; border-right: 1px solid var(--border); }
       .work--featured .work__body { justify-content: center; padding: 1.6rem 1.6rem; }
     }
 
