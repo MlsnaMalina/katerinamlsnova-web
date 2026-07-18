@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Jednoduchý web na míru pro živnostníky, lektory a malé projekty. Bez šablony — web bude vypadat přesně tak, jak chcete vy. Od 2 000 Kč, hotovo do 14 dnů." />
+  <link rel="canonical" href="https://www.katerinamlsnova.cz/jednoduchy-web.html" />
+  <meta name="theme-color" content="#7A1840" />
+
+  <link rel="icon" href="/favicon.ico" sizes="any" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
+  <meta property="og:title" content="Jednoduchý web na míru od 2 000 Kč — Kateřina Mlsnová" />
+  <meta property="og:description" content="Web přesně podle vás, ne podle šablony. Pro živnostníky, lektory a malé projekty. Hotovo do 14 dnů." />
+  <meta property="og:image" content="https://www.katerinamlsnova.cz/assets/og-image.png" />
+  <meta property="og:url" content="https://www.katerinamlsnova.cz/jednoduchy-web.html" />
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="cs_CZ" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Jednoduchý web na míru od 2 000 Kč — Kateřina Mlsnová" />
+  <meta name="twitter:description" content="Web přesně podle vás, ne podle šablony. Od 2 000 Kč, hotovo do 14 dnů." />
+  <meta name="twitter:image" content="https://www.katerinamlsnova.cz/assets/og-image.png" />
+
+  <title>Jednoduchý web na míru od 2 000 Kč — Kateřina Mlsnová</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Syne:wght@800&family=Space+Grotesk:wght@400;500&family=IBM+Plex+Mono:wght@600&family=Caveat:wght@700&display=swap"
+    rel="stylesheet"
+    media="print"
+    onload="this.media='all'"
+  />
+  <noscript>
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@800&family=Space+Grotesk:wght@400;500&family=IBM+Plex+Mono:wght@600&family=Caveat:wght@700&display=swap" rel="stylesheet" />
+  </noscript>
+
+  <!-- Vercel Web Analytics — bez cookies, běží záměrně mimo cookie souhlas -->
+  <script defer src="/_vercel/insights/script.js"></script>
+
+  <style>
+    :root {
+      --bg: #FFFFFF;
+      --surface: #FFFFFF;
+      --ink: #1A1714;
+      --muted: rgba(26, 23, 20, 0.68);
+      --accent: #7A1840;
+      --accent-soft: rgba(122, 24, 64, 0.32);
+      --border: rgba(26, 23, 20, 0.14);
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #0F0E0C;
+        --surface: #1A1714;
+        --ink: #F5F3F1;
+        --muted: rgba(245, 243, 241, 0.62);
+        --accent: #B83066;
+        --accent-soft: rgba(184, 48, 102, 0.42);
+        --border: rgba(245, 243, 241, 0.16);
+      }
+    }
+    :root[data-theme="dark"] {
+      --bg: #0F0E0C;
+      --surface: #1A1714;
+      --ink: #F5F3F1;
+      --muted: rgba(245, 243, 241, 0.62);
+      --accent: #B83066;
+      --accent-soft: rgba(184, 48, 102, 0.42);
+      --border: rgba(245, 243, 241, 0.16);
+    }
+    :root[data-theme="light"] {
+      --bg: #FFFFFF;
+      --surface: #FFFFFF;
+      --ink: #1A1714;
+      --muted: rgba(26, 23, 20, 0.68);
+      --accent: #7A1840;
+      --accent-soft: rgba(122, 24, 64, 0.32);
+      --border: rgba(26, 23, 20, 0.14);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: "Space Grotesk", system-ui, sans-serif;
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      * { animation: none !important; transition: none !important; }
+    }
+    .svg-defs { position: absolute; width: 0; height: 0; }
+
+    .wrap { width: min(100% - 2rem, 940px); margin-inline: auto; }
+    .eyebrow {
+      font-family: "IBM Plex Mono", monospace; font-weight: 600;
+      font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent);
+    }
+    h1, h2, h3 { font-family: "Syne", sans-serif; font-weight: 800; text-wrap: balance; }
+    a { color: var(--accent); }
+
+    /* Ručně kreslený rámeček */
+    .rough { position: relative; }
+    .rough::before {
+      content: ""; position: absolute; inset: 0;
+      border: 2px solid var(--ink); filter: url(#rough); pointer-events: none;
+    }
+
+    /* Header */
+    .lp-header {
+      position: sticky; top: 0; z-index: 20;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0.8rem 0; background: color-mix(in srgb, var(--bg) 88%, transparent);
+      backdrop-filter: saturate(1.1) blur(6px); border-bottom: 1px solid var(--border);
+    }
+    .lp-logo {
+      font-family: "Syne", sans-serif; font-weight: 800; font-size: 0.82rem;
+      line-height: 1.08; letter-spacing: 0.04em; color: var(--ink); text-decoration: none;
+    }
+    .theme-toggle {
+      appearance: none; background: transparent; border: 1px solid var(--border);
+      border-radius: 999px; width: 38px; height: 38px; cursor: pointer;
+      font-size: 1rem; display: grid; place-items: center; color: inherit;
+    }
+    .theme-toggle:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+    /* Hero */
+    .hero { padding: 2.6rem 0 1rem; display: grid; gap: 2rem; }
+    @media (min-width: 860px) {
+      .hero { grid-template-columns: 1.05fr 0.95fr; align-items: center; gap: 2.6rem; padding-top: 3.4rem; }
+    }
+    .hero__h1 { font-size: clamp(2rem, 6vw, 3rem); line-height: 1.08; margin: 0.6rem 0 0; }
+    .hero__h1 em { font-style: normal; color: var(--accent); }
+    .hero__sub { margin: 1rem 0 0; color: var(--muted); font-size: 1.05rem; max-width: 40ch; }
+    .hero__cta-row { margin-top: 1.5rem; display: flex; flex-wrap: wrap; gap: 0.8rem; align-items: center; }
+    .btn {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      padding: 0.85rem 1.5rem; background: var(--accent); color: #fff;
+      font-family: "Space Grotesk", sans-serif; font-weight: 500; font-size: 1rem;
+      text-decoration: none; border: none; cursor: pointer;
+    }
+    .btn.rough::before { border-color: var(--accent); }
+    .btn:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
+    .hero__micro { margin: 0.7rem 0 0; font-size: 0.82rem; color: var(--muted); }
+
+    /* Účtenka */
+    .receipt { background: var(--surface); padding: 1.6rem 1.4rem; }
+    .receipt.rough::before { border-width: 2.4px; }
+    .receipt__title { font-family: "IBM Plex Mono", monospace; font-weight: 600; letter-spacing: 0.1em; font-size: 0.72rem; margin: 0; }
+    .receipt__for { font-family: "Caveat", cursive; font-weight: 700; font-size: 1.3rem; color: var(--accent); margin: 0.1rem 0 0; transform: rotate(-1deg); }
+    .receipt__rule { border: 0; border-top: 1.5px dashed var(--border); margin: 0.9rem 0; }
+    .receipt__rows { font-family: "IBM Plex Mono", monospace; font-weight: 600; font-size: 0.82rem; }
+    .receipt__row { display: flex; justify-content: space-between; gap: 0.8rem; padding: 0.5rem 0; border-bottom: 1px dashed var(--border); }
+    .receipt__row span { color: var(--muted); }
+    .receipt__row--key span, .receipt__row--key b { color: var(--accent); }
+    .receipt__total { display: flex; justify-content: space-between; gap: 0.8rem; margin-top: 0.3rem; padding-top: 0.75rem; border-top: 2px solid var(--accent-soft); font-family: "IBM Plex Mono", monospace; font-weight: 600; font-size: 0.95rem; color: var(--accent); }
+    .receipt__note { margin: 0.9rem 0 0; font-size: 0.82rem; color: var(--ink); }
+    .receipt__note b { color: var(--accent); font-weight: 500; }
+
+    /* Sekce */
+    section { padding: 3rem 0; }
+    .section__head { max-width: 46ch; }
+    .section__title { font-size: clamp(1.5rem, 4vw, 2rem); margin: 0.4rem 0 0; }
+    .section__intro { margin: 0.8rem 0 0; color: var(--muted); }
+
+    /* Proč na míru — porovnání */
+    .compare { margin-top: 1.8rem; display: grid; gap: 1rem; }
+    @media (min-width: 720px) { .compare { grid-template-columns: 1fr 1fr; } }
+    .compare__card { background: var(--surface); padding: 1.4rem 1.3rem; }
+    .compare__card h3 { margin: 0; font-size: 1.1rem; }
+    .compare__tag { font-family: "IBM Plex Mono", monospace; font-weight: 600; font-size: 0.66rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
+    .compare__card--yours .compare__tag { color: var(--accent); }
+    .compare__card p { margin: 0.7rem 0 0; color: var(--muted); font-size: 0.95rem; }
+    .compare__card--yours { color: var(--ink); }
+    .compare__card--yours p { color: var(--ink); }
+
+    /* Kroky */
+    .steps { margin-top: 1.8rem; display: grid; gap: 1rem; counter-reset: step; }
+    @media (min-width: 720px) { .steps { grid-template-columns: repeat(3, 1fr); } }
+    .step { background: var(--surface); padding: 1.3rem 1.2rem; }
+    .step__num {
+      font-family: "IBM Plex Mono", monospace; font-weight: 600; color: var(--accent);
+      font-size: 0.8rem; letter-spacing: 0.1em;
+    }
+    .step h3 { margin: 0.4rem 0 0; font-size: 1.05rem; }
+    .step p { margin: 0.5rem 0 0; color: var(--muted); font-size: 0.92rem; }
+
+    /* Ukázky */
+    .works { margin-top: 1.8rem; display: grid; gap: 1.1rem; }
+    @media (min-width: 720px) { .works { grid-template-columns: repeat(3, 1fr); } }
+    .work { display: flex; flex-direction: column; background: var(--surface); overflow: hidden; text-decoration: none; color: var(--ink); }
+    .work__media { width: 100%; height: 190px; overflow: hidden; border-bottom: 1px solid var(--border); }
+    .work__media img { width: 100%; height: 100%; object-fit: cover; object-position: top center; display: block; }
+    .work__body { padding: 1rem 1.1rem 1.2rem; display: flex; flex-direction: column; gap: 0.35rem; flex: 1; }
+    .work__name { font-family: "Syne", sans-serif; font-weight: 800; font-size: 1rem; }
+    .work__desc { color: var(--muted); font-size: 0.88rem; }
+    .work__link { margin-top: auto; padding-top: 0.5rem; font-family: "IBM Plex Mono", monospace; font-weight: 600; font-size: 0.78rem; color: var(--accent); }
+    .works-more { margin-top: 1.4rem; font-family: "IBM Plex Mono", monospace; font-weight: 600; font-size: 0.85rem; }
+
+    /* Formulář */
+    .contact { background: var(--surface); padding: 2rem 1.5rem; }
+    .contact__lead { margin: 0.8rem 0 1.6rem; color: var(--muted); max-width: 46ch; }
+    .field { display: flex; flex-direction: column; gap: 0.4rem; margin-bottom: 1rem; }
+    .field label { font-family: "IBM Plex Mono", monospace; font-weight: 600; font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+    .field input, .field textarea {
+      font-family: "Space Grotesk", sans-serif; font-size: 1rem; color: var(--ink);
+      background: var(--bg); border: 1.5px solid var(--border); border-radius: 10px;
+      padding: 0.7rem 0.85rem; width: 100%;
+    }
+    .field textarea { resize: vertical; min-height: 120px; }
+    .field input:focus, .field textarea:focus { outline: 2px solid var(--accent); outline-offset: 1px; border-color: transparent; }
+    .contact__error { color: var(--accent); font-size: 0.9rem; margin: 0 0 0.8rem; }
+    .contact__submit { width: 100%; justify-content: center; }
+    .contact__success { text-align: center; padding: 1.5rem 0; }
+    .contact__success h3 { font-size: 1.3rem; margin: 0; }
+    .contact__success p { color: var(--muted); margin: 0.5rem 0 0; }
+    .contact__alt { margin-top: 1.4rem; text-align: center; font-size: 0.9rem; color: var(--muted); }
+    .contact__email { background: none; border: none; color: var(--accent); font: inherit; cursor: pointer; text-decoration: underline; padding: 0; }
+
+    /* Footer */
+    .lp-footer { border-top: 1px solid var(--border); padding: 2rem 0 3rem; margin-top: 1rem; }
+    .lp-footer__inner { display: flex; flex-wrap: wrap; gap: 0.6rem 1.4rem; align-items: center; font-size: 0.82rem; color: var(--muted); }
+    .lp-footer a { color: var(--muted); }
+    .lp-footer a:hover { color: var(--accent); }
+
+    [hidden] { display: none !important; }
+  </style>
+</head>
+<body>
+  <svg class="svg-defs" aria-hidden="true" focusable="false">
+    <defs>
+      <filter id="rough" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3" result="noise" />
+        <feDisplacementMap in="SourceGraphic" in2="noise" scale="3" />
+      </filter>
+    </defs>
+  </svg>
+
+  <header class="lp-header">
+    <div class="wrap" style="display:flex; align-items:center; justify-content:space-between;">
+      <a class="lp-logo" href="/">KATEŘINA<br />MLSNOVÁ</a>
+      <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Přepnout světlý a tmavý režim">
+        <span class="theme-toggle__icon" aria-hidden="true">🌙</span>
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <!-- HERO -->
+    <div class="wrap">
+      <section class="hero">
+        <div class="hero__intro">
+          <p class="eyebrow">Jednoduchý web · živnostníci, lektoři, malé projekty</p>
+          <h1 class="hero__h1">Web přesně podle vás. <em>Ne podle šablony.</em></h1>
+          <p class="hero__sub">Jedna přehledná stránka — kdo jste, co děláte a kam vám napsat. Navrhnu ji na míru vašemu řemeslu, ne naopak. Bez agentury, bez šablon.</p>
+          <div class="hero__cta-row">
+            <a class="btn rough" href="#poptavka">Nezávazně poptat</a>
+          </div>
+          <p class="hero__micro">Odpovím do 24 hodin. Poptávka k ničemu nezavazuje.</p>
+        </div>
+
+        <div class="receipt rough" aria-label="Přehled nabídky">
+          <p class="receipt__title">NABÍDKA · JEDNODUCHÝ WEB</p>
+          <p class="receipt__for">pro živnostníky, lektory i malé projekty</p>
+          <hr class="receipt__rule" />
+          <div class="receipt__rows">
+            <div class="receipt__row"><span>web na míru · 1 stránka</span><b>od 2 000 Kč</b></div>
+            <div class="receipt__row receipt__row--key"><span>jak bude vypadat</span><b>přesně podle vás</b></div>
+            <div class="receipt__row"><span>šablona</span><b>žádná</b></div>
+            <div class="receipt__row"><span>schůzky navíc</span><b>0 — stačí e-mail</b></div>
+            <div class="receipt__row"><span>termín</span><b>do 14 dnů</b></div>
+          </div>
+          <div class="receipt__total"><span>CELKEM</span><b>od 2 000 Kč</b></div>
+          <p class="receipt__note">Šablonu si sice upravíte sami — ale <b>jen tak, jak vám dovolí.</b> Web na míru vypadá přesně tak, jak chcete vy.</p>
+        </div>
+      </section>
+    </div>
+
+    <!-- PROČ NA MÍRU -->
+    <div class="wrap">
+      <section id="proc">
+        <div class="section__head">
+          <p class="eyebrow">Proč ne šablona</p>
+          <h2 class="section__title">Šablona zní lákavě. Háček přijde později.</h2>
+          <p class="section__intro">Je levná a upravíte si ji sami. Jenže na jednu věc se přijde, až když ji potřebujete:</p>
+        </div>
+        <div class="compare">
+          <div class="compare__card rough">
+            <p class="compare__tag">Hotová šablona</p>
+            <h3>Vypadá, jak dovolí šablona</h3>
+            <p>Upravíte si ji sami — dokud nenarazíte na to, co prostě nejde. Web nikdy nebude vypadat přesně tak, jak jste si představovali. Zjistíte to většinou pozdě.</p>
+          </div>
+          <div class="compare__card compare__card--yours rough">
+            <p class="compare__tag">Web na míru</p>
+            <h3>Vypadá přesně podle vás</h3>
+            <p>Řeknete mi, co potřebujete, a postavím to. Žádné „tohle šablona neumí". A pořád jednoduše — jedna stránka, jasná cena, hotovo do 14 dnů.</p>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- JAK TO PROBÍHÁ -->
+    <div class="wrap">
+      <section id="jak">
+        <div class="section__head">
+          <p class="eyebrow">Jak to probíhá</p>
+          <h2 class="section__title">Tři kroky, žádné schůzky</h2>
+        </div>
+        <div class="steps">
+          <div class="step rough">
+            <p class="step__num">KROK 1</p>
+            <h3>Napíšete mi</h3>
+            <p>Pár vět o tom, co potřebujete. Stačí e-mail — nemusíme se nikam scházet.</p>
+          </div>
+          <div class="step rough">
+            <p class="step__num">KROK 2</p>
+            <h3>Navrhnu a ukážu</h3>
+            <p>Připravím návrh a pošlu vám ho k odsouhlasení. Doladíme, co bude potřeba.</p>
+          </div>
+          <div class="step rough">
+            <p class="step__num">KROK 3</p>
+            <h3>Hotovo do 14 dnů</h3>
+            <p>Web je online. Cena od 2 000 Kč, přesně podle rozsahu — víte ji předem.</p>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- UKÁZKY -->
+    <div class="wrap">
+      <section id="ukazky">
+        <div class="section__head">
+          <p class="eyebrow">Ukázky</p>
+          <h2 class="section__title">Nic z toho není šablona</h2>
+          <p class="section__intro">Tohle všechno jsem postavila na míru. Klikněte a vyzkoušejte si to naživo.</p>
+        </div>
+        <div class="works">
+          <a class="work rough" href="https://bullet-journal-todo.vercel.app/?demo" target="_blank" rel="noopener">
+            <div class="work__media"><img src="assets/ukazky/denik.webp" alt="Ukázka aplikace Můj deník a to do" loading="lazy" decoding="async" /></div>
+            <div class="work__body">
+              <span class="work__name">Můj deník · to do</span>
+              <span class="work__desc">Osobní deník a úkolníček v jednom, na míru.</span>
+              <span class="work__link">Otevřít demo →</span>
+            </div>
+          </a>
+          <a class="work rough" href="https://vyplata.vercel.app/?demo" target="_blank" rel="noopener">
+            <div class="work__media"><img src="assets/ukazky/vyplata.webp" alt="Ukázka aplikace Výplata" loading="lazy" decoding="async" /></div>
+            <div class="work__body">
+              <span class="work__name">Výplata</span>
+              <span class="work__desc">Fakturační plánovač pro živnostníky.</span>
+              <span class="work__link">Otevřít demo →</span>
+            </div>
+          </a>
+          <a class="work rough" href="https://hry-do-letadla.vercel.app/" target="_blank" rel="noopener">
+            <div class="work__media"><img src="assets/ukazky/travel-arcade.webp" alt="Ukázka her do letadla — Travel Arcade" loading="lazy" decoding="async" /></div>
+            <div class="work__body">
+              <span class="work__name">Hry do letadla</span>
+              <span class="work__desc">Sada mini her, které fungují i offline.</span>
+              <span class="work__link">Otevřít →</span>
+            </div>
+          </a>
+        </div>
+        <p class="works-more"><a href="/#ukazky">Celé portfolio na hlavním webu →</a></p>
+      </section>
+    </div>
+
+    <!-- POPTÁVKA -->
+    <div class="wrap">
+      <section id="poptavka">
+        <div class="contact rough">
+          <p class="eyebrow">Napište mi</p>
+          <h2 class="section__title">Pojďme se na to podívat</h2>
+          <p class="contact__lead">Máte nápad nebo potřebujete jednoduchý web? Napište mi pár vět. Podíváme se na to spolu — nezávazně, není se čeho bát.</p>
+
+          <form id="contact-form" action="https://formspree.io/f/mzdopbaq" method="POST" novalidate>
+            <div class="field">
+              <label for="cf-name">Jméno</label>
+              <input id="cf-name" type="text" name="name" autocomplete="name" required />
+            </div>
+            <div class="field">
+              <label for="cf-email">E-mail</label>
+              <input id="cf-email" type="email" name="email" autocomplete="email" required />
+            </div>
+            <div class="field">
+              <label for="cf-message">Zpráva</label>
+              <textarea id="cf-message" name="message" rows="5" required></textarea>
+            </div>
+            <p class="contact__error" id="cf-error" hidden></p>
+            <button type="submit" class="btn rough contact__submit" id="cf-submit">
+              <span class="cf-label">Odeslat</span>
+              <span class="cf-arrow" aria-hidden="true">→</span>
+              <span class="cf-loading" hidden>Odesílám…</span>
+            </button>
+          </form>
+
+          <div class="contact__success" id="cf-success" hidden>
+            <h3>Děkuji, zpráva se odeslala.</h3>
+            <p>Ozvu se vám co nejdříve.</p>
+          </div>
+
+          <p class="contact__alt">
+            nebo mi napište přímo na
+            <button type="button" class="contact__email" id="cf-email-reveal" data-user="K.mlsnova" data-domain="seznam.cz">klikněte pro zobrazení e-mailu</button>
+          </p>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="lp-footer">
+    <div class="wrap lp-footer__inner">
+      <span>Kateřina Mlsnová · IČO 22031383</span>
+      <a href="/">Hlavní web</a>
+      <a href="zasady-ochrany-osobnich-udaju.html">Ochrana osobních údajů</a>
+    </div>
+  </footer>
+
+  <script>
+    // Theme toggle — sdílí klíč km-theme s hlavním webem
+    (function () {
+      var KEY = 'km-theme';
+      var root = document.documentElement;
+      var toggle = document.getElementById('theme-toggle');
+      var icon = toggle && toggle.querySelector('.theme-toggle__icon');
+      function systemTheme() {
+        return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      }
+      function activeTheme() {
+        return root.getAttribute('data-theme') || systemTheme();
+      }
+      function apply(theme) {
+        root.setAttribute('data-theme', theme);
+        if (icon) icon.textContent = theme === 'dark' ? '☀️' : '🌙';
+      }
+      apply(localStorage.getItem(KEY) || systemTheme());
+      if (toggle) {
+        toggle.addEventListener('click', function () {
+          var next = activeTheme() === 'dark' ? 'light' : 'dark';
+          apply(next);
+          try { localStorage.setItem(KEY, next); } catch (e) {}
+        });
+      }
+    })();
+
+    // Kontaktní formulář — async Formspree
+    (function () {
+      var form = document.getElementById('contact-form');
+      var success = document.getElementById('cf-success');
+      var errorEl = document.getElementById('cf-error');
+      var btn = document.getElementById('cf-submit');
+      if (!form || !success) return;
+      var label = btn.querySelector('.cf-label');
+      var arrow = btn.querySelector('.cf-arrow');
+      var loading = btn.querySelector('.cf-loading');
+      var emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+      function setLoading(on) {
+        btn.disabled = on;
+        if (label) label.hidden = on;
+        if (arrow) arrow.hidden = on;
+        if (loading) loading.hidden = !on;
+      }
+
+      form.addEventListener('submit', async function (e) {
+        e.preventDefault();
+        errorEl.hidden = true;
+        var data = new FormData(form);
+        var name = (data.get('name') || '').toString().trim();
+        var email = (data.get('email') || '').toString().trim();
+        var message = (data.get('message') || '').toString().trim();
+        if (!name || !email || !message || !emailRe.test(email)) {
+          errorEl.textContent = 'Vyplňte prosím všechna pole správně.';
+          errorEl.hidden = false;
+          return;
+        }
+        setLoading(true);
+        try {
+          var res = await fetch(form.action, {
+            method: 'POST',
+            body: data,
+            headers: { Accept: 'application/json' }
+          });
+          if (!res.ok) throw new Error('not ok');
+          form.hidden = true;
+          success.hidden = false;
+        } catch (err) {
+          errorEl.textContent = 'Něco se pokazilo. Zkuste to znovu nebo mi napište přímo na e-mail.';
+          errorEl.hidden = false;
+          setLoading(false);
+        }
+      });
+    })();
+
+    // E-mail reveal — anti-spam obfuskace
+    (function () {
+      var btn = document.getElementById('cf-email-reveal');
+      if (!btn) return;
+      btn.addEventListener('click', function () {
+        var email = btn.dataset.user + '@' + btn.dataset.domain;
+        var link = document.createElement('a');
+        link.href = 'mailto:' + email;
+        link.textContent = email;
+        link.className = 'contact__email';
+        btn.replaceWith(link);
+      });
+    })();
+  </script>
+</body>
+</html>
