@@ -8,6 +8,10 @@
   ],
   "rewrites": [
     {
+      "source": "/jednoduchy-web",
+      "destination": "/jednoduchy-web.html"
+    },
+    {
       "source": "/krejcirik-bazeny/",
       "destination": "https://krejcirik-bazeny.vercel.app/index.html"
     },
