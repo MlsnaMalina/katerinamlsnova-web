@@ -9,6 +9,11 @@
       "source": "/emoce",
       "destination": "/emoce/",
       "permanent": true
+    },
+    {
+      "source": "/denisa-blaho",
+      "destination": "/denisa-blaho/",
+      "permanent": true
     }
   ],
   "rewrites": [
@@ -31,6 +36,14 @@
     {
       "source": "/emoce/:path*",
       "destination": "https://emocni-priserky.vercel.app/:path*"
+    },
+    {
+      "source": "/denisa-blaho/",
+      "destination": "https://denisa-blaho.vercel.app/index.html"
+    },
+    {
+      "source": "/denisa-blaho/:path*",
+      "destination": "https://denisa-blaho.vercel.app/:path*"
     }
   ]
 }
