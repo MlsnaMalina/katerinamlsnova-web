@@ -35,6 +35,7 @@ Web pro vibecoding činnost Kateřiny Mlsnové — nabízí tvorbu jednoduchých
 | `script.js` | Init fronta `__initQueue`, animace, navigace, slidery, lightbox, egg hunt, kalkulačka, FAQ, cookie consent, Formspree | ~980 ř. |
 | `game.js` | Canvas hra „Skákající malina" (sekce `#hra`) | ~620 ř. |
 | `404.html` | Vlastní 404 stránka | |
+| `letak.html` | Leták A4 k vytištění (`/letak`, rewrite ve `vercel.json`, `noindex`); styly v bloku „Leták" na konci `style.css` | |
 | `zasady-ochrany-osobnich-udaju.html` | GDPR stránka | |
 | `vercel.json` | Redirect + rewrites pro subprojekt `/krejcirik-bazeny` | |
 | `robots.txt`, `sitemap.xml` | SEO | |
@@ -101,7 +102,7 @@ Další font nepřidávat.
 8. **Jak to probíhá** (`#jak-to-probiha`) — 4 kroky s doodle šipkami
 9. **Malá přestávka** (`#hra`) — canvas hra (game.js)
 10. **Možná vás zajímá** (`#mozna-vas-zajima`) — FAQ accordion, 6 otázek
-11. **Napište mi** (`#kontakt`) — Formspree formulář + malina #3 + e-mail reveal
+11. **Napište mi** (`#kontakt`) — Formspree formulář + malina #3 + e-mail reveal + trhací lísteček `.tear-flyer` (v `.contact__row` vedle formuláře od 1280 px, jinak pod ním)
 12. **Footer** — IČO, adresa na klik, GDPR odkaz, správa cookies
 
 Navigace (desktop i mobilní overlay): S čím vám mohu pomoci · Ukázky · Kolik to stojí? · O mně · Jak to probíhá · FAQ · Kontakt. Theme toggle 🌙/☀️ vpravo, hamburger pod 768 px.
@@ -174,6 +175,7 @@ Karty s vysokými screenshoty mají `work-card__media--cover` (ořez shora); kli
 - **Cookie consent** — banner (přijmout/odmítnout), „Spravovat cookies" ve footeru banner znovu otevře, lazy GA4 load po souhlasu
 - **Canvas hra** — Skákající malina (Space/tap = skok, gravity + vítr), high-score v localStorage
 - **Dokreslování rámečků** — poslední init v `script.js`: `.skill-card__frame rect`, `.work-card__frame rect`, `.fit__frame rect` a `.shelf__underline path` se při prvním příjezdu do viewportu dokreslí (WAAPI, stroke-dashoffset, 900 ms); co je vidět už při načtení, zůstává; při `prefers-reduced-motion` vypnuto
+- **Trhací lísteček a leták** — 6 lístečků `.tear-strip` (odkazy na `/letak`, fungují i bez JS); klik lísteček „utrhne" (padající kopie `.tear-strip--falling`), za 520 ms přejde na `/letak`; poslední lísteček má `.is-last`, po utržení všech se ukáže „Pověsit nové lístečky". `letak.html`: list A4 794 × 1123 px zmenšený do šířky okna, tlačítka „Uložit jako PDF" / „Vytisknout" volají `window.print()`, tisk přes `@page A4` (výška 296 mm, aby se nezalomil na 2 strany), e-mail se skládá skriptem (anti-spam), datum tisku doplní skript. Leták je schválený 2026-10-11: bez cen, bez ikon, bez maliny, papír bílý i v tmavém režimu. Na miniatuře v Kontaktu nesmí být malina (zaměnitelná s honem na maliny)
 - **Odezva na stisk** — blok „Pohyb a odezva" na konci `style.css`: tlačítka a CTA mají na `:active` vlastnost `scale: 0.97` (samostatná vlastnost, aby nepřebila existující `transform`/`transition`). Maliny egg huntu do seznamu nepatří
 
 ---
@@ -265,7 +267,8 @@ assets/
 docs/
   brand/                               # maskot Mlsná Malina (charakterový list + pózy)
   handoff/                             # HISTORICKÁ dokumentace (stav 2026-05-03, zastaralé)
-vercel.json                            # redirect+rewrites pro /krejcirik-bazeny subprojekt
+letak.html                             # leták A4 k tisku (/letak)
+vercel.json                            # redirecty + rewrites (/letak, /emoce, /krejcirik-bazeny…)
 ```
 
 ---

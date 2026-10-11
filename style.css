@@ -4948,3 +4948,242 @@ body.lightbox-open {
   to { opacity: 1; transform: none; }
 }
 
+
+/* ============================================
+   Leták k vytištění (/letak) + trhací lísteček v Kontaktu (2026-10-11)
+   Papír je bílý v obou režimech, béžová zakázaná.
+   ============================================ */
+
+:root {
+  --paper: var(--color-white);
+  --paper-ink: var(--color-ink);
+  --paper-muted: color-mix(in srgb, var(--color-ink) 72%, var(--color-white));
+  --paper-accent: var(--color-raspberry-dark);
+  --paper-tape: color-mix(in srgb, var(--color-raspberry-dark) 16%, transparent);
+}
+
+/* --- Stránka /letak --- */
+.page-letak .svg-defs { position: absolute; width: 0; height: 0; overflow: hidden; }
+.page-letak {
+  background: var(--bg);
+  color: var(--text);
+  padding: 0 16px 48px;
+}
+.letak-bar {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  max-width: 794px;
+  margin: 0 auto;
+  padding: 14px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  background: var(--bg);
+}
+.letak-bar__back {
+  font-family: var(--font-mono);
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: var(--text);
+  text-decoration: none;
+}
+.letak-bar__back:hover,
+.letak-bar__back:focus-visible { color: var(--accent); }
+.letak-bar__acts { display: flex; gap: 8px; flex-wrap: wrap; }
+.letak-bar__btn {
+  font-family: var(--font-mono);
+  font-weight: 600;
+  font-size: 0.82rem;
+  color: var(--accent);
+  background: var(--bg);
+  border: 1.6px solid var(--accent);
+  border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+  padding: 8px 15px;
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+.letak-bar__btn--solid { background: var(--accent); color: var(--bg); }
+.letak-bar__btn:active { scale: 0.97; }
+.letak-bar__btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+.letak-hint {
+  max-width: 794px;
+  margin: 0 auto 14px;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+.letak-sheet {
+  position: relative;
+  max-width: 794px;
+  margin: 0 auto;
+}
+.letak-sheet .flyer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform-origin: 0 0;
+  outline: 1px solid var(--border);
+}
+
+/* --- List A4: 794 × 1123 px = 210 × 297 mm při 96 dpi --- */
+.flyer {
+  width: 794px;
+  height: 1123px;
+  padding: 52px 56px 0;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+  background: var(--paper);
+  color: var(--paper-ink);
+  font-family: var(--font-body);
+  box-shadow: -8px 8px 0 rgba(163, 31, 79, 0.16);
+}
+.fl-tape { position: absolute; top: -6px; left: 50%; width: 140px; height: 36px; transform: translateX(-50%) rotate(2deg); }
+.fl-tape path { fill: var(--paper-tape); }
+.fl-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 20px; }
+.fl-first { font-weight: 500; letter-spacing: 0.5em; font-size: 15px; color: var(--paper-muted); }
+.fl-last { font-family: var(--font-display); font-weight: 800; font-size: 60px; line-height: 0.95; letter-spacing: -0.015em; display: flex; align-items: flex-end; }
+.fl-cur { display: inline-block; width: 14px; height: 52px; background: var(--paper-accent); margin: 0 0 4px 6px; }
+.fl-tag { font-size: 15px; line-height: 1.5; color: var(--paper-muted); margin: 14px 0 0; }
+.fl-note { margin: 26px 0 0; white-space: nowrap; font-family: "Caveat", cursive; font-weight: 700; font-size: 30px; line-height: 1; color: var(--paper-accent); text-align: center; transform: rotate(-6deg); }
+.fl-h { font-family: var(--font-display); font-weight: 800; font-size: 23px; margin: 34px 0 0; display: inline-flex; flex-direction: column; align-self: flex-start; color: var(--paper-ink); }
+.fl-h svg { width: 100%; height: 8px; margin-top: 4px; }
+.fl-h svg path,
+.fl-arrow path { fill: none; stroke: var(--paper-accent); stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+.fl-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px 26px; margin-top: 18px; }
+.fl-svc { border-top: 1.8px solid var(--paper-accent); padding-top: 9px; }
+.fl-svc b { display: block; font-weight: 500; font-size: 14.5px; line-height: 1.25; }
+.fl-svc p { margin: 4px 0 0; font-size: 12.5px; line-height: 1.45; color: var(--paper-muted); }
+.fl-steps { display: flex; align-items: flex-start; gap: 6px; margin-top: 18px; }
+.fl-step { flex: 1; min-width: 0; }
+.fl-num { display: block; font-family: var(--font-mono); font-weight: 600; font-size: 12px; color: var(--paper-accent); }
+.fl-step b { display: block; margin-top: 2px; font-weight: 500; font-size: 15px; }
+.fl-step p { margin: 3px 0 0; font-size: 12px; line-height: 1.4; color: var(--paper-muted); }
+.fl-arrow { flex: none; width: 34px; height: 16px; margin-top: 22px; }
+.fl-contact { position: relative; margin-top: 30px; display: grid; grid-template-columns: auto 1fr; gap: 26px; align-items: center; padding: 20px 24px; }
+.fl-frame { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
+.fl-frame rect { fill: none; stroke: var(--paper-ink); stroke-width: 1.8; }
+.fl-qr { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+.fl-qr-code { width: 104px; height: 104px; color: var(--paper-ink); }
+.fl-qr small { font-size: 10.5px; color: var(--paper-muted); }
+.fl-ct { display: flex; flex-direction: column; }
+.fl-lbl { font-family: var(--font-mono); font-weight: 600; font-size: 10.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--paper-muted); }
+.fl-ct b { font-family: var(--font-mono); font-weight: 600; font-size: 22px; margin-bottom: 8px; }
+.fl-ct small { font-size: 11px; color: var(--paper-muted); }
+.fl-printed { margin: auto 0 0; padding-bottom: 6px; font-size: 10px; color: var(--paper-muted); text-align: right; }
+.fl-cut { position: relative; margin: 0 -56px; border-top: 1.6px dashed var(--paper-ink); }
+.fl-cut span { position: absolute; left: 30px; top: -12px; padding: 0 4px; font-size: 18px; line-height: 1; background: var(--paper); }
+.fl-cut em { position: absolute; left: 62px; top: -26px; font-family: "Caveat", cursive; font-weight: 700; font-style: normal; font-size: 18px; color: var(--paper-accent); }
+.fl-strips { display: flex; height: 178px; margin: 0 -56px; }
+.fl-strip { flex: 1; display: flex; justify-content: center; padding-top: 12px; border-right: 1.6px dashed var(--paper-ink); }
+.fl-strip:last-child { border-right: 0; }
+.fl-strip span { writing-mode: vertical-rl; display: flex; flex-direction: column; gap: 4px; }
+.fl-strip b { font-family: var(--font-mono); font-weight: 600; font-size: 13px; }
+.fl-strip i { font-style: normal; font-family: var(--font-mono); font-weight: 600; font-size: 10px; color: var(--paper-muted); }
+
+@page { size: A4; margin: 0; }
+@media print {
+  .page-letak { padding: 0; background: var(--color-white); }
+  .letak-bar,
+  .letak-hint { display: none !important; }
+  .letak-sheet { max-width: none; height: auto !important; }
+  .letak-sheet .flyer { position: static; transform: none !important; box-shadow: none; outline: 0; width: 210mm; height: 296mm; break-inside: avoid; }
+  html, body.page-letak { margin: 0; }
+  .flyer { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+}
+
+/* --- Trhací lísteček v Kontaktu --- */
+.contact__row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 3rem;
+}
+.tear-flyer {
+  justify-self: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+@media (min-width: 1280px) {
+  .contact__row {
+    grid-template-columns: minmax(0, 40rem) 240px;
+    margin-right: calc(-3rem - 240px);
+    align-items: start;
+  }
+  .tear-flyer { grid-column: 2; grid-row: 1 / span 2; margin-top: -1.5rem; }
+}
+.tear-flyer__hint {
+  align-self: flex-start;
+  display: flex;
+  align-items: flex-end;
+  gap: 6px;
+  margin: 0 0 10px 18px;
+  font-family: "Caveat", cursive;
+  font-weight: 700;
+  font-size: 1.45rem;
+  line-height: 1.1;
+  color: var(--accent);
+  transform: rotate(-3deg);
+}
+.tear-flyer__hint svg { width: 38px; height: 30px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; }
+.tear-flyer__paper {
+  position: relative;
+  width: 240px;
+  background: var(--paper);
+  color: var(--paper-ink);
+  transform: rotate(1.6deg);
+  box-shadow: -6px 6px 0 rgba(163, 31, 79, 0.16);
+}
+.tear-flyer__frame { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
+.tear-flyer__frame rect { fill: none; stroke: var(--paper-ink); stroke-width: 1.6; }
+.tear-flyer__tape { position: absolute; top: -14px; left: 50%; width: 92px; height: 28px; transform: translateX(-50%) rotate(-3deg); }
+.tear-flyer__tape path { fill: var(--paper-tape); }
+.tear-flyer__body { padding: 24px 18px 12px; }
+.tear-flyer__first { font-weight: 500; letter-spacing: 0.42em; font-size: 0.68rem; color: var(--paper-muted); }
+.tear-flyer__last { font-family: var(--font-display); font-weight: 800; font-size: 1.42rem; line-height: 1; letter-spacing: -0.01em; }
+.tear-flyer__txt { margin: 8px 0 0; font-size: 0.78rem; line-height: 1.4; color: var(--paper-muted); }
+.tear-flyer__hand { margin: 10px 0 0; font-family: "Caveat", cursive; font-weight: 700; font-size: 1.2rem; line-height: 1.1; color: var(--paper-accent); }
+.tear-flyer__cut { margin: 0 8px; border-top: 1.5px dashed var(--paper-muted); }
+.tear-flyer__strips { display: flex; height: 118px; padding: 0 8px 10px; }
+.tear-strip {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  border-right: 1.5px dashed var(--paper-muted);
+  color: var(--paper-ink);
+  text-decoration: none;
+  transform-origin: 50% 0;
+  transition: transform 160ms cubic-bezier(0.23, 1, 0.32, 1), background-color 160ms ease;
+}
+.tear-strip:last-child { border-right: 0; }
+.tear-strip span { writing-mode: vertical-rl; padding-top: 8px; font-family: var(--font-mono); font-weight: 600; font-size: 0.62rem; }
+@media (hover: hover) and (pointer: fine) {
+  .tear-strip:hover { background: color-mix(in srgb, var(--color-raspberry-dark) 9%, transparent); transform: rotate(-2deg); }
+}
+.tear-strip:focus-visible { outline: 2px solid var(--paper-accent); outline-offset: 2px; }
+.tear-strip.is-torn { visibility: hidden; }
+.tear-strip.is-last span::after { content: " · poslední!"; font-family: "Caveat", cursive; font-weight: 700; font-size: 0.85rem; color: var(--paper-accent); }
+.tear-strip--falling {
+  position: fixed;
+  z-index: 60;
+  pointer-events: none;
+  display: flex;
+  justify-content: center;
+  background: var(--paper);
+  border: 1.2px solid color-mix(in srgb, var(--color-ink) 35%, transparent);
+}
+.tear-flyer__restock {
+  margin-top: 14px;
+  font-family: var(--font-mono);
+  font-weight: 600;
+  font-size: 0.78rem;
+  color: var(--accent);
+  background: none;
+  border: 0;
+  text-decoration: underline;
+  cursor: pointer;
+}

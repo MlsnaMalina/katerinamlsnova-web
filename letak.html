@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Leták k vytištění — Kateřina Mlsnová, weby, hry a interaktivní materiály pro malé projekty." />
+  <meta name="robots" content="noindex" />
+  <meta name="theme-color" content="#7A1840" />
+  <title>Leták k vytištění | Kateřina Mlsnová</title>
+  <link rel="icon" href="/favicon.ico" sizes="any" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Syne:wght@800&family=Space+Grotesk:wght@400;500&family=IBM+Plex+Mono:wght@600&family=Caveat:wght@600;700&display=swap"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="style.css" />
+  <script>
+    // Stejné téma jako hlavní web (jen čtení, klíč km-theme se nemění)
+    try { const t = localStorage.getItem("km-theme"); if (t) document.documentElement.setAttribute("data-theme", t); } catch (e) {}
+  </script>
+  <!-- Vercel Web Analytics — bez cookies, běží záměrně mimo cookie souhlas -->
+  <script defer src="/_vercel/insights/script.js"></script>
+</head>
+<body class="page-letak">
+  <svg class="svg-defs" width="0" height="0" aria-hidden="true" focusable="false">
+    <defs>
+      <filter id="rough" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3" result="noise" />
+        <feDisplacementMap in="SourceGraphic" in2="noise" scale="3" />
+      </filter>
+    </defs>
+  </svg>
+
+  <div class="letak-bar">
+    <a class="letak-bar__back" href="/#kontakt">← Zpět na web</a>
+    <div class="letak-bar__acts">
+      <button type="button" class="letak-bar__btn" data-print>Uložit jako PDF</button>
+      <button type="button" class="letak-bar__btn letak-bar__btn--solid" data-print>Vytisknout</button>
+    </div>
+  </div>
+  <p class="letak-hint">Pro uložení do PDF zvolte v tiskovém dialogu jako tiskárnu „Uložit jako PDF".</p>
+
+  <main class="letak-sheet" id="letak-sheet">
+    <article class="flyer" aria-label="Leták: Kateřina Mlsnová — weby, hry a interaktivní materiály pro malé projekty">
+      <svg class="fl-tape" viewBox="0 0 120 34" aria-hidden="true"><path d="M4,6 L116,2 L114,30 L2,32 Z"/></svg>
+      <header class="fl-head">
+        <div>
+          <div class="fl-first">KATEŘINA</div>
+          <div class="fl-last">MLSNOVÁ<span class="fl-cur" aria-hidden="true"></span></div>
+          <p class="fl-tag">Weby, hry a interaktivní materiály pro malé projekty.<br>Bez agentury. Bez šablon. Bez „proč to nejde".</p>
+        </div>
+        <p class="fl-note">Máte nápad?<br>Napište mi!</p>
+      </header>
+
+      <h2 class="fl-h">S čím vám můžu pomoci<svg viewBox="0 0 300 10" preserveAspectRatio="none" aria-hidden="true"><path d="M3,6 C80,9 180,2 297,6"/></svg></h2>
+      <div class="fl-grid">
+          <div class="fl-svc"><b>Jednoduchý web</b><p>Jednostránkový web pro firmu, službu, akci nebo projekt. Vypadá tak, jak chcete vy.</p></div>
+          <div class="fl-svc"><b>Hry, kvízy a kalkulačky</b><p>Interaktivní prvek, který návštěvníka zapojí nebo mu usnadní rozhodnutí.</p></div>
+          <div class="fl-svc"><b>Aplikace a online prezentace</b><p>Aplikace na to, co reálně řešíte, nebo prezentace, kterou sdílíte odkazem.</p></div>
+          <div class="fl-svc"><b>Pracovní listy a digitalizace</b><p>Formuláře, dotazníky a výukové materiály v přehledné online podobě.</p></div>
+          <div class="fl-svc"><b>Kontrola AI textů</b><p>Text psaný s pomocí AI zkontroluji a navrhnu konkrétní úpravy.</p></div>
+          <div class="fl-svc"><b>Máte jiný nápad?</b><p>Napište mi. Podíváme se na to spolu.</p></div>
+      </div>
+
+      <h2 class="fl-h">Jak to probíhá<svg viewBox="0 0 300 10" preserveAspectRatio="none" aria-hidden="true"><path d="M3,5 C70,2 200,9 297,4"/></svg></h2>
+      <div class="fl-steps">
+          <div class="fl-step"><span class="fl-num">01</span><b>Napíšete mi</b><p>Formulářem nebo e-mailem, nezávazně.</p></div>
+          <svg class="fl-arrow" viewBox="0 0 40 16" aria-hidden="true"><path d="M2,9 C12,6 24,10 34,8 M28,3 L35,8 L28,13"/></svg>
+          <div class="fl-step"><span class="fl-num">02</span><b>Domluvíme se</b><p>Pošlu návrh s cenou a termínem.</p></div>
+          <svg class="fl-arrow" viewBox="0 0 40 16" aria-hidden="true"><path d="M2,9 C12,6 24,10 34,8 M28,3 L35,8 L28,13"/></svg>
+          <div class="fl-step"><span class="fl-num">03</span><b>Tvořím</b><p>Průběžně ukazuji, zapracuji připomínky.</p></div>
+          <svg class="fl-arrow" viewBox="0 0 40 16" aria-hidden="true"><path d="M2,9 C12,6 24,10 34,8 M28,3 L35,8 L28,13"/></svg>
+          <div class="fl-step"><span class="fl-num">04</span><b>Hotovo</b><p>Předám s návodem, jsem tu i potom.</p></div>
+      </div>
+
+      <div class="fl-contact">
+        <svg class="fl-frame" preserveAspectRatio="none" aria-hidden="true"><rect x="1" y="1" width="99.5%" height="98%" rx="12" filter="url(#rough)"/></svg>
+        <div class="fl-qr"><svg viewBox="0 0 29 29" class="fl-qr-code" aria-hidden="true"><path class="qrline" stroke="currentColor" d="M0 0.5h7m1 0h3m5 0h1m2 0h2m1 0h7m-29 1h1m5 0h1m1 0h1m3 0h1m1 0h1m5 0h1m1 0h1m5 0h1m-29 1h1m1 0h3m1 0h1m2 0h3m1 0h2m3 0h3m1 0h1m1 0h3m1 0h1m-29 1h1m1 0h3m1 0h1m1 0h1m2 0h1m1 0h5m1 0h1m2 0h1m1 0h3m1 0h1m-29 1h1m1 0h3m1 0h1m4 0h1m1 0h4m2 0h1m2 0h1m1 0h3m1 0h1m-29 1h1m5 0h1m2 0h2m5 0h5m1 0h1m5 0h1m-29 1h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7m-21 1h5m2 0h3m-18 1h1m1 0h2m1 0h3m4 0h1m1 0h5m3 0h1m2 0h1m1 0h2m-28 1h1m5 0h1m3 0h1m2 0h1m1 0h9m3 0h1m-29 1h1m3 0h1m1 0h2m1 0h1m1 0h1m4 0h1m1 0h1m3 0h3m1 0h2m-28 1h3m2 0h1m2 0h6m1 0h1m2 0h2m1 0h1m1 0h2m3 0h1m-28 1h1m1 0h6m3 0h1m4 0h1m7 0h2m-27 1h1m3 0h1m3 0h4m2 0h6m2 0h2m2 0h3m-26 1h4m2 0h5m3 0h3m2 0h3m1 0h3m-29 1h3m2 0h1m2 0h2m8 0h3m2 0h2m2 0h1m-26 1h2m1 0h3m2 0h1m3 0h2m2 0h4m2 0h2m1 0h1m-26 1h3m2 0h1m2 0h1m1 0h1m2 0h1m4 0h2m1 0h1m1 0h3m-28 1h1m5 0h1m1 0h2m2 0h5m1 0h1m1 0h1m2 0h1m2 0h1m-25 1h2m5 0h7m1 0h2m1 0h1m5 0h1m-26 1h1m2 0h1m1 0h1m2 0h2m2 0h2m1 0h2m2 0h7m-19 1h3m6 0h2m1 0h1m3 0h5m-29 1h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h3m1 0h1m1 0h2m1 0h1m-28 1h1m5 0h1m1 0h8m4 0h1m3 0h2m1 0h1m-28 1h1m1 0h3m1 0h1m2 0h2m1 0h1m4 0h1m2 0h5m1 0h1m-27 1h1m1 0h3m1 0h1m1 0h2m1 0h3m1 0h1m1 0h1m3 0h1m2 0h2m2 0h1m-29 1h1m1 0h3m1 0h1m1 0h1m1 0h1m2 0h1m2 0h2m1 0h1m3 0h1m2 0h1m1 0h1m-29 1h1m5 0h1m2 0h1m1 0h1m2 0h1m4 0h2m2 0h1m1 0h1m1 0h1m-28 1h7m1 0h2m1 0h2m2 0h2m1 0h4m3 0h1m1 0h1"/></svg><small>Naskenujte a napište mi</small></div>
+        <div class="fl-ct">
+          <span class="fl-lbl">web</span><b>katerinamlsnova.cz</b>
+          <span class="fl-lbl">e-mail</span><b data-mail>napad (zavináč) katerinamlsnova.cz</b>
+          <small>IČO 22031383 · Průhonice</small>
+        </div>
+      </div>
+
+      <p class="fl-printed">Vytištěno z katerinamlsnova.cz<span id="letak-date"></span></p>
+      <div class="fl-cut" aria-hidden="true"><span>✂</span><em>tady utrhněte</em></div>
+      <div class="fl-strips">
+          <div class="fl-strip"><span><b>katerinamlsnova.cz</b><i data-mail>napad (zavináč) katerinamlsnova.cz</i></span></div>
+          <div class="fl-strip"><span><b>katerinamlsnova.cz</b><i data-mail>napad (zavináč) katerinamlsnova.cz</i></span></div>
+          <div class="fl-strip"><span><b>katerinamlsnova.cz</b><i data-mail>napad (zavináč) katerinamlsnova.cz</i></span></div>
+          <div class="fl-strip"><span><b>katerinamlsnova.cz</b><i data-mail>napad (zavináč) katerinamlsnova.cz</i></span></div>
+          <div class="fl-strip"><span><b>katerinamlsnova.cz</b><i data-mail>napad (zavináč) katerinamlsnova.cz</i></span></div>
+          <div class="fl-strip"><span><b>katerinamlsnova.cz</b><i data-mail>napad (zavináč) katerinamlsnova.cz</i></span></div>
+          <div class="fl-strip"><span><b>katerinamlsnova.cz</b><i data-mail>napad (zavináč) katerinamlsnova.cz</i></span></div>
+          <div class="fl-strip"><span><b>katerinamlsnova.cz</b><i data-mail>napad (zavináč) katerinamlsnova.cz</i></span></div>
+      </div>
+    </article>
+  </main>
+
+  <script>
+    (function () {
+      // E-mail skládáme až skriptem — stejná ochrana proti spamovým robotům jako na hlavním webu
+      const mail = ["napad", "katerinamlsnova.cz"].join("@");
+      document.querySelectorAll("[data-mail]").forEach((el) => { el.textContent = mail; });
+
+      const dateEl = document.getElementById("letak-date");
+      if (dateEl) dateEl.textContent = " · " + new Date().toLocaleDateString("cs-CZ");
+
+      document.querySelectorAll("[data-print]").forEach((btn) => btn.addEventListener("click", () => window.print()));
+
+      // A4 list (794 × 1123 px) se na obrazovce zmenší do šířky okna; tisk má vlastní pravidla v CSS
+      const sheet = document.getElementById("letak-sheet");
+      const flyer = sheet.querySelector(".flyer");
+      function fit() {
+        const s = Math.min(1, sheet.clientWidth / 794);
+        flyer.style.transform = "scale(" + s + ")";
+        sheet.style.height = 1123 * s + "px";
+      }
+      fit();
+      window.addEventListener("resize", fit);
+    })();
+  </script>
+</body>
+</html>

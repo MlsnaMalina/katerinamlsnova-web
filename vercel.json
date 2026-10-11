@@ -22,6 +22,10 @@
       "destination": "/jednoduchy-web.html"
     },
     {
+      "source": "/letak",
+      "destination": "/letak.html"
+    },
+    {
       "source": "/krejcirik-bazeny/",
       "destination": "https://krejcirik-bazeny.vercel.app/index.html"
     },
