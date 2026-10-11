@@ -956,22 +956,52 @@ __initQueue.push(() => {
   const selectedList = document.getElementById("calc-selected-list");
   if (!priceDisplay || !emptyState || !itemsState || !selectedList) return;
 
+  // Součet na účtence doběhne na novou hodnotu, nové řádky jemně vjedou
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  let shownTotal = 0;
+  let tickRaf = 0;
+  let prevLabels = new Set();
+
+  function showTotal(to) {
+    cancelAnimationFrame(tickRaf);
+    const from = shownTotal;
+    if (reduceMotion || from === to) {
+      shownTotal = to;
+      priceDisplay.textContent = to.toLocaleString("cs-CZ");
+      return;
+    }
+    const t0 = performance.now();
+    const step = (now) => {
+      const k = Math.min(1, (now - t0) / 420);
+      const eased = 1 - Math.pow(1 - k, 3);
+      shownTotal = Math.round(from + (to - from) * eased);
+      priceDisplay.textContent = shownTotal.toLocaleString("cs-CZ");
+      if (k < 1) tickRaf = requestAnimationFrame(step);
+    };
+    tickRaf = requestAnimationFrame(step);
+  }
+
   function updateCalculator() {
     let total = 0;
     selectedList.innerHTML = "";
     let hasSelection = false;
+    const labels = new Set();
 
     calcInputs.forEach((input) => {
       if (input.checked) {
         hasSelection = true;
         total += parseInt(input.value, 10) || 0;
         const li = document.createElement("li");
-        li.textContent = input.getAttribute("data-label");
+        const label = input.getAttribute("data-label");
+        li.textContent = label;
+        if (!prevLabels.has(label)) li.classList.add("is-new");
+        labels.add(label);
         selectedList.appendChild(li);
       }
     });
+    prevLabels = labels;
 
-    priceDisplay.textContent = total.toLocaleString("cs-CZ");
+    showTotal(total);
 
     if (hasSelection) {
       emptyState.style.display = "none";
