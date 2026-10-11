@@ -48,6 +48,7 @@ __initQueue.push(() => {
       i++;
       setTimeout(typeWriter1, 28);
     } else {
+      buildHeroSite();
       setTimeout(() => {
         pitchEl?.classList.add('visible-element');
         setTimeout(() => {
@@ -68,13 +69,38 @@ __initQueue.push(() => {
               }
             }
             typeWriter2();
-          }, 400);
+          }, 1400);
         }, 300);
       }, 200);
     }
   }
 
   setTimeout(typeWriter1, 200);
+
+  // Po zadání v terminálu se vedle nakreslí malý web (~1,9 s)
+  function buildHeroSite() {
+    const build = document.querySelector('.hero-build');
+    if (!build) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches || !build.animate) {
+      build.classList.remove('is-pending');
+      return;
+    }
+    const draws = build.querySelectorAll('.hb-draw');
+    const pops = build.querySelectorAll('.hb-pop');
+    const draw = (el, duration, delay) => el.animate(
+      [{ strokeDasharray: 1, strokeDashoffset: 1 }, { strokeDasharray: 1, strokeDashoffset: 0 }],
+      { duration, delay, easing: 'cubic-bezier(0.77, 0, 0.175, 1)', fill: 'backwards' }
+    );
+    const pop = (el, delay) => el.animate(
+      [{ opacity: 0, transform: 'translateY(6px)' }, { opacity: 1, transform: 'none' }],
+      { duration: 280, delay, easing: 'cubic-bezier(0.23, 1, 0.32, 1)', fill: 'backwards' }
+    );
+    const drawPlan = [[700, 0], [300, 500], [600, 1000], [300, 1050], [300, 1130], [300, 1210], [500, 1500]];
+    const popPlan = [650, 800, 900, 1400];
+    draws.forEach((el, i) => draw(el, ...(drawPlan[i] || [400, 0])));
+    pops.forEach((el, i) => pop(el, popPlan[i] || 0));
+    build.classList.remove('is-pending');
+  }
 
   function initEyes() {
     const pupils = document.querySelectorAll('.pupil');

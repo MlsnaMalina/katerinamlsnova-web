@@ -4893,3 +4893,31 @@ body.lightbox-open {
   }
 }
 
+/* Hero — terminál „postaví" malý web (jen desktop, na mobilu je terminál skrytý) */
+.hero-build {
+  width: 100%;
+  margin-top: 0.4rem;
+  color: var(--text);
+}
+.hero-build svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+.hero-build .hb-s {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.hero-build .hb-a { fill: var(--accent); }
+.hero-build .hb-soft { fill: var(--accent); fill-opacity: 0.12; }
+.hero-build.is-pending .hb-draw { stroke-dasharray: 1; stroke-dashoffset: 1; }
+.hero-build.is-pending .hb-pop { opacity: 0; }
+
+@media (max-width: 768px) {
+  .hero-build { display: none; }
+}
+
