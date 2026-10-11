@@ -9,7 +9,7 @@
   --color-ink: #1A1714;
   --color-deep-black: #0F0E0C;
   --color-white: #FFFFFF;
-  --color-cream: #F7F4EE;
+  --color-light: #F4F4F5; /* neutrální světle šedá — béžová je zakázaná (2026-10-11) */
 
   /* Typography */
   --font-display: "Syne", sans-serif;
@@ -18,7 +18,7 @@
 
   /* Semantic tokens — LIGHT mode (default) */
   --bg: var(--color-white);
-  --bg-elevated: var(--color-cream);
+  --bg-elevated: var(--color-light);
   --text: var(--color-ink);
   --text-muted: rgba(26, 23, 20, 0.7);
   --accent: var(--color-raspberry-dark);
@@ -31,11 +31,11 @@
   :root {
     --bg: var(--color-deep-black);
     --bg-elevated: var(--color-ink);
-    --text: var(--color-cream);
-    --text-muted: rgba(247, 244, 238, 0.7);
+    --text: var(--color-light);
+    --text-muted: rgba(244, 244, 245, 0.7);
     --accent: var(--color-raspberry-light);
     --accent-hover: var(--color-raspberry-dark);
-    --border: rgba(247, 244, 238, 0.12);
+    --border: rgba(244, 244, 245, 0.12);
   }
 }
 
@@ -47,12 +47,12 @@
   --text-muted: rgba(255, 255, 255, 0.7);
   --accent: var(--color-raspberry-light);
   --accent-hover: var(--color-raspberry-dark);
-  --border: rgba(247, 244, 238, 0.12);
+  --border: rgba(244, 244, 245, 0.12);
 }
 
 [data-theme="light"] {
   --bg: var(--color-white);
-  --bg-elevated: var(--color-cream);
+  --bg-elevated: var(--color-light);
   --text: var(--color-ink);
   --text-muted: rgba(26, 23, 20, 0.7);
   --accent: var(--color-raspberry-dark);
@@ -531,7 +531,7 @@ body {
 }
 
 #hero-terminal {
-  color: #f5f0e8;
+  color: #F4F4F5;
   font-size: 1.1rem;
   font-family: var(--font-mono);
   margin: 0;
@@ -1156,7 +1156,7 @@ body {
   max-height: 180px;
   object-fit: contain;
   display: block;
-  background-color: var(--color-cream);
+  background-color: var(--color-light);
   border-radius: 8px;
 }
 
@@ -1318,7 +1318,7 @@ body {
   width: 100%;
   max-height: 360px;
   object-fit: contain;
-  background-color: var(--color-cream);
+  background-color: var(--color-light);
   border-radius: 10px;
 }
 
@@ -1712,7 +1712,7 @@ body.lightbox-open {
   display: block;
   width: fit-content;
   background-color: #a31f4f;
-  color: #f5f0e8;
+  color: #F4F4F5;
   font-family: 'Space Grotesk', sans-serif;
   font-weight: bold;
   padding: 12px 24px;
@@ -2175,7 +2175,7 @@ body.lightbox-open {
   gap: 0.5rem;
   padding: 0.85rem 2rem;
   background-color: var(--accent);
-  color: var(--color-cream);
+  color: var(--color-light);
   border: none;
   border-radius: 999px;
   cursor: pointer;
@@ -2626,7 +2626,7 @@ body.lightbox-open {
 #game-restart-btn:hover,
 #game-restart-btn:focus-visible {
   background-color: var(--accent);
-  color: var(--color-cream);
+  color: var(--color-light);
   border-color: var(--accent);
   outline: none;
 }
@@ -4345,7 +4345,7 @@ body.lightbox-open {
 
 .page-404__line {
   font-family: var(--font-mono);
-  color: #f5f0e8;
+  color: #F4F4F5;
   margin: 0;
   font-size: 0.95rem;
   line-height: 1.5;
@@ -4399,7 +4399,7 @@ body.lightbox-open {
 .page-404__sub {
   font-family: var(--font-mono);
   font-size: 0.95rem;
-  color: #f5f0e8;
+  color: #F4F4F5;
   opacity: 0.78;
   margin: 0 0 1.5rem;
   line-height: 1.6;
@@ -4418,7 +4418,7 @@ body.lightbox-open {
   padding: 0.7rem 1.1rem;
   font-family: var(--font-mono);
   font-size: 0.9rem;
-  color: #f5f0e8;
+  color: #F4F4F5;
   background-color: transparent;
   border: 1px solid #444;
   border-radius: 3px;

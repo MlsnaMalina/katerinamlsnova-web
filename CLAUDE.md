@@ -52,10 +52,12 @@ Nové JS inity registruj přes `__initQueue.push(fn)` (jediný DOMContentLoaded 
 |---|---|---|
 | `--accent` | `#7A1840` (light) / `#B83066` (dark) | Primary CTA, interactive |
 | `--bg` | `#FFFFFF` (light) / `#0F0E0C` (dark) | Pozadí stránky |
-| `--bg-elevated` | `#F7F4EE` (light) | Karty, elevated plochy |
+| `--bg-elevated` | `#F4F4F5` (light) / `#1A1714` (dark) | Karty, elevated plochy (token `--color-light`) |
 | `--text` | `#1A1714` | Hlavní text |
 | `--text-muted` | rgba(26,23,20,0.7) | Sekundární text |
 | `--border` | rgba(26,23,20,0.12) | Jemné linky |
+
+**Béžová / krémová je zakázaná** (dřívější `--color-cream: #F7F4EE` nahrazen neutrální `--color-light: #F4F4F5`, 2026-10-11) — světlé plochy jen bílé nebo neutrálně šedé.
 
 **Vždy piš `var(--accent)`, nikdy hardcoded hex v nových pravidlech.**
 Výjimka: hex `#a31f4f` v inline SVG doodlech a `assets/malina.svg` je legacy — nechej být.
