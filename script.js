@@ -974,3 +974,40 @@ __initQueue.push(() => {
     });
   });
 })();
+
+// Ručně kreslené rámečky karet se dokreslí při prvním příjezdu do viewportu.
+// Co je vidět už při načtení, zůstává nakreslené (žádné probliknutí).
+__initQueue.push(() => {
+  if (!('IntersectionObserver' in window)) return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const strokes = document.querySelectorAll(
+    '.skill-card__frame rect, .work-card__frame rect, .fit__frame rect, .shelf__underline path'
+  );
+  if (!strokes.length || typeof strokes[0].getTotalLength !== 'function') return;
+
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (!entry.isIntersecting) return;
+      const el = entry.target;
+      io.unobserve(el);
+      let len = 0;
+      try { len = el.getTotalLength(); } catch (e) { /* nic */ }
+      const reset = () => { el.style.strokeDasharray = ''; };
+      if (!len) { reset(); return; }
+      el.style.strokeDasharray = `${len} ${len}`;
+      const anim = el.animate(
+        [{ strokeDashoffset: len }, { strokeDashoffset: 0 }],
+        { duration: 900, easing: 'cubic-bezier(0.77, 0, 0.175, 1)' }
+      );
+      anim.onfinish = reset;
+      anim.oncancel = reset;
+    });
+  }, { threshold: 0.2 });
+
+  strokes.forEach((el) => {
+    const r = el.getBoundingClientRect();
+    if (r.top < window.innerHeight && r.bottom > 0) return;
+    el.style.strokeDasharray = '0 100000';
+    io.observe(el);
+  });
+});

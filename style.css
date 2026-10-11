@@ -484,7 +484,7 @@ body {
   width: 100%;
   max-width: 600px;
   margin: 2rem auto;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+  box-shadow: -8px 8px 0 rgba(163, 31, 79, 0.2);
   overflow: hidden;
   text-align: left;
 }
@@ -661,7 +661,7 @@ body {
   font-family: var(--font-body);
   font-weight: 600;
   font-size: 1rem;
-  box-shadow: 0 8px 24px rgba(163, 31, 79, 0.35);
+  box-shadow: -5px 5px 0 rgba(26, 23, 20, 0.18);
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.3s ease, transform 0.3s ease;
@@ -3165,7 +3165,6 @@ body.lightbox-open {
   background-color: var(--bg);
   border-top: 2px solid var(--accent);
   padding: 20px 24px;
-  box-shadow: 0 -4px 24px rgba(0, 0, 0, 0.12);
 }
 
 .cookie-banner[hidden] {
@@ -3578,7 +3577,7 @@ body.lightbox-open {
   max-width: 340px;
   width: 100%;
   text-align: center;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+  box-shadow: -8px 8px 0 rgba(163, 31, 79, 0.2);
 }
 .hero-malina-modal__img {
   display: block;
@@ -3637,7 +3636,7 @@ body.lightbox-open {
   max-width: 380px;
   width: 100%;
   text-align: center;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+  box-shadow: -8px 8px 0 rgba(163, 31, 79, 0.2);
 }
 
 .egg-modal__title {
@@ -3825,7 +3824,7 @@ body.lightbox-open {
   padding: 5px 15px;
   cursor: pointer;
   border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
-  transition: all 0.2s ease;
+  transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
   font-family: var(--font-body);
 }
 
@@ -4857,3 +4856,40 @@ body.lightbox-open {
   white-space: nowrap;
   border: 0;
 }
+
+/* ============================================
+   Pohyb a odezva (návrh „Malina v pohybu", 2026-10)
+   ============================================ */
+
+:root {
+  --ease-out-strong: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out-strong: cubic-bezier(0.77, 0, 0.175, 1);
+}
+
+/* Odezva na stisk — samostatná vlastnost `scale`, aby nepřebila existující transform/transition */
+.hero-bio-cta__btn:active,
+.hero-cta__btn:active,
+.skill-card__cta:active,
+.shelf-demo-btn:active,
+.work-card__cta:active,
+.lightbox__cta:active,
+.pricing-row__cta-btn:active,
+.why__cta:active,
+.contact__submit:active,
+.calc-reset-btn:active,
+.cookie-btn:active,
+.email-reveal-btn:active,
+.hero-malina-modal__btn:active,
+.egg-modal__btn:active,
+.doodle-btn-small:active,
+.theme-toggle:active {
+  scale: 0.97;
+}
+
+/* Hover zvednutí karet jen na zařízeních s myší (na dotyku se „zasekne") */
+@media (hover: none) {
+  .skill-card:hover {
+    transform: none;
+  }
+}
+
