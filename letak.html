@@ -101,6 +101,7 @@
     </article>
   </main>
 
+  <script src="vlastovka.js"></script>
   <script>
     (function () {
       // E-mail skládáme až skriptem — stejná ochrana proti spamovým robotům jako na hlavním webu
@@ -122,6 +123,13 @@
       }
       fit();
       window.addEventListener("resize", fit);
+
+      // Přílet vlaštovky — jen když návštěvník přišel přes utržený lísteček
+      let viaPlane = false;
+      try { viaPlane = sessionStorage.getItem("km-letak-vlastovka") === "1"; sessionStorage.removeItem("km-letak-vlastovka"); } catch (e) {}
+      if (viaPlane && window.kmPlane && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        window.kmPlane.flyIn(sheet);
+      }
     })();
   </script>
 </body>

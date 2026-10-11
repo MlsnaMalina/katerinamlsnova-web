@@ -1115,7 +1115,7 @@ __initQueue.push(() => {
   });
 });
 
-// Trhací lísteček v Kontaktu: lísteček se utrhne, spadne a otevře se /letak.
+// Trhací lísteček v Kontaktu: lísteček se utrhne, složí do vlaštovky (vlastovka.js), odletí a otevře se /letak.
 // Odkaz funguje i bez JS; skript jen přidá animaci. Prostřední klik / Ctrl+klik nechává prohlížeči.
 __initQueue.push(() => {
   const flyer = document.querySelector('.tear-flyer');
@@ -1136,27 +1136,14 @@ __initQueue.push(() => {
       if (e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
       e.preventDefault();
       const href = strip.getAttribute('href');
-      if (reduce || !strip.animate) { window.location.href = href; return; }
+      if (reduce || !window.kmPlane) { window.location.href = href; return; }
 
+      // Lísteček se složí do vlaštovky a odletí; /letak pak přehraje přílet (klíč v sessionStorage)
       const r = strip.getBoundingClientRect();
-      const ghost = document.createElement('div');
-      ghost.className = 'tear-strip tear-strip--falling';
-      ghost.style.left = r.left + 'px';
-      ghost.style.top = r.top + 'px';
-      ghost.style.width = r.width + 'px';
-      ghost.style.height = r.height + 'px';
-      ghost.innerHTML = strip.innerHTML;
-      document.body.appendChild(ghost);
       strip.classList.add('is-torn');
       refresh();
-
-      const dir = Math.random() < 0.5 ? -1 : 1;
-      ghost.animate([
-        { transform: 'translateY(0) rotate(0deg)', opacity: 1 },
-        { transform: `translateY(6px) rotate(${dir * 4}deg)`, opacity: 1, offset: 0.18 },
-        { transform: `translate(${dir * 36}px, ${window.innerHeight * 0.45}px) rotate(${dir * 38}deg)`, opacity: 0 }
-      ], { duration: 780, easing: 'cubic-bezier(0.55, 0, 0.85, 0.4)', fill: 'forwards' }).onfinish = () => ghost.remove();
-      setTimeout(() => { window.location.href = href; }, 520);
+      try { sessionStorage.setItem('km-letak-vlastovka', '1'); } catch (err) { /* nic */ }
+      window.kmPlane.flyAway(r, () => { window.location.href = href; });
     });
   });
 

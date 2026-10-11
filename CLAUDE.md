@@ -34,6 +34,7 @@ Web pro vibecoding činnost Kateřiny Mlsnové — nabízí tvorbu jednoduchých
 | `style.css` | Všechny styly, CSS tokeny, dark/light mode | ~4 850 ř. |
 | `script.js` | Init fronta `__initQueue`, animace, navigace, slidery, lightbox, egg hunt, kalkulačka, FAQ, cookie consent, Formspree | ~980 ř. |
 | `game.js` | Canvas hra „Skákající malina" (sekce `#hra`) | ~620 ř. |
+| `vlastovka.js` | Papírová vlaštovka (`window.kmPlane`) — sdílená pro `index.html` i `letak.html` | ~120 ř. |
 | `404.html` | Vlastní 404 stránka | |
 | `letak.html` | Leták A4 k vytištění (`/letak`, rewrite ve `vercel.json`, `noindex`); styly v bloku „Leták" na konci `style.css` | |
 | `zasady-ochrany-osobnich-udaju.html` | GDPR stránka | |
@@ -155,6 +156,7 @@ Karty s vysokými screenshoty mají `work-card__media--cover` (ořez shora); kli
 | `km-eggs-found-v2` | localStorage | JSON pole ID (např. `["hero","2","3"]`) |
 | `cookie_consent` | localStorage | `"granted"` / `"denied"` — POZOR, bez `km-` prefixu |
 | `km-eggs-modal-shown` | sessionStorage | `"1"` |
+| `km-letak-vlastovka` | sessionStorage | `"1"` — jednorázová značka pro přílet vlaštovky na `/letak` (hned se maže) |
 | `katherine-game-highscore` | localStorage | číslo (skóre) |
 
 **Změna klíčů = reset dat u všech návštěvníků. Neměnit.**
@@ -175,7 +177,7 @@ Karty s vysokými screenshoty mají `work-card__media--cover` (ořez shora); kli
 - **Cookie consent** — banner (přijmout/odmítnout), „Spravovat cookies" ve footeru banner znovu otevře, lazy GA4 load po souhlasu
 - **Canvas hra** — Skákající malina (Space/tap = skok, gravity + vítr), high-score v localStorage
 - **Dokreslování rámečků** — poslední init v `script.js`: `.skill-card__frame rect`, `.work-card__frame rect`, `.fit__frame rect` a `.shelf__underline path` se při prvním příjezdu do viewportu dokreslí (WAAPI, stroke-dashoffset, 900 ms); co je vidět už při načtení, zůstává; při `prefers-reduced-motion` vypnuto
-- **Trhací lísteček a leták** — 6 lístečků `.tear-strip` (odkazy na `/letak`, fungují i bez JS); klik lísteček „utrhne" (padající kopie `.tear-strip--falling`), za 520 ms přejde na `/letak`; poslední lísteček má `.is-last`, po utržení všech se ukáže „Pověsit nové lístečky". `letak.html`: list A4 794 × 1123 px zmenšený do šířky okna, tlačítka „Uložit jako PDF" / „Vytisknout" volají `window.print()`, tisk přes `@page A4` (výška 296 mm, aby se nezalomil na 2 strany), e-mail se skládá skriptem (anti-spam), datum tisku doplní skript. Leták je schválený 2026-10-11: bez cen, bez ikon, bez maliny, papír bílý i v tmavém režimu. Na miniatuře v Kontaktu nesmí být malina (zaměnitelná s honem na maliny)
+- **Trhací lísteček a leták** — 6 lístečků `.tear-strip` (odkazy na `/letak`, fungují i bez JS); klik lísteček utrhne, složí do papírové vlaštovky a ta odletí obloukem (`vlastovka.js`, `window.kmPlane.flyAway`, ~1,35 s), pak přechod na `/letak`; před odchodem se nastaví `sessionStorage` `km-letak-vlastovka`, `/letak` podle něj přehraje přílet (`kmPlane.flyIn`, leták dosedne) a klíč smaže — přímé otevření `/letak` je bez vlaštovky; při `prefers-reduced-motion` rovnou přechod; poslední lísteček má `.is-last`, po utržení všech se ukáže „Pověsit nové lístečky". `letak.html`: list A4 794 × 1123 px zmenšený do šířky okna, tlačítka „Uložit jako PDF" / „Vytisknout" volají `window.print()`, tisk přes `@page A4` (výška 296 mm, aby se nezalomil na 2 strany), e-mail se skládá skriptem (anti-spam), datum tisku doplní skript. Leták je schválený 2026-10-11: bez cen, bez ikon, bez maliny, papír bílý i v tmavém režimu. Na miniatuře v Kontaktu nesmí být malina (zaměnitelná s honem na maliny)
 - **Odezva na stisk** — blok „Pohyb a odezva" na konci `style.css`: tlačítka a CTA mají na `:active` vlastnost `scale: 0.97` (samostatná vlastnost, aby nepřebila existující `transform`/`transition`). Maliny egg huntu do seznamu nepatří
 
 ---
