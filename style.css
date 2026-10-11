@@ -1290,7 +1290,8 @@ body {
   right: 1rem;
   width: 2.4rem;
   height: 2.4rem;
-  background: transparent;
+  z-index: 3; /* nad .lightbox__media (position: relative), jinak obrázek překryje křížek */
+  background: var(--card-bg);
   border: none;
   font-size: 2rem;
   line-height: 1;
