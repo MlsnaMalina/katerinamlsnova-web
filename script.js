@@ -398,7 +398,7 @@ __initQueue.push(() => {
     });
   }
 
-  function open(card) {
+  function openNow(card) {
     const cardImg = card.querySelector(".work-card__media img");
     const cardTag = card.querySelector(".work-card__tag");
     const cardTitle = card.querySelector(".work-card__title");
@@ -456,7 +456,7 @@ __initQueue.push(() => {
     setTimeout(() => lightbox.querySelector(".lightbox__close")?.focus(), 50);
   }
 
-  function close() {
+  function closeNow() {
     lightbox.classList.remove("is-open", "lightbox--wide");
     lightbox.setAttribute("aria-hidden", "true");
     document.body.classList.remove("lightbox-open");
@@ -465,6 +465,53 @@ __initQueue.push(() => {
     if (lastFocused && typeof lastFocused.focus === "function") {
       lastFocused.focus();
     }
+  }
+
+  // Plynulý přechod karta → lightbox přes View Transitions API.
+  // Prohlížeč bez podpory (nebo omezení pohybu) otevře lightbox jako dřív.
+  const canMorph = () =>
+    typeof document.startViewTransition === "function" &&
+    !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  let morphImg = null;
+
+  function settle(img) {
+    if (!img.decode) return Promise.resolve();
+    return Promise.race([img.decode().catch(() => {}), new Promise((r) => setTimeout(r, 300))]);
+  }
+
+  function open(card) {
+    const cardImg = card.querySelector(".work-card__media img");
+    if (!canMorph() || !cardImg) { openNow(card); return; }
+    morphImg = cardImg;
+    lightbox.classList.add("lightbox--morph");
+    cardImg.style.viewTransitionName = "km-shot";
+    const t = document.startViewTransition(async () => {
+      cardImg.style.viewTransitionName = "";
+      imgEl.style.viewTransitionName = "km-shot";
+      openNow(card);
+      await settle(imgEl);
+    });
+    t.finished.finally(() => {
+      imgEl.style.viewTransitionName = "";
+      lightbox.classList.remove("lightbox--morph");
+    });
+  }
+
+  function close() {
+    const back = morphImg && morphImg.isConnected ? morphImg : null;
+    morphImg = null;
+    if (!canMorph() || !back) { closeNow(); return; }
+    lightbox.classList.add("lightbox--morph");
+    imgEl.style.viewTransitionName = "km-shot";
+    const t = document.startViewTransition(() => {
+      imgEl.style.viewTransitionName = "";
+      back.style.viewTransitionName = "km-shot";
+      closeNow();
+    });
+    t.finished.finally(() => {
+      back.style.viewTransitionName = "";
+      lightbox.classList.remove("lightbox--morph");
+    });
   }
 
   navPrevEl?.addEventListener("click", () => goSlide(-1));

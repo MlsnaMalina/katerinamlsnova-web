@@ -4921,3 +4921,17 @@ body.lightbox-open {
   .hero-build { display: none; }
 }
 
+/* Ukázky — karta se plynule „roztáhne" do lightboxu (View Transitions API) */
+.lightbox--morph,
+.lightbox--morph .lightbox__panel {
+  transition: none !important;
+}
+::view-transition-group(km-shot) {
+  animation-duration: 420ms;
+  animation-timing-function: cubic-bezier(0.32, 0.72, 0, 1);
+}
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 240ms;
+}
+
